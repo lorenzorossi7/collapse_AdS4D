@@ -1,0 +1,24 @@
+STATUS OF THIS BRANCH:
+3+1 Cartesian code for study of gravitational collapse of scalar field in AdS4 with no symmetries. The first commit is taken from the Lorenzo-ahfinder-qlsettensor-wip branch of the AdS4D repository.
+
+New derivative stencils in z have been tested.
+Convergence at t=0 is good as expected for analytic Schwarzschild-AdS initial data. At later times, we obtain convergence of the independent residual, i.e., the maximum value of all the components of the equations of motion. We saw that convergence of grid functions is lost in the runs used for 2011.12970. The resolutions are 145,217 and 325 (separated by a factor of 3/2) and a black hole is formed. Loss of convergence might arise from the excision surface. Further testing is needed to ensure convergence Long time stability of runs has been checked for several initial data parameters.
+The solver of Hamiltonian constraint has been generalised to 3+1, so it is now possible to use time-symmetric initial data that solves the Hamiltonian constraint with a non-vanishing scalar field. Convergence at t=0 has been tested for this type of data.
+Convergence and stability at later times, higher resolutions and different values of the parameters needs to be tested.
+The AH finder has been implemented and tested by checking that the finder gives the expected position of the AH for analytic Schwarzschild-AdS BH initial data. However it does not seem to find black holes after one or more bounces. FIX
+It is possible to deactivate the AH finder and have fixed excision radius by just setting a value for ex_rbuf or to use the AH finder for scalar field and analytic BH initial data.
+We've implemented the possibility of producing sdf files with the values of the metric components on the apparent horizon.
+
+We implemented the possibility of producing an ascii file with the value of the relative kretschmann scalar (i.e. (kretschmann/kretschmann_pureAdS) -1) at the centre of the grid at the corresponding time of evolution. We have also implemented the possibility of outputting the Kretschmann and relative Kretschmann scalar in the bulk as sdf files. We did the same for the Riemann cube scalar and relative Riemann cube scalar.
+
+We implemented the quasilocal boundary stress-energy tensor and mass density calculation in terms of regularised metric components divided by q, and tested that it gives the expected value in the case of analytic Schwarzschild initial data. This works also with checkpointing. Then we wrote the expressions in terms of derivatives of metric components w.r.t. rho. We checked convergence for such expressions for L1,L2 and L3 resolution at t=0.
+
+However, the allocation of memory is done in a way that does not work with AMR techniques. FIX
+
+The AdS mass is computed performing a double integral on the S^2 sphere at the boundary of the mass density ONLY IF WE RUN ON 1 CORE, otherwise the numerical approximation for the double integral becomes unreliable. We produce an ascii file with the time of evolution and the AdS mass at that time. We checked that the AdS mass gives the expected value in the case of analytic Schwarzschild initial data (it actually underestimates it a bit, but the accuracy seems to improve with resolution).
+The stress-energy tensor and AdS mass should be tested in the following ways:
+1. convergence in the high resolution limit (DONE for L1,L2,L3 resolution at t=0)
+2. tracelessness (the trace seems to be small for a few test runs, but convergence shows a bad trend at late times for the runs of 2011.12970, that probably comes from the bad convergence trends in the bulk)
+3. conservation (same bad trends at late times).
+We also produce an ascii file with the value of the scalar field at the boundary (namely, the leading order coefficient in the near boundary expansion).
+We implemented the option of producing spatially reduced ascii files, i.e. containing a number of boundary points reduced by a certain parameter, called reduction_factor. This is done to obtain smaller ascii files.
