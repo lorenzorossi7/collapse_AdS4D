@@ -824,7 +824,7 @@ c-----------------------------------------------------------------------
 !                 AH_chi=acos( zb-AH_xc(3)/r )
 !                 AH_phi=atan2( yb-AH_xc(2),xb-AH_xc(1) )
 
-                 AH_chi=acos( xb-AH_xc(1)/r )
+                 AH_chi=acos( (xb-AH_xc(1))/r )
                  AH_phi=atan2( zb-AH_xc(3),yb-AH_xc(2) )
 
                  if (AH_phi.lt.0) AH_phi=AH_phi+2*PI

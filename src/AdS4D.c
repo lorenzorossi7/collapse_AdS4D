@@ -2929,7 +2929,7 @@ void AdS4D_pre_io_calc(void)
         //(NOTE: for t=t0, have *not* cycled time sequence, so still np1,n,nm1,
         // so here, time level np1 is the most advanced time level) 
         //we call the following functions just to save and output the values of the grid functions chrbdy, leadordcoeff_phi1 and quasiset_ll for t=0. These will be later then used to extrapolate the value of bdyphi and quasiset componenents at the AdS boundary in pre_tstep for t=0 (and post_tstep for later times)
-        if (output_bdyquantities)
+        if (output_bdyquantities&&(g_L==Lc))
         {  
 
  
@@ -15158,8 +15158,6 @@ void AdS4D_post_tstep(int L)
 
     //printf("AdS4D_post_tstep is called");
     //fflush(stdout); 
-
-    dx=x[1]-x[0]; dy=y[1]-y[0]; dz=z[1]-z[0];
 
 
     ct = PAMR_get_time(L);  
