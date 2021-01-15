@@ -612,4 +612,7 @@ void extrap_quasiset_fixedpts_(    real *quasiset_tt, real *quasiset_tchi, real 
                    int *ind_distance_fixedpts,
                    real *x, real *y, real *z, real *dt, real *chr, real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz, int *phys_bdy, int *ghost_width);
 
+void boost_perturb_(real *phi1, real *phi1_t, real *A, real *B, real *C, real *r0, real *delta, real *xu0, real *yu0, real *zu0, real *ex, real *ey, real *ez,
+              real *boost_vx, real *boost_vy, real *boost_vz, real *AdS_L, real *x, real *y, real *z, int *Nx, int *Ny, int *Nz, real *rhoc, real *rhod);
+
 #endif
