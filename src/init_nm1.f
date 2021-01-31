@@ -961,7 +961,7 @@ c----------------------------------------------------------------------
               gb_xz_tt0=h0_ll_tt(2,4)
               gb_yy_tt0=h0_ll_tt(3,3)
               gb_yz_tt0=h0_ll_tt(3,4)
-              gb_zz_tt0=h0_ll_tt(4,4)
+              gb_zz_tt0  =h0_ll_tt(4,4)
               phi1_tt0 =phi10_tt/(1-rho0**2)**2
 
               ! initialize past time level by O(h^3) expansion

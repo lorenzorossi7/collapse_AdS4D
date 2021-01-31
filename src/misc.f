@@ -2967,17 +2967,16 @@ c   = A , r < r0
 c
 c where r = sqrt ( (1-ex^2)*(x)^2 + (1-ey^2)*(y)^2 )
 c----------------------------------------------------------------------
-        subroutine gauss3d(f,A0,B0,C0,r0,delta,xu0,yu0,zu0,ex,ey,ez,
+        subroutine gauss3d(f,A,B,C,r0,delta,xu0,yu0,zu0,ex,ey,ez,
      &                     L,x,y,z,Nx,Ny,Nz,
      &                     rhoc,rhod,stype)
         implicit none
         integer Nx,Ny,Nz
         real*8 f(Nx,Ny,Nz),x(Nx),y(Ny),z(Nz)
-        real*8 A0,B0,C0,r0,delta,ex,ey,ez,xu0,yu0,zu0,L
+        real*8 A,B,C,r0,delta,ex,ey,ez,xu0,yu0,zu0,L
 
         integer i,j,k
         integer stype
-        integer a,b
         real*8 r,x0,y0,z0,rho0,xi0,chi0,csr,xb,yb,zb
 
         real*8 rhoc,rhod
@@ -3031,25 +3030,24 @@ c----------------------------------------------------------------------
                     f(i,j,k)=0
                  else if (r.gt.r0) then
                    f(i,j,k)=
-     &             A0*exp(-((r-r0)/delta)**2)
-     &            +B0*cos(chi0)*4*f1*(1-f1)
-     &            +C0*cos(xi0)*4*f1*(1-f1)
+     &             A*exp(-((r-r0)/delta)**2)
+     &            +B*cos(chi0)*4*f1*(1-f1)
+     &            +C*cos(xi0)*4*f1*(1-f1)
                  else
                   if (rho0.ne.0.0d0) then
                    f(i,j,k)=
-     &             A0
-     &            +B0*cos(chi0)*4*f1*(1-f1)
-     &            +C0*cos(xi0)*4*f1*(1-f1)
+     &             A
+     &            +B*cos(chi0)*4*f1*(1-f1)
+     &            +C*cos(xi0)*4*f1*(1-f1)
                   else if ((y0.ne.0.0d0).or.(z0.ne.0.0d0)) then
                    f(i,j,k)=
-     &             A0
-     &            +B0*cos(chi0)*4*f1*(1-f1)
+     &             A
+     &            +B*cos(chi0)*4*f1*(1-f1)
                   else
                    f(i,j,k)=
-     &             A0
+     &             A
                   end if
                  end if
-
 
               else if (stype.eq.1) then
 
@@ -3057,22 +3055,22 @@ c----------------------------------------------------------------------
                     f(i,j,k)=0
                  else if (rho0.gt.r0) then
                     f(i,j,k)=
-     &              A0*(1-f1)/(1-rho0**2)**2
-     &             +B0*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
-     &             +C0*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &              A*(1-f1)/(1-rho0**2)**2
+     &             +B*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &             +C*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
                  else
                   if (rho0.ne.0.0d0) then
                     f(i,j,k)=
-     &              A0*(1-f1)/(1-rho0**2)**2
-     &             +B0*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
-     &             +C0*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &              A*(1-f1)/(1-rho0**2)**2
+     &             +B*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &             +C*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
                   else if ((y0.ne.0.0d0).or.(z0.ne.0.0d0)) then
                     f(i,j,k)=
-     &              A0*(1-f1)/(1-rho0**2)**2
-     &             +B0*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &              A*(1-f1)/(1-rho0**2)**2
+     &             +B*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
                   else
                     f(i,j,k)=
-     &              A0*(1-f1)/(1-rho0**2)**2
+     &              A*(1-f1)/(1-rho0**2)**2
                   end if
                  end if
 
@@ -3082,14 +3080,14 @@ c----------------------------------------------------------------------
                     f(i,j,k)=0
                  else if (rho0.gt.r0) then
                     f(i,j,k)=
-     &              A0*(1-f1)/(1-rho0**2)**2
-     &             +B0*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
-     &             +C0*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &              A*(1-f1)/(1-rho0**2)**2
+     &             +B*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &             +C*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
                  else
                     f(i,j,k)=
-     &              A0*(1-f1)/(1-rho0**2)**2
-     &             +B0*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
-     &             +C0*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &              A*(1-f1)/(1-rho0**2)**2
+     &             +B*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &             +C*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
                  end if
 
               end if
@@ -3099,235 +3097,6 @@ c----------------------------------------------------------------------
 
         return
         end
-
-c----------------------------------------------------------------------
-c perturbes scalar field profile with a Lorentz-boosted Gaussian profile centred
-c at (xu0,yu0,zu0) and boost velocity (boost_vx,boost_vy,boost_vz)
-c----------------------------------------------------------------------
-
-        subroutine boost_perturb(f,f_t,A0,B0,C0,r0,delta,xu0,yu0,zu0,
-     &                     ex,ey,ez,
-     &                     boost_vx,boost_vy,boost_vz,
-     &                     L,x,y,z,Nx,Ny,Nz,
-     &                     rhoc,rhod)
-        implicit none
-        integer Nx,Ny,Nz
-        real*8 f(Nx,Ny,Nz),f_t(Nx,Ny,Nz)
-        real*8 x(Nx),y(Ny),z(Nz)
-        real*8 A0,B0,C0,r0,delta,ex,ey,ez,xu0,yu0,zu0,L
-
-        integer i,j,k
-        integer stype
-        integer a,b
-        real*8 r,x0,y0,z0,rho0,xi0,chi0,csr,xb,yb,zb
-        real*8 boost_vx,boost_vy,boost_vz
-        real*8 boost_vnorm
-        real*8 gamma
-        real*8 lambda_boost(4,4),lambdainv_boost(4,4)
-        real*8 x0_invboost,y0_invboost,z0_invboost
-        real*8 xb_invboost,yb_invboost,zb_invboost
-        real*8 r_invboost
-        real*8 derexp0
-
-        real*8 rhoc,rhod
-        real*8 f1,trans
-
-        real*8 PI
-        parameter (PI=3.141592653589793d0)
-
-        ! initialize fixed-size variables
-        data i,j,k/0,0,0/
-        data r,x0,y0,z0,rho0,xi0,chi0,csr,xb,yb,zb
-     &       /0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0/
-        data lambda_boost,lambdainv_boost/16*0.0,16*0.0/
-  
-        !--------------------------------------------------------------
- 
-       if ((abs(boost_vx).gt.10.0d0**(-10)).or.
-     &     (abs(boost_vy).gt.10.0d0**(-10)).or.
-     &     (abs(boost_vz).gt.10.0d0**(-10)) ) then
-        do i=1,Nx
-           do j=1,Ny
-            do k=1,Nz
-              f(i,j,k)=0
-              f_t(i,j,k)=0
-              x0=x(i)
-              y0=y(j)
-              z0=z(k)
-              rho0=sqrt(x0**2+y0**2+z0**2)
-              if (rho0.ne.0.0d0) then
-               xi0=acos(x0/rho0)
-              end if
-              if ((y0.ne.0.0d0).or.(z0.ne.0.0d0)) then
-                chi0=atan2(z0,y0)
-                if (chi0.lt.0) chi0=chi0+2*PI
-              end if
-!            write (*,*) 'DEBUG from gauss3d'
-!            write(*,*) 'rho0=',rho0
-!            write(*,*) 'chi0,xi0=',chi0,xi0
-
-
-                boost_vnorm=sqrt(boost_vx**2+boost_vy**2+boost_vz**2)
-                gamma=1/sqrt(1-boost_vnorm**2)
-
-                lambda_boost(1,1)=gamma
-                lambda_boost(1,2)=-gamma*boost_vx
-                lambda_boost(1,3)=-gamma*boost_vy
-                lambda_boost(1,4)=-gamma*boost_vz
-                lambda_boost(2,2)=1+(gamma-1)*(boost_vx**2)
-     &           /boost_vnorm**2
-                lambda_boost(2,3)=(gamma-1)*boost_vx*boost_vy
-     &           /boost_vnorm**2
-                lambda_boost(2,4)=(gamma-1)*boost_vx*boost_vz
-     &           /boost_vnorm**2
-                lambda_boost(3,3)=1+(gamma-1)*(boost_vy**2)
-     &           /boost_vnorm**2
-                lambda_boost(3,4)=(gamma-1)*boost_vy*boost_vz
-     &           /boost_vnorm**2
-                lambda_boost(4,4)=1+(gamma-1)*(boost_vz**2)
-     &           /boost_vnorm**2
-                !the matrix of Lorentz boosts is symmetric
-                do a=1,4
-                 do b=a+1,4
-                  lambda_boost(b,a)=lambda_boost(a,b)
-                 end do
-                end do
-
-                lambdainv_boost(1,1)=-1/((-1+boost_vnorm**2)*gamma)
-                lambdainv_boost(1,2)=-boost_vx
-     &           /((-1+boost_vnorm**2)*gamma)
-                lambdainv_boost(1,3)=-boost_vy
-     &           /((-1+boost_vnorm**2)*gamma)
-                lambdainv_boost(1,4)=-boost_vz
-     &           /((-1+boost_vnorm**2)*gamma)
-                lambdainv_boost(2,2)=(1/boost_vnorm**2)*
-     &           (boost_vy**2+boost_vz**2-(boost_vx**2)
-     &           /((-1+boost_vnorm**2)*gamma))
-                lambdainv_boost(2,3)=-(boost_vx*boost_vy*
-     &           (1+(-1+boost_vnorm**2)*gamma))
-     &           /((-1+boost_vnorm**2)*boost_vnorm**2*gamma)
-                lambdainv_boost(2,4)=-(boost_vx*boost_vz*
-     &           (1+(-1+boost_vnorm**2)*gamma))
-     &           /((-1+boost_vnorm**2)*boost_vnorm**2*gamma)
-                lambdainv_boost(3,3)=(1/boost_vnorm**2)*
-     &           (boost_vx**2+boost_vz**2-(boost_vy**2)
-     &           /((-1+boost_vnorm**2)*gamma))
-                lambdainv_boost(3,4)=-(boost_vy*boost_vz*
-     &           (1+(-1+boost_vnorm**2)*gamma))
-     &           /((-1+boost_vnorm**2)*boost_vnorm**2*gamma)
-                lambdainv_boost(4,4)=(1/boost_vnorm**2)*
-     &           (boost_vx**2+boost_vy**2-(boost_vz**2)
-     &           /((-1+boost_vnorm**2)*gamma))
-                !the matrix of Lorentz boosts is symmetric
-                do a=1,4
-                 do b=a+1,4
-                  lambdainv_boost(b,a)=lambdainv_boost(a,b)
-                 end do
-                end do
-
-                !lambdainv_boost^(-1)^\mu_\nu x^\mu at t=0
-                x0_invboost=lambdainv_boost(2,2)*x0
-     &           +lambdainv_boost(2,3)*y0+lambdainv_boost(2,4)*z0
-                y0_invboost=lambdainv_boost(3,2)*x0
-     &           +lambdainv_boost(3,3)*y0+lambdainv_boost(3,4)*z0
-                z0_invboost=lambdainv_boost(4,2)*x0
-     &           +lambdainv_boost(4,3)*y0+lambdainv_boost(4,4)*z0
-
-
-               xb_invboost=x0_invboost-xu0
-               yb_invboost=y0_invboost-yu0
-               zb_invboost=z0_invboost-zu0
-
-               r_invboost=sqrt(xb_invboost**2+yb_invboost**2
-     &          +zb_invboost**2
-     &           -ex**2*xb_invboost**2-ey**2*yb_invboost**2
-     &           -ez**2*zb_invboost**2)
-
-               f(i,j,k)=
-     &             A0*exp(-((r_invboost-r0)/delta)**2)
-
-               !set derivative of f(i,j,k) w.r.t. t at t=0
-
-               derexp0=(2*(-((-1 + ex**2)*lambdainv_boost(2,1)*
-     -         (xu0 - x0*lambdainv_boost(2,2) - 
-     -           y0*lambdainv_boost(2,3) - 
-     -           z0*lambdainv_boost(2,4))) - 
-     -      (-1 + ey**2)*lambdainv_boost(3,1)*
-     -       (yu0 - x0*lambdainv_boost(3,2) - 
-     -         y0*lambdainv_boost(3,3) - z0*lambdainv_boost(3,4))
-     -        + (-1 + ez**2)*lambdainv_boost(4,1)*
-     -       (-zu0 + x0*lambdainv_boost(4,2) + 
-     -         y0*lambdainv_boost(4,3) + z0*lambdainv_boost(4,4))
-     -      )*(-r0 + Sqrt((-xu0 + x0*lambdainv_boost(2,2) + 
-     -           y0*lambdainv_boost(2,3) + 
-     -           z0*lambdainv_boost(2,4))**2 - 
-     -        ex**2*(-xu0 + x0*lambdainv_boost(2,2) + 
-     -            y0*lambdainv_boost(2,3) + 
-     -            z0*lambdainv_boost(2,4))**2 + 
-     -        (-yu0 + x0*lambdainv_boost(3,2) + 
-     -           y0*lambdainv_boost(3,3) + 
-     -           z0*lambdainv_boost(3,4))**2 - 
-     -        ey**2*(-yu0 + x0*lambdainv_boost(3,2) + 
-     -            y0*lambdainv_boost(3,3) + 
-     -            z0*lambdainv_boost(3,4))**2 + 
-     -        (-zu0 + x0*lambdainv_boost(4,2) + 
-     -           y0*lambdainv_boost(4,3) + 
-     -           z0*lambdainv_boost(4,4))**2 - 
-     -        ez**2*(-zu0 + x0*lambdainv_boost(4,2) + 
-     -            y0*lambdainv_boost(4,3) + 
-     -            z0*lambdainv_boost(4,4))**2)))/
-     -  (delta**2*Sqrt((-xu0 + x0*lambdainv_boost(2,2) + 
-     -         y0*lambdainv_boost(2,3) + z0*lambdainv_boost(2,4))
-     -        **2 - ex**2*
-     -       (-xu0 + x0*lambdainv_boost(2,2) + 
-     -          y0*lambdainv_boost(2,3) + z0*lambdainv_boost(2,4)
-     -          )**2 + 
-     -      (-yu0 + x0*lambdainv_boost(3,2) + 
-     -         y0*lambdainv_boost(3,3) + z0*lambdainv_boost(3,4))
-     -        **2 - ey**2*
-     -       (-yu0 + x0*lambdainv_boost(3,2) + 
-     -          y0*lambdainv_boost(3,3) + z0*lambdainv_boost(3,4)
-     -          )**2 + 
-     -      (-zu0 + x0*lambdainv_boost(4,2) + 
-     -         y0*lambdainv_boost(4,3) + z0*lambdainv_boost(4,4))
-     -        **2 - ez**2*
-     -       (-zu0 + x0*lambdainv_boost(4,2) + 
-     -          y0*lambdainv_boost(4,3) + z0*lambdainv_boost(4,4)
-     -          )**2))
-
-               f_t(i,j,k)=f(i,j,k)*derexp0
-
-!!DEBUG
-!              if ((abs(x0-0.375d0).lt.10.0d0**(-10)).and.
-!     &            (abs(y0-0.125d0).lt.10.0d0**(-10)).and.
-!     &            (abs(z0-0.0d0).lt.10.0d0**(-10))) then
-!                write (*,*) "x0,y0,z0=",x0,y0,z0
-!                write (*,*) "xu0,yu0,zu0=",xu0,yu0,zu0
-!                write (*,*) "A0,r0,delta=",A0,r0,delta
-!               do a=1,4
-!                do b=1,4
-!                  write (*,*) "a,b,lambda_boost(a,b)="
-!     &             ,a,b,lambda_boost(a,b)
-!                  write (*,*) "a,b,lambdainv_boost(a,b)="
-!     &             ,a,b,lambdainv_boost(a,b)
-!                end do
-!               end do
-!                  write (*,*) "xb_invboost=",xb_invboost
-!                  write (*,*) "yb_invboost=",yb_invboost
-!                  write (*,*) "zb_invboost=",zb_invboost
-!                  write (*,*) "r_invboost=",r_invboost
-!                  write (*,*) "f(i,j,k)=",f(i,j,k)
-!                  write (*,*) "f_t(i,j,k)=",f_t(i,j,k)
-!              end if
-
-            end do
-           end do
-        end do
-       end if
-
-        return
-        end
-
 
 c----------------------------------------------------------------------
 c initializes complex s.f. phi with approximate q-ball profile

@@ -38,7 +38,6 @@ real kappa_cd,rho_cd;
 // gaussians
 real phi1_amp_1,phi1_B_1,phi1_C_1,phi1_r0_1,phi1_delta_1,phi1_x0_1[3],phi1_ecc_1[3];
 real phi1_amp_2,phi1_B_2,phi1_C_2,phi1_r0_2,phi1_delta_2,phi1_x0_2[3],phi1_ecc_2[3];
-real boost_v_1[3],boost_v_2[3];
 
 // if > 0, initialize with exact BH
 real ief_bh_r0;
@@ -2025,16 +2024,13 @@ void AdS4D_var_post_init(char *pfile)
     phi1_amp_1=phi1_B_1=phi1_C_1=phi1_r0_1=phi1_x0_1[0]=phi1_x0_1[1]=phi1_x0_1[2]=phi1_ecc_1[0]=phi1_ecc_1[1]=phi1_ecc_1[2]=0;
     phi1_amp_2=phi1_B_2=phi1_C_2=phi1_r0_1=phi1_x0_2[0]=phi1_x0_2[1]=phi1_x0_2[2]=phi1_ecc_2[0]=phi1_ecc_2[1]=phi1_ecc_2[2]=0;  
 
-    boost_v_1[0]=boost_v_1[1]=boost_v_1[2]=0;
-    boost_v_2[0]=boost_v_2[1]=boost_v_2[2]=0;
-
     AMRD_real_param(pfile,"phi1_amp_1",&phi1_amp_1,1);
     AMRD_real_param(pfile,"phi1_B_1",&phi1_B_1,1);
     AMRD_real_param(pfile,"phi1_C_1",&phi1_C_1,1);
     AMRD_real_param(pfile,"phi1_r0_1",&phi1_r0_1,1);
     AMRD_real_param(pfile,"phi1_delta_1",&phi1_delta_1,1);
     AMRD_real_param(pfile,"phi1_x0_1",phi1_x0_1,AMRD_dim);
-    AMRD_real_param(pfile,"phi1_ecc_1",phi1_ecc_1,AMRD_dim);   
+    AMRD_real_param(pfile,"phi1_ecc_1",phi1_ecc_1,AMRD_dim);    
     AMRD_real_param(pfile,"phi1_amp_2",&phi1_amp_2,1);
     AMRD_real_param(pfile,"phi1_B_2",&phi1_B_2,1);
     AMRD_real_param(pfile,"phi1_C_2",&phi1_C_2,1);
@@ -2042,9 +2038,6 @@ void AdS4D_var_post_init(char *pfile)
     AMRD_real_param(pfile,"phi1_delta_2",&phi1_delta_2,1);
     AMRD_real_param(pfile,"phi1_x0_2",phi1_x0_2,AMRD_dim);
     AMRD_real_param(pfile,"phi1_ecc_2",phi1_ecc_2,AMRD_dim);  
-
-    AMRD_real_param(pfile,"boost_v_1",boost_v_1,AMRD_dim);  
-    AMRD_real_param(pfile,"boost_v_2",boost_v_2,AMRD_dim);
 
     kappa_cd=0; AMRD_real_param(pfile,"kappa_cd",&kappa_cd,1);
     rho_cd=0; AMRD_real_param(pfile,"rho_cd",&rho_cd,1);    
@@ -2417,10 +2410,11 @@ void AdS4D_free_data(void)
     AdS4D_AMRH_var_clear(); // constrained variables are set post-MG    
     zero_f(phi1_t_n); // holds initial time derivatives for ID  
     gauss3d_(phi1_n,&phi1_amp_1,&phi1_B_1,&phi1_C_1,&phi1_r0_1,&phi1_delta_1,&phi1_x0_1[0],&phi1_x0_1[1],&phi1_x0_1[2],
+
             &phi1_ecc_1[0],&phi1_ecc_1[1],&phi1_ecc_1[2],&AdS_L,x,y,z,&Nx,&Ny,&Nz,&rhoc,&rhod,&stype);  
     gauss3d_(w1,&phi1_amp_2,&phi1_B_2,&phi1_C_2,&phi1_r0_2,&phi1_delta_2,&phi1_x0_2[0],&phi1_x0_2[1],&phi1_x0_2[2],
+
             &phi1_ecc_2[0],&phi1_ecc_2[1],&phi1_ecc_2[2],&AdS_L,x,y,z,&Nx,&Ny,&Nz,&rhoc,&rhod,&stype);  
-  
     for (i=0; i<size; i++) phi1_n[i]+=w1[i];    
 
     return;
@@ -2689,18 +2683,7 @@ void AdS4D_t0_cnst_data(void)
                     gb_yz,
                     gb_zz,Hb_t,Hb_x,Hb_y,
                     Hb_z,
-                    &AdS_L,mask_mg,phys_bdy,x,y,z,chr_mg,&AMRD_ex,&Nx,&Ny,&Nz,&regtype,&rhoa,&rhob);
-
-        if ((fabs(boost_v_1[0])>pow(10.0,-10))||(fabs(boost_v_1[1])>pow(10.0,-10))||(fabs(boost_v_1[2])>pow(10.0,-10)))
-        {
-        	printf("using Lorentz-boosted scalar field profile\n");
-        	//printf("boost_v_1[0]=%lf,boost_v_1[1]=%lf,boost_v_1[2]=%lf\n",boost_v_1[0],boost_v_1[1],boost_v_1[2]);
-            boost_perturb_(phi1,phi1_t_n,&phi1_amp_1,&phi1_B_1,&phi1_C_1,&phi1_r0_1,&phi1_delta_1,
-            		&phi1_x0_1[0],&phi1_x0_1[1],&phi1_x0_1[2],
-    		        &phi1_ecc_1[0],&phi1_ecc_1[1],&phi1_ecc_1[2],
-    		        &boost_v_1[0],&boost_v_1[1],&boost_v_1[2],
-    		        &AdS_L,x,y,z,&Nx,&Ny,&Nz,&rhoc,&rhod);
-        }
+                    &AdS_L,mask_mg,phys_bdy,x,y,z,chr_mg,&AMRD_ex,&Nx,&Ny,&Nz,&regtype,&rhoa,&rhob);    
 //   for (i=0; i<Nx; i++)   
 //   { 
 //      for (j=0; j<Ny; j++) 
@@ -2783,25 +2766,19 @@ void AdS4D_t0_cnst_data(void)
                     Hb_z_np1,Hb_z_n,Hb_z_nm1,Hb_z_t_n,
                     phi1_np1,phi1_n,phi1_nm1,phi1_t_n,tfunction,
                     &AdS_L,phys_bdy,x,y,z,&dt,chr,&AMRD_ex,&Nx,&Ny,&Nz,&regtype);   
-					for (i=0; i<Nx; i++)
-					{    
-						for (j=0; j<Ny; j++)
-						{ 
-						   	for (k=0; k<Nz; k++)
-						    {  
-								if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<0.4)
-							    {   
-									ind=i+Nx*(j+Ny*k);
-									printf("AdS4D_AMRH_var_clear-POST init_hb_ AND init_nm1_\n");
-									printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"
-									       ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));
-									printf("phi1_nm1[ind]=%lf,phi1_n[ind]=%lf,phi1_np1[ind]=%lf\n",phi1_nm1[ind],phi1_n[ind],phi1_np1[ind]);
-									printf("phi1_t_n[ind]=%lf\n",phi1_t_n[ind]);
-									printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);
-								}
-						    }
-						}
-					}  
+                    //   for (i=0; i<Nx; i++)
+                    //   {    //      for (j=0; j<Ny; j++)
+                    //      { //       for (k=0; k<Nz; k++)
+                    //       {  //        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1)
+                    //        {   //         ind=i+Nx*(j+Ny*k);
+                    //         printf("AdS4D_AMRH_var_clear-POST init_hb_ AND init_nm1_\n");
+                    //         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"
+                    //                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));
+                    //         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);
+                    //        }
+                    //       }
+                    //      }
+                    //   }  
     }   
     // store initial source functions 
     if (gb_xx_nm1)

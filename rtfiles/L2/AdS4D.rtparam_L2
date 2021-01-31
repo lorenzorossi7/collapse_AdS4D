@@ -12,7 +12,6 @@ phi1_x0_1 := [0.0 0.0 0.0]
 phi1_ecc_1 := [0.3 0.2 0.25]
 phi1_B_1 := 0.0
 phi1_C_1 := 0.0
-boost_v_1 := [0.0 0.0 0.0]
 
 rhoc := 0.4
 rhod := 0.8
@@ -25,7 +24,7 @@ ief_bh_r0 := 0.0
 AH_Lmin := 1
 AH_rsteps := 10
 AH_eps := 0.0
-#AH_max_iter := 10000
+AH_max_iter := 10000
 AH_lambda := 0.0001
 AH_tol := 1e-2
 AH_r0 := 0.10
@@ -36,7 +35,7 @@ AH_Nphi := 17
 AH_freq := 24
 AH_freq_aft := 240
 #excision buffer, i.e. how wide the region to evolve within the AH (or the AdS boundary if there is no BH) is
-ex_rbuf := 1.0
+ex_rbuf := 0.35
 AH_reset_scale := 1.1
 AH_max_iter_2 := 0
 AH_max_iter_3 := 0
@@ -132,7 +131,7 @@ max_resolution_degree := 4
 #reduction_factor is the factor by which we need to reduce the number points of the lowest resolution used for convergence (i.e. the resolution with degree 1) so that we only select points that are present also in the resolutions with degree 2 and 3. To get the exact same points in higher resolutions, we need to reduce by a factor (reduction_factor**(max_resolution_degree-1))*((ratio_Lhighres_Llowres)**(resolution_degree-1)). ratio_Lhighres_Llowres and reduction_factor must be chosen so that this factor is an integer for all resolutions
 reduction_factor := 2
 
-base_shape := [17 17 17]
+base_shape := [145 145 145]
 max_lev := 1
 lambda := 0.3
 rho_sp := 2
@@ -255,7 +254,7 @@ num_save_1_vars := 5
 save_1_vars := [ "iresall" "gb_res" "gb_xx" "kg_ires" "quasiset_tracell" ]
 
 num_save_2_vars := 7
-save_2_vars := [ "gb_xx" "gb_zz" "Hb_x" "phi1" "relkretsch" "gb_tt" "relriemanncube" ]
+save_2_vars := [ "gb_xx" "psi" "Hb_x" "phi1" "relkretsch" "gb_tt" "relriemanncube" ]
 
 num_save_3_vars := 2
 save_3_vars := [ "gb_xx" "Hb_x" ]
