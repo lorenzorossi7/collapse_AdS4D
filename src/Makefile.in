@@ -74,7 +74,8 @@ apph.o: AdS4D.h apph.h
 exp.o:
 interp.o:
 quasiset.o:
-ADS5D_OBJS = AdS4D.o g_evo_opt.o init_nm1.o misc.o axisym.o ires.o mg_sup.o init_hb.o init_ghbdot.o gauge.o apph.o exp.o interp.o quasiset.o
+boost_perturb.o:
+ADS5D_OBJS = AdS4D.o g_evo_opt.o init_nm1.o misc.o axisym.o ires.o mg_sup.o init_hb.o init_ghbdot.o gauge.o apph.o exp.o interp.o quasiset.o boost_perturb.o
 
 AdS4D: $(ADS5D_OBJS) 
 	$(CC_LOAD) $(ADS5D_OBJS) $(LIBS) -o AdS4D

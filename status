@@ -1,6 +1,8 @@
 STATUS OF THIS BRANCH:
 3+1 Cartesian code for study of gravitational collapse of scalar field in AdS4 with no symmetries. The first commit is taken from the Lorenzo-ahfinder-qlsettensor-wip branch of the AdS4D repository.
 
+Implemented Lorentz-boosted perturbations to time-symmetric initial data. This gives constraint-violating data.
+
 New derivative stencils in z have been tested.
 Convergence at t=0 is good as expected for analytic Schwarzschild-AdS initial data. At later times, we obtain convergence of the independent residual, i.e., the maximum value of all the components of the equations of motion. We saw that convergence of grid functions is lost in the runs used for 2011.12970. The resolutions are 145,217 and 325 (separated by a factor of 3/2) and a black hole is formed. Loss of convergence might arise from the excision surface. Further testing is needed to ensure convergence Long time stability of runs has been checked for several initial data parameters.
 The solver of Hamiltonian constraint has been generalised to 3+1, so it is now possible to use time-symmetric initial data that solves the Hamiltonian constraint with a non-vanishing scalar field. Convergence at t=0 has been tested for this type of data.

@@ -38,6 +38,8 @@ real kappa_cd,rho_cd;
 // gaussians
 real phi1_amp_1,phi1_B_1,phi1_C_1,phi1_r0_1,phi1_delta_1,phi1_x0_1[3],phi1_ecc_1[3];
 real phi1_amp_2,phi1_B_2,phi1_C_2,phi1_r0_2,phi1_delta_2,phi1_x0_2[3],phi1_ecc_2[3];
+real boost_v_1[3],boost_v_2[3];
+real eps_amp_1;
 
 // if > 0, initialize with exact BH
 real ief_bh_r0;
@@ -2024,13 +2026,17 @@ void AdS4D_var_post_init(char *pfile)
     phi1_amp_1=phi1_B_1=phi1_C_1=phi1_r0_1=phi1_x0_1[0]=phi1_x0_1[1]=phi1_x0_1[2]=phi1_ecc_1[0]=phi1_ecc_1[1]=phi1_ecc_1[2]=0;
     phi1_amp_2=phi1_B_2=phi1_C_2=phi1_r0_1=phi1_x0_2[0]=phi1_x0_2[1]=phi1_x0_2[2]=phi1_ecc_2[0]=phi1_ecc_2[1]=phi1_ecc_2[2]=0;  
 
+    boost_v_1[0]=boost_v_1[1]=boost_v_1[2]=0;
+    boost_v_2[0]=boost_v_2[1]=boost_v_2[2]=0;
+    eps_amp_1=0;
+
     AMRD_real_param(pfile,"phi1_amp_1",&phi1_amp_1,1);
     AMRD_real_param(pfile,"phi1_B_1",&phi1_B_1,1);
     AMRD_real_param(pfile,"phi1_C_1",&phi1_C_1,1);
     AMRD_real_param(pfile,"phi1_r0_1",&phi1_r0_1,1);
     AMRD_real_param(pfile,"phi1_delta_1",&phi1_delta_1,1);
     AMRD_real_param(pfile,"phi1_x0_1",phi1_x0_1,AMRD_dim);
-    AMRD_real_param(pfile,"phi1_ecc_1",phi1_ecc_1,AMRD_dim);    
+    AMRD_real_param(pfile,"phi1_ecc_1",phi1_ecc_1,AMRD_dim);   
     AMRD_real_param(pfile,"phi1_amp_2",&phi1_amp_2,1);
     AMRD_real_param(pfile,"phi1_B_2",&phi1_B_2,1);
     AMRD_real_param(pfile,"phi1_C_2",&phi1_C_2,1);
@@ -2038,6 +2044,10 @@ void AdS4D_var_post_init(char *pfile)
     AMRD_real_param(pfile,"phi1_delta_2",&phi1_delta_2,1);
     AMRD_real_param(pfile,"phi1_x0_2",phi1_x0_2,AMRD_dim);
     AMRD_real_param(pfile,"phi1_ecc_2",phi1_ecc_2,AMRD_dim);  
+
+    AMRD_real_param(pfile,"boost_v_1",boost_v_1,AMRD_dim);  
+    AMRD_real_param(pfile,"boost_v_2",boost_v_2,AMRD_dim);
+    AMRD_real_param(pfile,"eps_amp_1",&eps_amp_1,1);
 
     kappa_cd=0; AMRD_real_param(pfile,"kappa_cd",&kappa_cd,1);
     rho_cd=0; AMRD_real_param(pfile,"rho_cd",&rho_cd,1);    
@@ -2410,11 +2420,10 @@ void AdS4D_free_data(void)
     AdS4D_AMRH_var_clear(); // constrained variables are set post-MG    
     zero_f(phi1_t_n); // holds initial time derivatives for ID  
     gauss3d_(phi1_n,&phi1_amp_1,&phi1_B_1,&phi1_C_1,&phi1_r0_1,&phi1_delta_1,&phi1_x0_1[0],&phi1_x0_1[1],&phi1_x0_1[2],
-
             &phi1_ecc_1[0],&phi1_ecc_1[1],&phi1_ecc_1[2],&AdS_L,x,y,z,&Nx,&Ny,&Nz,&rhoc,&rhod,&stype);  
     gauss3d_(w1,&phi1_amp_2,&phi1_B_2,&phi1_C_2,&phi1_r0_2,&phi1_delta_2,&phi1_x0_2[0],&phi1_x0_2[1],&phi1_x0_2[2],
-
             &phi1_ecc_2[0],&phi1_ecc_2[1],&phi1_ecc_2[2],&AdS_L,x,y,z,&Nx,&Ny,&Nz,&rhoc,&rhod,&stype);  
+  
     for (i=0; i<size; i++) phi1_n[i]+=w1[i];    
 
     return;
@@ -2467,7 +2476,7 @@ void AdS4D_t0_cnst_data(void)
     //        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1)    
     //        { 
     //         ind=i+Nx*(j+Ny*k);    
-    //         printf("AdS4D_AMRH_var_clear-PRE init_ghbdot_\n");   
+    //         printf("AdS4D_t0_cnst_data-PRE init_ghbdot_\n");   
     //         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"  
     //                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));    
     //         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);   
@@ -2502,7 +2511,7 @@ void AdS4D_t0_cnst_data(void)
 //        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1)    
 //        { 
 //         ind=i+Nx*(j+Ny*k);    
-//         printf("AdS4D_AMRH_var_clear-POST init_ghbdot_\n");  
+//         printf("AdS4D_t0_cnst_data-POST init_ghbdot_\n");  
 //         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n" 
 //                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));   
 //         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);  
@@ -2523,7 +2532,7 @@ void AdS4D_t0_cnst_data(void)
     //        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1)    
     //        { 
     //         ind=i+Nx*(j+Ny*k);    
-    //         printf("AdS4D_AMRH_var_clear-PRE init_ghb_ads_\n");  
+    //         printf("AdS4D_t0_cnst_data-PRE init_ghb_ads_\n");  
     //         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n" 
     //                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));   
     //         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);  
@@ -2549,7 +2558,7 @@ void AdS4D_t0_cnst_data(void)
                     //        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1)  
                     //        {   
                     //         ind=i+Nx*(j+Ny*k);  
-                    //         printf("AdS4D_AMRH_var_clear-POST init_ghb_ads_\n");   
+                    //         printf("AdS4D_t0_cnst_data-POST init_ghb_ads_\n");   
                     //         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"  
                     //                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));    
                     //         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);   
@@ -2589,7 +2598,7 @@ void AdS4D_t0_cnst_data(void)
         //        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1)    
         //        { 
         //         ind=i+Nx*(j+Ny*k);    
-        //         printf("AdS4D_AMRH_var_clear-PRE init_schwads4d_bh_\n"); 
+        //         printf("AdS4D_t0_cnst_data-PRE init_schwads4d_bh_\n"); 
         //         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"    
         //                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));  
         //         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]); 
@@ -2623,7 +2632,7 @@ void AdS4D_t0_cnst_data(void)
 	//        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1)    
 	//        { 
 	//         ind=i+Nx*(j+Ny*k);    
-	//         printf("AdS4D_AMRH_var_clear-POST init_schwads4d_bh_\n");    
+	//         printf("AdS4D_t0_cnst_data-POST init_schwads4d_bh_\n");    
 	//         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"   
 	//                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])); 
 	//         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);    
@@ -2665,7 +2674,7 @@ void AdS4D_t0_cnst_data(void)
         //        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1)    
         //        { 
         //         ind=i+Nx*(j+Ny*k);    
-        //         printf("AdS4D_AMRH_var_clear-PRE init_ghb_\n");  
+        //         printf("AdS4D_t0_cnst_data-PRE init_ghb_\n");  
         //         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n" 
         //                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));   
         //         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);  
@@ -2683,7 +2692,8 @@ void AdS4D_t0_cnst_data(void)
                     gb_yz,
                     gb_zz,Hb_t,Hb_x,Hb_y,
                     Hb_z,
-                    &AdS_L,mask_mg,phys_bdy,x,y,z,chr_mg,&AMRD_ex,&Nx,&Ny,&Nz,&regtype,&rhoa,&rhob);    
+                    &AdS_L,mask_mg,phys_bdy,x,y,z,chr_mg,&AMRD_ex,&Nx,&Ny,&Nz,&regtype,&rhoa,&rhob);
+
 //   for (i=0; i<Nx; i++)   
 //   { 
 //      for (j=0; j<Ny; j++) 
@@ -2693,7 +2703,7 @@ void AdS4D_t0_cnst_data(void)
 //        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1) 
 //        {  
 //         ind=i+Nx*(j+Ny*k); 
-//         printf("AdS4D_AMRH_var_clear-POST init_ghb_\n");  
+//         printf("AdS4D_t0_cnst_data-POST init_ghb_\n");  
 //         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n" 
 //                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));   
 //         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);    
@@ -2707,36 +2717,51 @@ void AdS4D_t0_cnst_data(void)
     // initialize hbars 
     if (AMRD_id_pl_method==3 && gb_xx_nm1)
     {   
-    //   for (i=0; i<Nx; i++)  
-    //   {    
-    //      for (j=0; j<Ny; j++)  
-    //      { 
-    //       for (k=0; k<Nz; k++)    
-    //       {  
-    //        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1)  
-    //        {   
-    //         ind=i+Nx*(j+Ny*k);  
-    //         printf("AdS4D_AMRH_var_clear-PRE init_hb_ AND init_nm1_\n");   
-    //         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"  
-    //                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));    
-    //         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);   
-    //        }    
-    //       }  
-    //      } 
-    //   }   
-    //      for (i=0; i<Nx; i++)   
-    //      {  
-    //         for (j=0; j<Ny; j++)   
-    //         {   
-    //          for (k=0; k<Nz; k++)   
-    //          {  
-    //            ind=i+Nx*(j+Ny*k);  
-    //            rho=sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]);    
-    //            if ((chr[ind]==AMRD_ex)&&(rho<0.7))   
-    //            printf("PT EXCISED: i=%i,j=%i,k=%i,x=%lf,y=%lf,z=%lf,rho=%lf\n",i,j,k,x[i],y[j],z[k],rho);   
-    //          }  
-    //         }  
-    //       }    
+//	   for (i=0; i<Nx; i++)  
+//	   {    
+//	      for (j=0; j<Ny; j++)  
+//	      { 
+//	       for (k=0; k<Nz; k++)    
+//	       {  
+//	        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<pow(10,-10)*(1-3*dx/2))  
+//	        {   
+//	         ind=i+Nx*(j+Ny*k);  
+//	         printf("AdS4D_t0_cnst_data-POST init_hb_ PRE init_nm1_\n");   
+//	         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"  
+//	                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));    
+//	         printf("phi1_nm1[ind]=%lf,phi1_n[ind]=%lf,phi1_np1[ind]=%lf\n",phi1_nm1[ind],phi1_n[ind],phi1_np1[ind]);
+//	         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);
+//	         printf("gb_tx_nm1[ind]=%lf,gb_tx_n[ind]=%lf,gb_tx_np1[ind]=%lf\n",gb_tx_nm1[ind],gb_tx_n[ind],gb_tx_np1[ind]);
+//	         printf("gb_ty_nm1[ind]=%lf,gb_ty_n[ind]=%lf,gb_ty_np1[ind]=%lf\n",gb_ty_nm1[ind],gb_ty_n[ind],gb_ty_np1[ind]);
+//	         printf("gb_tz_nm1[ind]=%lf,gb_tz_n[ind]=%lf,gb_tz_np1[ind]=%lf\n",gb_tz_nm1[ind],gb_tz_n[ind],gb_tz_np1[ind]);   
+//	         printf("gb_xx_nm1[ind]=%lf,gb_xx_n[ind]=%lf,gb_xx_np1[ind]=%lf\n",gb_xx_nm1[ind],gb_xx_n[ind],gb_xx_np1[ind]);  
+//	         printf("gb_xy_nm1[ind]=%lf,gb_xy_n[ind]=%lf,gb_xy_np1[ind]=%lf\n",gb_xy_nm1[ind],gb_xy_n[ind],gb_xy_np1[ind]);  
+//	         printf("gb_xz_nm1[ind]=%lf,gb_xz_n[ind]=%lf,gb_xz_np1[ind]=%lf\n",gb_xz_nm1[ind],gb_xz_n[ind],gb_xz_np1[ind]);  
+//	         printf("gb_yy_nm1[ind]=%lf,gb_yy_n[ind]=%lf,gb_yy_np1[ind]=%lf\n",gb_yy_nm1[ind],gb_yy_n[ind],gb_yy_np1[ind]);  
+//	         printf("gb_yz_nm1[ind]=%lf,gb_yz_n[ind]=%lf,gb_yz_np1[ind]=%lf\n",gb_yz_nm1[ind],gb_yz_n[ind],gb_yz_np1[ind]);  
+//	         printf("gb_zz_nm1[ind]=%lf,gb_zz_n[ind]=%lf,gb_zz_np1[ind]=%lf\n",gb_zz_nm1[ind],gb_zz_n[ind],gb_zz_np1[ind]);
+//	         printf("Hb_t_n[ind]=%lf\n",Hb_t_n[ind]);
+//	         printf("Hb_x_n[ind]=%lf\n",Hb_x_n[ind]);  
+//	         printf("Hb_y_n[ind]=%lf\n",Hb_y_n[ind]);
+//	         printf("Hb_z_n[ind]=%lf\n",Hb_z_n[ind]);
+//	         AMRD_stop("END","");
+//	        }    
+//	       }  
+//	      } 
+//	   }  
+//	      for (i=0; i<Nx; i++)   
+//	      {  
+//	         for (j=0; j<Ny; j++)   
+//	         {   
+//	          for (k=0; k<Nz; k++)   
+//	          {  
+//	            ind=i+Nx*(j+Ny*k);  
+//	            rho=sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]);    
+//	            if ((chr[ind]==AMRD_ex)&&(rho<0.7))   
+//	            printf("PT EXCISED: i=%i,j=%i,k=%i,x=%lf,y=%lf,z=%lf,rho=%lf\n",i,j,k,x[i],y[j],z[k],rho);   
+//	          }  
+//	         }  
+//	       }    
         init_hb_(gb_tt_np1,gb_tt_n,gb_tt_nm1,
                 gb_tx_np1,gb_tx_n,gb_tx_nm1,
                 gb_ty_np1,gb_ty_n,gb_ty_nm1,
@@ -2749,7 +2774,39 @@ void AdS4D_t0_cnst_data(void)
                 gb_zz_np1,gb_zz_n,gb_zz_nm1,
                 Hb_t_n,Hb_x_n,Hb_y_n,
                 Hb_z_n,
-                &AdS_L,phys_bdy,x,y,z,&dt,chr,&AMRD_ex,&Nx,&Ny,&Nz,&regtype);   
+                &AdS_L,phys_bdy,x,y,z,&dt,chr,&AMRD_ex,&Nx,&Ny,&Nz,&regtype);  
+//	   for (i=0; i<Nx; i++)  
+//	   {    
+//	      for (j=0; j<Ny; j++)  
+//	      { 
+//	       for (k=0; k<Nz; k++)    
+//	       {  
+//	        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<pow(10,-10)*(1-3*dx/2))  
+//	        {   
+//	         ind=i+Nx*(j+Ny*k);  
+//	         printf("AdS4D_t0_cnst_data-POST init_hb_ PRE init_nm1_\n");   
+//	         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"  
+//	                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));    
+//	         printf("phi1_nm1[ind]=%lf,phi1_n[ind]=%lf,phi1_np1[ind]=%lf\n",phi1_nm1[ind],phi1_n[ind],phi1_np1[ind]);
+//	         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);
+//	         printf("gb_tx_nm1[ind]=%lf,gb_tx_n[ind]=%lf,gb_tx_np1[ind]=%lf\n",gb_tx_nm1[ind],gb_tx_n[ind],gb_tx_np1[ind]);
+//	         printf("gb_ty_nm1[ind]=%lf,gb_ty_n[ind]=%lf,gb_ty_np1[ind]=%lf\n",gb_ty_nm1[ind],gb_ty_n[ind],gb_ty_np1[ind]);
+//	         printf("gb_tz_nm1[ind]=%lf,gb_tz_n[ind]=%lf,gb_tz_np1[ind]=%lf\n",gb_tz_nm1[ind],gb_tz_n[ind],gb_tz_np1[ind]);   
+//	         printf("gb_xx_nm1[ind]=%lf,gb_xx_n[ind]=%lf,gb_xx_np1[ind]=%lf\n",gb_xx_nm1[ind],gb_xx_n[ind],gb_xx_np1[ind]);  
+//	         printf("gb_xy_nm1[ind]=%lf,gb_xy_n[ind]=%lf,gb_xy_np1[ind]=%lf\n",gb_xy_nm1[ind],gb_xy_n[ind],gb_xy_np1[ind]);  
+//	         printf("gb_xz_nm1[ind]=%lf,gb_xz_n[ind]=%lf,gb_xz_np1[ind]=%lf\n",gb_xz_nm1[ind],gb_xz_n[ind],gb_xz_np1[ind]);  
+//	         printf("gb_yy_nm1[ind]=%lf,gb_yy_n[ind]=%lf,gb_yy_np1[ind]=%lf\n",gb_yy_nm1[ind],gb_yy_n[ind],gb_yy_np1[ind]);  
+//	         printf("gb_yz_nm1[ind]=%lf,gb_yz_n[ind]=%lf,gb_yz_np1[ind]=%lf\n",gb_yz_nm1[ind],gb_yz_n[ind],gb_yz_np1[ind]);  
+//	         printf("gb_zz_nm1[ind]=%lf,gb_zz_n[ind]=%lf,gb_zz_np1[ind]=%lf\n",gb_zz_nm1[ind],gb_zz_n[ind],gb_zz_np1[ind]);
+//	         printf("Hb_t_n[ind]=%lf\n",Hb_t_n[ind]);
+//	         printf("Hb_x_n[ind]=%lf\n",Hb_x_n[ind]);  
+//	         printf("Hb_y_n[ind]=%lf\n",Hb_y_n[ind]);
+//	         printf("Hb_z_n[ind]=%lf\n",Hb_z_n[ind]);
+//	         AMRD_stop("END","");
+//	        }    
+//	       }  
+//	      } 
+//	   }  
         init_nm1_(gb_tt_np1,gb_tt_n,gb_tt_nm1,gb_tt_t_n,
                     gb_tx_np1,gb_tx_n,gb_tx_nm1,gb_tx_t_n,
                     gb_ty_np1,gb_ty_n,gb_ty_nm1,gb_ty_t_n,
@@ -2766,19 +2823,25 @@ void AdS4D_t0_cnst_data(void)
                     Hb_z_np1,Hb_z_n,Hb_z_nm1,Hb_z_t_n,
                     phi1_np1,phi1_n,phi1_nm1,phi1_t_n,tfunction,
                     &AdS_L,phys_bdy,x,y,z,&dt,chr,&AMRD_ex,&Nx,&Ny,&Nz,&regtype);   
-                    //   for (i=0; i<Nx; i++)
-                    //   {    //      for (j=0; j<Ny; j++)
-                    //      { //       for (k=0; k<Nz; k++)
-                    //       {  //        if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<1)
-                    //        {   //         ind=i+Nx*(j+Ny*k);
-                    //         printf("AdS4D_AMRH_var_clear-POST init_hb_ AND init_nm1_\n");
-                    //         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"
-                    //                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));
-                    //         printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);
-                    //        }
-                    //       }
-                    //      }
-                    //   }  
+//					for (i=0; i<Nx; i++)
+//					{    
+//						for (j=0; j<Ny; j++)
+//						{ 
+//						   	for (k=0; k<Nz; k++)
+//						    {  
+//								if (sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k])<0.4)
+//							    {   
+//									ind=i+Nx*(j+Ny*k);
+//									printf("AdS4D_t0_cnst_data-POST init_hb_ AND init_nm1_\n");
+//									printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"
+//									       ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));
+//									printf("phi1_nm1[ind]=%lf,phi1_n[ind]=%lf,phi1_np1[ind]=%lf\n",phi1_nm1[ind],phi1_n[ind],phi1_np1[ind]);
+//									printf("phi1_t_n[ind]=%lf\n",phi1_t_n[ind]);
+//									printf("gb_tt_nm1[ind]=%lf,gb_tt_n[ind]=%lf,gb_tt_np1[ind]=%lf\n",gb_tt_nm1[ind],gb_tt_n[ind],gb_tt_np1[ind]);
+//								}
+//						    }
+//						}
+//					}  
     }   
     // store initial source functions 
     if (gb_xx_nm1)
@@ -2926,6 +2989,64 @@ void AdS4D_pre_io_calc(void)
     }
     else
     {
+
+		//we change the scalar field profile to time-dependent one.
+		//In particular, we use a Lorentz-boosted profile with boost velocity v=(&boost_v_1[0],&boost_v_1[1],&boost_v_1[2])
+		//The metric is left unchanged.
+		//We are using time-asymmetric initial scalar field, so the matter momentum density at t=0 does not vanish, so the momentum constraint is not trivially satisfied.
+		//We are not solving the momentum constraint, so this initial data violates the constraints of GR.
+		//Thanks to constraint-damping, we can expect to return to a solution of the Einstein equations in a short amount of evolution time
+		//only if the boost velocity is small enough.
+        if ((fabs(boost_v_1[0])>pow(10.0,-10))||(fabs(boost_v_1[1])>pow(10.0,-10))||(fabs(boost_v_1[2])>pow(10.0,-10)))
+        {
+        	if (my_rank==0) 
+        	{
+        		printf("Lorentz-boosting initial phi1\n"
+        			   "WARNING: use of time-asymmetric, constraint-violating initial data\n");
+        		printf("boost_velocity components:\n"
+        			   "boost_v_1[0]=%lf,boost_v_1[1]=%lf,boost_v_1[2]=%lf\n",boost_v_1[0],boost_v_1[1],boost_v_1[2]);
+        		printf("boost_v_norm=%lf\n",sqrt(boost_v_1[0]*boost_v_1[0]+boost_v_1[1]*boost_v_1[1]+boost_v_1[2]*boost_v_1[2]));
+        		if (sqrt(boost_v_1[0]*boost_v_1[0]+boost_v_1[1]*boost_v_1[1]+boost_v_1[2]*boost_v_1[2])>=1)
+        		{
+        			AMRD_stop("ERROR: boost velocities equal to or larger than the speed of light are not allowed","");
+        		}
+        	}
+
+        	boost_perturb_(phi1_np1,phi1_n,phi1_nm1,phi1_t_n,
+        				gb_tt_np1,gb_tt_n,gb_tt_nm1,gb_tt_t_n,
+                        gb_tx_np1,gb_tx_n,gb_tx_nm1,gb_tx_t_n,
+                        gb_ty_np1,gb_ty_n,gb_ty_nm1,gb_ty_t_n,
+                        gb_tz_np1,gb_tz_n,gb_tz_nm1,gb_tz_t_n,
+                        gb_xx_np1,gb_xx_n,gb_xx_nm1,gb_xx_t_n,
+                        gb_xy_np1,gb_xy_n,gb_xy_nm1,gb_xy_t_n,
+                        gb_xz_np1,gb_xz_n,gb_xz_nm1,gb_xz_t_n,
+                        gb_yy_np1,gb_yy_n,gb_yy_nm1,gb_yy_t_n,
+                        gb_yz_np1,gb_yz_n,gb_yz_nm1,gb_yz_t_n,
+                        gb_zz_np1,gb_zz_n,gb_zz_nm1,gb_zz_t_n,
+        				&eps_amp_1,
+        				&phi1_r0_1,&phi1_delta_1,
+        				&phi1_x0_1[0],&phi1_x0_1[1],&phi1_x0_1[2],
+            			&phi1_ecc_1[0],&phi1_ecc_1[1],&phi1_ecc_1[2],
+    		        	&boost_v_1[0],&boost_v_1[1],&boost_v_1[2],
+                    	&AdS_L,x,y,z,&dt,chr,&AMRD_ex,&Nx,&Ny,&Nz);
+        	//printf("boost_v_1[0]=%lf,boost_v_1[1]=%lf,boost_v_1[2]=%lf\n",boost_v_1[0],boost_v_1[1],boost_v_1[2]);
+//            subs_boost_phi1_(phi1_np1,phi1_n,phi1_nm1,
+//    		        &boost_v_1[0],&boost_v_1[1],&boost_v_1[2],
+//                    &AdS_L,x,y,z,&dt,chr,&AMRD_ex,&Nx,&Ny,&Nz);
+
+//            boost_gb_(gb_tt_np1,gb_tt_n,gb_tt_nm1,
+//                          gb_tx_np1,gb_tx_n,gb_tx_nm1,
+//                          gb_ty_np1,gb_ty_n,gb_ty_nm1,
+//                          gb_tz_np1,gb_tz_n,gb_tz_nm1,
+//                          gb_xx_np1,gb_xx_n,gb_xx_nm1,
+//                          gb_xy_np1,gb_xy_n,gb_xy_nm1,
+//                          gb_xz_np1,gb_xz_n,gb_xz_nm1,
+//                          gb_yy_np1,gb_yy_n,gb_yy_nm1,
+//                          gb_yz_np1,gb_yz_n,gb_yz_nm1,
+//                          gb_zz_np1,gb_zz_n,gb_zz_nm1,
+//                          &boost_v_1[0],&boost_v_1[1],&boost_v_1[2],
+//                          &AdS_L,x,y,z,&dt,chr,&AMRD_ex,&Nx,&Ny,&Nz);
+        }
         //(NOTE: for t=t0, have *not* cycled time sequence, so still np1,n,nm1,
         // so here, time level np1 is the most advanced time level) 
         //we call the following functions just to save and output the values of the grid functions chrbdy, leadordcoeff_phi1 and quasiset_ll for t=0. These will be later then used to extrapolate the value of bdyphi and quasiset componenents at the AdS boundary in pre_tstep for t=0 (and post_tstep for later times)

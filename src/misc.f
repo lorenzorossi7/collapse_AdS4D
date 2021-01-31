@@ -2967,16 +2967,17 @@ c   = A , r < r0
 c
 c where r = sqrt ( (1-ex^2)*(x)^2 + (1-ey^2)*(y)^2 )
 c----------------------------------------------------------------------
-        subroutine gauss3d(f,A,B,C,r0,delta,xu0,yu0,zu0,ex,ey,ez,
+        subroutine gauss3d(f,A0,B0,C0,r0,delta,xu0,yu0,zu0,ex,ey,ez,
      &                     L,x,y,z,Nx,Ny,Nz,
      &                     rhoc,rhod,stype)
         implicit none
         integer Nx,Ny,Nz
         real*8 f(Nx,Ny,Nz),x(Nx),y(Ny),z(Nz)
-        real*8 A,B,C,r0,delta,ex,ey,ez,xu0,yu0,zu0,L
+        real*8 A0,B0,C0,r0,delta,ex,ey,ez,xu0,yu0,zu0,L
 
         integer i,j,k
         integer stype
+        integer a,b
         real*8 r,x0,y0,z0,rho0,xi0,chi0,csr,xb,yb,zb
 
         real*8 rhoc,rhod
@@ -3030,24 +3031,25 @@ c----------------------------------------------------------------------
                     f(i,j,k)=0
                  else if (r.gt.r0) then
                    f(i,j,k)=
-     &             A*exp(-((r-r0)/delta)**2)
-     &            +B*cos(chi0)*4*f1*(1-f1)
-     &            +C*cos(xi0)*4*f1*(1-f1)
+     &             A0*exp(-((r-r0)/delta)**2)
+     &            +B0*cos(chi0)*4*f1*(1-f1)
+     &            +C0*cos(xi0)*4*f1*(1-f1)
                  else
                   if (rho0.ne.0.0d0) then
                    f(i,j,k)=
-     &             A
-     &            +B*cos(chi0)*4*f1*(1-f1)
-     &            +C*cos(xi0)*4*f1*(1-f1)
+     &             A0
+     &            +B0*cos(chi0)*4*f1*(1-f1)
+     &            +C0*cos(xi0)*4*f1*(1-f1)
                   else if ((y0.ne.0.0d0).or.(z0.ne.0.0d0)) then
                    f(i,j,k)=
-     &             A
-     &            +B*cos(chi0)*4*f1*(1-f1)
+     &             A0
+     &            +B0*cos(chi0)*4*f1*(1-f1)
                   else
                    f(i,j,k)=
-     &             A
+     &             A0
                   end if
                  end if
+
 
               else if (stype.eq.1) then
 
@@ -3055,22 +3057,22 @@ c----------------------------------------------------------------------
                     f(i,j,k)=0
                  else if (rho0.gt.r0) then
                     f(i,j,k)=
-     &              A*(1-f1)/(1-rho0**2)**2
-     &             +B*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
-     &             +C*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &              A0*(1-f1)/(1-rho0**2)**2
+     &             +B0*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &             +C0*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
                  else
                   if (rho0.ne.0.0d0) then
                     f(i,j,k)=
-     &              A*(1-f1)/(1-rho0**2)**2
-     &             +B*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
-     &             +C*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &              A0*(1-f1)/(1-rho0**2)**2
+     &             +B0*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &             +C0*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
                   else if ((y0.ne.0.0d0).or.(z0.ne.0.0d0)) then
                     f(i,j,k)=
-     &              A*(1-f1)/(1-rho0**2)**2
-     &             +B*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &              A0*(1-f1)/(1-rho0**2)**2
+     &             +B0*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
                   else
                     f(i,j,k)=
-     &              A*(1-f1)/(1-rho0**2)**2
+     &              A0*(1-f1)/(1-rho0**2)**2
                   end if
                  end if
 
@@ -3080,14 +3082,14 @@ c----------------------------------------------------------------------
                     f(i,j,k)=0
                  else if (rho0.gt.r0) then
                     f(i,j,k)=
-     &              A*(1-f1)/(1-rho0**2)**2
-     &             +B*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
-     &             +C*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &              A0*(1-f1)/(1-rho0**2)**2
+     &             +B0*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &             +C0*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
                  else
                     f(i,j,k)=
-     &              A*(1-f1)/(1-rho0**2)**2
-     &             +B*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
-     &             +C*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &              A0*(1-f1)/(1-rho0**2)**2
+     &             +B0*cos(chi0)*4*f1*(1-f1)/(1-rho0**2)**2
+     &             +C0*cos(xi0)*4*f1*(1-f1)/(1-rho0**2)**2
                  end if
 
               end if
@@ -3097,6 +3099,7 @@ c----------------------------------------------------------------------
 
         return
         end
+
 
 c----------------------------------------------------------------------
 c initializes complex s.f. phi with approximate q-ball profile
