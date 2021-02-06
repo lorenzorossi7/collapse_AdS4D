@@ -16,10 +16,11 @@ c----------------------------------------------------------------------
      &                     gb_yy_np1,gb_yy_n,gb_yy_nm1,gb_yy_t_n,
      &                     gb_yz_np1,gb_yz_n,gb_yz_nm1,gb_yz_t_n,
      &                     gb_zz_np1,gb_zz_n,gb_zz_nm1,gb_zz_t_n,
-     &                     eps_amp,
-     &                     r0,delta,xu0,yu0,zu0,
-     &                     ex,ey,ez,
      &                     boost_vx,boost_vy,boost_vz,
+     &                     boost_amp,
+     &                     boost_r0,boost_delta,
+     &                     boost_xu0,boost_yu0,boost_zu0,
+     &                     boost_ex,boost_ey,boost_ez,
      &                     L,x,y,z,dt,chr,exc,Nx,Ny,Nz)
 
         implicit none
@@ -29,7 +30,10 @@ c----------------------------------------------------------------------
         real*8 phi1_n(Nx,Ny,Nz),phi1_t_n(Nx,Ny,Nz)
         real*8 phi1_np1(Nx,Ny,Nz),phi1_nm1(Nx,Ny,Nz)
         real*8 x(Nx),y(Ny),z(Nz),dt
-        real*8 eps_amp,r0,delta,ex,ey,ez,xu0,yu0,zu0,L
+        real*8 boost_amp,boost_r0,boost_delta
+        real*8 boost_ex,boost_ey,boost_ez
+        real*8 boost_xu0,boost_yu0,boost_zu0
+        real*8 L
         real*8 chr(Nx,Ny,Nz),exc
 
         real*8 gb_tt_np1(Nx,Ny,Nz),gb_tt_n(Nx,Ny,Nz),gb_tt_nm1(Nx,Ny,Nz)
@@ -116,20 +120,20 @@ c----------------------------------------------------------------------
                 gamma=1/sqrt(1-boost_vnorm**2)
 
                 lambda_boost(1,1)=gamma
-                lambda_boost(1,2)=-gamma*boost_vx
-                lambda_boost(1,3)=-gamma*boost_vy
-                lambda_boost(1,4)=-gamma*boost_vz
-                lambda_boost(2,2)=1+(gamma-1)*(boost_vx**2)
+                lambda_boost(1,2)=-gamma*(-boost_vx)
+                lambda_boost(1,3)=-gamma*(-boost_vy)
+                lambda_boost(1,4)=-gamma*(-boost_vz)
+                lambda_boost(2,2)=1+(gamma-1)*((-boost_vx)**2)
      &           /boost_vnorm**2
-                lambda_boost(2,3)=(gamma-1)*boost_vx*boost_vy
+                lambda_boost(2,3)=(gamma-1)*(-boost_vx)*(-boost_vy)
      &           /boost_vnorm**2
-                lambda_boost(2,4)=(gamma-1)*boost_vx*boost_vz
+                lambda_boost(2,4)=(gamma-1)*(-boost_vx)*(-boost_vz)
      &           /boost_vnorm**2
-                lambda_boost(3,3)=1+(gamma-1)*(boost_vy**2)
+                lambda_boost(3,3)=1+(gamma-1)*((-boost_vy)**2)
      &           /boost_vnorm**2
-                lambda_boost(3,4)=(gamma-1)*boost_vy*boost_vz
+                lambda_boost(3,4)=(gamma-1)*(-boost_vy)*(-boost_vz)
      &           /boost_vnorm**2
-                lambda_boost(4,4)=1+(gamma-1)*(boost_vz**2)
+                lambda_boost(4,4)=1+(gamma-1)*((-boost_vz)**2)
      &           /boost_vnorm**2
                 !the matrix of Lorentz boosts is symmetric
                 do a=1,4
@@ -139,29 +143,29 @@ c----------------------------------------------------------------------
                 end do
 
                 lambdainv_boost(1,1)=-1/((-1+boost_vnorm**2)*gamma)
-                lambdainv_boost(1,2)=-boost_vx
+                lambdainv_boost(1,2)=-(-boost_vx)
      &           /((-1+boost_vnorm**2)*gamma)
-                lambdainv_boost(1,3)=-boost_vy
+                lambdainv_boost(1,3)=-(-boost_vy)
      &           /((-1+boost_vnorm**2)*gamma)
-                lambdainv_boost(1,4)=-boost_vz
+                lambdainv_boost(1,4)=-(-boost_vz)
      &           /((-1+boost_vnorm**2)*gamma)
                 lambdainv_boost(2,2)=(1/boost_vnorm**2)*
-     &           (boost_vy**2+boost_vz**2-(boost_vx**2)
+     &           ((-boost_vy)**2+(-boost_vz)**2-((-boost_vx)**2)
      &           /((-1+boost_vnorm**2)*gamma))
-                lambdainv_boost(2,3)=-(boost_vx*boost_vy*
+                lambdainv_boost(2,3)=-((-boost_vx)*(-boost_vy)*
      &           (1+(-1+boost_vnorm**2)*gamma))
      &           /((-1+boost_vnorm**2)*boost_vnorm**2*gamma)
-                lambdainv_boost(2,4)=-(boost_vx*boost_vz*
+                lambdainv_boost(2,4)=-((-boost_vx)*(-boost_vz)*
      &           (1+(-1+boost_vnorm**2)*gamma))
      &           /((-1+boost_vnorm**2)*boost_vnorm**2*gamma)
                 lambdainv_boost(3,3)=(1/boost_vnorm**2)*
-     &           (boost_vx**2+boost_vz**2-(boost_vy**2)
+     &           ((-boost_vx)**2+(-boost_vz)**2-((-boost_vy)**2)
      &           /((-1+boost_vnorm**2)*gamma))
-                lambdainv_boost(3,4)=-(boost_vy*boost_vz*
+                lambdainv_boost(3,4)=-((-boost_vy)*(-boost_vz)*
      &           (1+(-1+boost_vnorm**2)*gamma))
      &           /((-1+boost_vnorm**2)*boost_vnorm**2*gamma)
                 lambdainv_boost(4,4)=(1/boost_vnorm**2)*
-     &           (boost_vx**2+boost_vy**2-(boost_vz**2)
+     &           ((-boost_vx)**2+(-boost_vy)**2-((-boost_vz)**2)
      &           /((-1+boost_vnorm**2)*gamma))
                 !the matrix of Lorentz boosts is symmetric
                 do a=1,4
@@ -389,16 +393,17 @@ c----------------------------------------------------------------------
 
 
 
-               xb_invboost=x0_invboost-xu0
-               yb_invboost=y0_invboost-yu0
-               zb_invboost=z0_invboost-zu0
+               xb_invboost=x0_invboost-boost_xu0
+               yb_invboost=y0_invboost-boost_yu0
+               zb_invboost=z0_invboost-boost_zu0
 
                r_invboost=sqrt(xb_invboost**2+yb_invboost**2
      &          +zb_invboost**2
-     &           -ex**2*xb_invboost**2-ey**2*yb_invboost**2
-     &           -ez**2*zb_invboost**2)
+     &           -boost_ex**2*xb_invboost**2-boost_ey**2*yb_invboost**2
+     &           -boost_ez**2*zb_invboost**2)
 
-     			f_n(i,j,k)=eps_amp*exp(-((r_invboost-r0)/delta)**2)
+     			f_n(i,j,k)=boost_amp*
+     &             exp(-((r_invboost-boost_r0)/boost_delta)**2)
 
                phi1_n(i,j,k)=phi1_n(i,j,k)+f_n(i,j,k)
               
@@ -1559,11 +1564,12 @@ c----------------------------------------------------------------------
 
 
               r_invboost_t=(1/(2*r_invboost))*
-     &             ((1-ex**2)*2*xb_invboost*x0_invboost_t+
-     &              (1-ey**2)*2*yb_invboost*y0_invboost_t+
-     &              (1-ez**2)*2*zb_invboost*z0_invboost_t)
+     &             ((1-boost_ex**2)*2*xb_invboost*x0_invboost_t+
+     &              (1-boost_ey**2)*2*yb_invboost*y0_invboost_t+
+     &              (1-boost_ez**2)*2*zb_invboost*z0_invboost_t)
 
-              derexp0=(-1/delta**2)*2*(r_invboost-r0)*r_invboost_t
+              derexp0=(-1/boost_delta**2)*2*
+     &         (r_invboost-boost_r0)*r_invboost_t
 
                f_t_n(i,j,k)=f_n(i,j,k)*derexp0
 
@@ -1613,8 +1619,8 @@ c----------------------------------------------------------------------
 !              if ((is_nan(f_n(i,j,k)))
 !     &         .or.(is_nan(f_t_n(i,j,k)))) then
 !                write (*,*) "x0,y0,z0=",x0,y0,z0
-!                write (*,*) "xu0,yu0,zu0=",xu0,yu0,zu0
-!                write (*,*) "A0,r0,delta=",A0,r0,delta
+!                write (*,*) "boost_xu0,boost_yu0,boost_zu0=",boost_xu0,boost_yu0,boost_zu0
+!                write (*,*) "A0,boost_r0,boost_delta=",A0,boost_r0,boost_delta
 !               do a=1,4
 !                do b=1,4
 !                  write (*,*) "a,b,lambda_boost(a,b)="
@@ -1640,8 +1646,8 @@ c----------------------------------------------------------------------
 !     &            (abs(y0-0.125d0).lt.10.0d0**(-10)).and.
 !     &            (abs(z0-0.0d0).lt.10.0d0**(-10))) then
 !                write (*,*) "x0,y0,z0=",x0,y0,z0
-!                write (*,*) "xu0,yu0,zu0=",xu0,yu0,zu0
-!                write (*,*) "A0,r0,delta=",A0,r0,delta
+!                write (*,*) "boost_xu0,boost_yu0,boost_zu0=",boost_xu0,boost_yu0,boost_zu0
+!                write (*,*) "A0,boost_r0,boost_delta=",A0,boost_r0,boost_delta
 !               do a=1,4
 !                do b=1,4
 !                  write (*,*) "a,b,lambda_boost(a,b)="

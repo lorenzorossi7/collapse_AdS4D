@@ -615,7 +615,7 @@ void extrap_quasiset_fixedpts_(    real *quasiset_tt, real *quasiset_tchi, real 
 void subs_boost_phi1_(real *phi1_np1, real *phi1_n, real *phi1_nm1, real *phi1_t_n, real *A, real *B, real *C, real *r0, real *delta, real *xu0, real *yu0, real *zu0, real *ex, real *ey, real *ez,
               real *boost_vx, real *boost_vy, real *boost_vz, real *AdS_L, real *x, real *y, real *z, real *dt, real *chr,real *exc, int *Nx, int *Ny, int *Nz);
 
-void boost_perturb_(real *phi1_np1, real *phi1_n, real *phi1_nm1, real *phi1_t_n, 
+void boost_perturb_(          real *phi1_np1, real *phi1_n, real *phi1_nm1, real *phi1_t_n, 
                               real *gb_tt_np1,real *gb_tt_n,real *gb_tt_nm1,real *gb_tt_t_n,
                               real *gb_tx_np1,real *gb_tx_n,real *gb_tx_nm1,real *gb_tx_t_n,
                               real *gb_ty_np1,real *gb_ty_n,real *gb_ty_nm1,real *gb_ty_t_n,
@@ -626,11 +626,11 @@ void boost_perturb_(real *phi1_np1, real *phi1_n, real *phi1_nm1, real *phi1_t_n
                               real *gb_yy_np1,real *gb_yy_n,real *gb_yy_nm1,real *gb_yy_t_n,
                               real *gb_yz_np1,real *gb_yz_n,real *gb_yz_nm1,real *gb_yz_t_n,
                               real *gb_zz_np1,real *gb_zz_n,real *gb_zz_nm1,real *gb_zz_t_n,
-                              real *eps_amp, 
-                              real *r0, real *delta, 
-                              real *xu0, real *yu0, real *zu0, 
-                              real *ex, real *ey, real *ez,
                               real *boost_vx, real *boost_vy, real *boost_vz, 
+                              real *boost_amp, 
+                              real *boost_r0, real *boost_delta, 
+                              real *boost_xu0, real *boost_yu0, real *boost_zu0, 
+                              real *boost_ex, real *boost_ey, real *boost_ez,
                               real *AdS_L, real *x, real *y, real *z, real *dt, real *chr,real *exc, int *Nx, int *Ny, int *Nz);
 
 //void boost_phi1_(real *phi1_np1,real *phi1_n,real *phi1_nm1,

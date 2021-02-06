@@ -2453,15 +2453,16 @@ c----------------------------------------------------------------------
      &             -4*PI**2*(gbsph_n(2,2)/q)
      &             -(gbsph_n(4,4)/q)/((sin(PI*chi0))**2) )
 
-
-               quasiset_massdensityll(i,j,k)=(sin(PI*chi0))
-     &                                    *(
+      !multiply by the square root of the determinant on the boundary sphere, 2*PI^2 * sin(PI*chi0), 
+      ! and integrate in chi0 from 0 to 1 and xi0 from 0 to 1 to obtain the total mass in AdS
+               quasiset_massdensityll(i,j,k)=
+     &                                    (
      &                                     12*(gbsph_n(3,3)/q)
      &                                    +8*PI**2*(gbsph_n(2,2)/q)
      &                                    +3*(gbsph_n(4,4)/q)
      &                                     /((sin(PI*chi0))**2)
      &                                    )
-     &                                    /(32*PI)
+     &                                    /(64*PI**3)
 
 
             end if
@@ -2615,16 +2616,17 @@ c----------------------------------------------------------------------
      &             -4*PI**2*(-dgbsph_rhorho_drho_n)
      &             -(-dgbsph_xixi_drho_n)/((sin(PI*chi0))**2) )
 
+      !multiply by the square root of the determinant on the boundary sphere, 2*PI^2 * sin(PI*chi0), 
+      ! and integrate in chi0 from 0 to 1 and xi0 from 0 to 1 to obtain the total mass in AdS
                quasiset_massdensityll(i,j,k)=
-     &                                     (sin(PI*chi0))
-     &                                    *(
+     &                                    (
      &                                     12*(-dgbsph_chichi_drho_n)
      &                                    +8*PI**2
      &                                        *(-dgbsph_rhorho_drho_n)
      &                                    +3*(-dgbsph_xixi_drho_n)
      &                                     /((sin(PI*chi0))**2)
      &                                    )
-     &                                    /(32*PI)
+     &                                    /(64*PI**3)
 
            else !excised points or points with y0=z0=0
 
@@ -6079,8 +6081,10 @@ c-------------------------------------------------------------------------------
 
               integral=integral+
      &              (chibdy(i+1)-chibdy(i))/2 * (xibdy(j+1)-xibdy(j))/2
-     &              *(density(lind_chipxip)+density(lind_chipxipp1)
-     &              +density(lind_chipp1xip)+density(lind_chipp1xipp1))
+     &     *(2*PI**2*sin(PI*chibdy(i))*density(lind_chipxip)
+     &      +2*PI**2*sin(PI*chibdy(i))*density(lind_chipxipp1)
+     &      +2*PI**2*sin(PI*chibdy(i+1))*density(lind_chipp1xip)
+     &      +2*PI**2*sin(PI*chibdy(i+1))*density(lind_chipp1xipp1))
 
          end do
         end do
