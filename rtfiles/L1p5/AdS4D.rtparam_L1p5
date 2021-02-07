@@ -17,6 +17,21 @@ rhoc := 0.4
 rhod := 0.8
 stype := 0
 
+#Lorent boost parameters
+boost_v_1 := [0.0 -0.95 0.0]
+boost_amp_1 := 0.55
+boost_r0_1 := 0.0
+boost_delta_1 := 0.2
+boost_x0_1 := [0.0 0.3 0.2]
+boost_ecc_1 := [0.2 0.2 0.2]
+
+boost_v_2 := [0.0 +0.95 0.0]
+boost_amp_2 := 0.55
+boost_r0_2 := 0.0
+boost_delta_2 := 0.2
+boost_x0_2 := [0.0 -0.3 -0.2]
+boost_ecc_2 := [0.2 0.2 0.2]
+
 #AdS4D-Schwarzschild BH ID#
 ief_bh_r0 := 0.8
 
@@ -83,6 +98,10 @@ output_bdy_extraporder1_paramset2 := 1
 output_bdy_extraporder2_paramset2 := 1
 output_bdy_extraporder3_paramset2 := 1
 output_bdy_extraporder4_paramset2 := 0
+output_bdyphi            := 1
+output_bdytrace          := 1
+output_bdymassdens       := 1
+output_bdyangmomdens     := 1
 output_AdS_mass := 0
 output_kretsch := 1
 #setting output_relkretschcentregrid to 1 will output relative Kretschmann at the centre of the grid only if output_kretsch is enabled

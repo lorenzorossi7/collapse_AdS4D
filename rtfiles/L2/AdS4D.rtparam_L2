@@ -13,6 +13,10 @@ phi1_ecc_1 := [0.3 0.2 0.25]
 phi1_B_1 := 0.0
 phi1_C_1 := 0.0
 
+rhoc := 0.4
+rhod := 0.8
+stype := 0
+
 #Lorent boost parameters
 boost_v_1 := [0.0 -0.95 0.0]
 boost_amp_1 := 0.55
@@ -28,11 +32,6 @@ boost_delta_2 := 0.2
 boost_x0_2 := [0.0 -0.3 -0.2]
 boost_ecc_2 := [0.2 0.2 0.2]
 
-
-
-rhoc := 0.4
-rhod := 0.8
-stype := 0
 
 #AdS4D-Schwarzschild BH ID#
 ief_bh_r0 := 0.0
@@ -103,9 +102,7 @@ output_bdy_extraporder4_paramset2 := 0
 output_bdyphi            := 1
 output_bdytrace          := 1
 output_bdymassdens       := 1
-output_bdyangmomdens_t   := 0
-output_bdyangmomdens_chi := 0
-output_bdyangmomdens_xi  := 0
+output_bdyangmomdens     := 1
 #Notice: AdS_mass calculation involves a double integral on the boundary sphere. 
 #This calculation is reliable only when using 1 core
 output_AdS_mass := 0
@@ -156,7 +153,7 @@ max_resolution_degree := 4
 #reduction_factor is the factor by which we need to reduce the number points of the lowest resolution used for convergence (i.e. the resolution with degree 1) so that we only select points that are present also in the resolutions with degree 2 and 3. To get the exact same points in higher resolutions, we need to reduce by a factor (reduction_factor**(max_resolution_degree-1))*((ratio_Lhighres_Llowres)**(resolution_degree-1)). ratio_Lhighres_Llowres and reduction_factor must be chosen so that this factor is an integer for all resolutions
 reduction_factor := 2
 
-base_shape := [17 17 17]
+base_shape := [33 33 33]
 max_lev := 1
 lambda := 0.2
 rho_sp := 2
@@ -278,8 +275,8 @@ max_t_interp_order := 3
 num_save_1_vars := 0
 #save_1_vars := [ "iresall" "gb_res" "kg_ires" "quasiset_tracell" ]
 
-num_save_2_vars := 3
-save_2_vars := [ "gb_xx" "relkretsch" "relriemanncube" ]
+num_save_2_vars := 0
+#save_2_vars := [ "gb_xx" "phi1" "relkretsch" "relriemanncube" ]
 #save_2_vars := [ "gb_xx" "phi1" "relkretsch" "relriemanncube" ]
 
 num_save_3_vars := 0

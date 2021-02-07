@@ -2016,6 +2016,9 @@ c----------------------------------------------------------------------
      &                  quasiset_xixi_ll,
      &                  quasiset_tracell,
      &                  quasiset_massdensityll,
+     &                  quasiset_angmomdensityxll,
+     &                  quasiset_angmomdensityyll,
+     &                  quasiset_angmomdensityzll,
      &                  gb_tt_np1,gb_tt_n,gb_tt_nm1,
      &                  gb_tx_np1,gb_tx_n,gb_tx_nm1,
      &                  gb_ty_np1,gb_ty_n,gb_ty_nm1,
@@ -2055,6 +2058,9 @@ c----------------------------------------------------------------------
         real*8 quasiset_chixi_ll(Nx,Ny,Nz),quasiset_xixi_ll(Nx,Ny,Nz)
         real*8 quasiset_tracell(Nx,Ny,Nz)
         real*8 quasiset_massdensityll(Nx,Ny,Nz)
+        real*8 quasiset_angmomdensityxll(Nx,Ny,Nz)
+        real*8 quasiset_angmomdensityyll(Nx,Ny,Nz)
+        real*8 quasiset_angmomdensityzll(Nx,Ny,Nz)
 
         integer i,j,k,is,ie,js,je,ks,ke
         integer a,b,c,d
@@ -2413,6 +2419,9 @@ c----------------------------------------------------------------------
               quasiset_xixi_ll(i,j,k)=0
               quasiset_tracell(i,j,k)=0
               quasiset_massdensityll(i,j,k)=0
+              quasiset_angmomdensityxll(i,j,k)=0
+              quasiset_angmomdensityyll(i,j,k)=0
+              quasiset_angmomdensityzll(i,j,k)=0
 
             if (no_derivatives) then
 !             if ((y0.ne.0.0d0).or.(z0.ne.0.0d0)) then
@@ -2463,6 +2472,22 @@ c----------------------------------------------------------------------
      &                                     /((sin(PI*chi0))**2)
      &                                    )
      &                                    /(64*PI**3)
+               quasiset_angmomdensityxll(i,j,k)=
+     &                                     -3*(gbsph_n(1,4)/q)
+     &                                    /(32*PI**2)
+               quasiset_angmomdensityyll(i,j,k)=
+     &                         3*(
+     &                          2*sin(2*PI*xi0)*(gbsph_n(1,3)/q)
+     &                         +cos(2*PI*xi0)*(gbsph_n(1,4)/q)
+     &                         )
+     &                         /(32*PI**2)
+               quasiset_angmomdensityzll(i,j,k)=
+     &                         3*(
+     &                          -2*cos(2*PI*xi0)*(gbsph_n(1,3)/q)
+     &                         +(cos(PI*chi0)/sin(PI*chi0))*
+     &                           sin(2*PI*xi0)*(gbsph_n(1,4)/q)
+     &                         )
+     &                         /(32*PI**2)
 
 
             end if
@@ -2476,9 +2501,9 @@ c----------------------------------------------------------------------
               gbsph_rhorho_n(i,j,k)=0
               gbsph_rhochi_n(i,j,k)=0
               gbsph_rhoxi_n(i,j,k) =0
-              gbsph_chichi_n(i,j,k)  =0
+              gbsph_chichi_n(i,j,k)=0
               gbsph_chixi_n(i,j,k) =0
-              gbsph_xixi_n(i,j,k)=0
+              gbsph_xixi_n(i,j,k)  =0
 
 
               quasiset_tt_ll(i,j,k)=0
@@ -2619,14 +2644,31 @@ c----------------------------------------------------------------------
       !multiply by the square root of the determinant on the boundary sphere, 2*PI^2 * sin(PI*chi0), 
       ! and integrate in chi0 from 0 to 1 and xi0 from 0 to 1 to obtain the total mass in AdS
                quasiset_massdensityll(i,j,k)=
-     &                                    (
-     &                                     12*(-dgbsph_chichi_drho_n)
-     &                                    +8*PI**2
-     &                                        *(-dgbsph_rhorho_drho_n)
-     &                                    +3*(-dgbsph_xixi_drho_n)
-     &                                     /((sin(PI*chi0))**2)
-     &                                    )
-     &                                    /(64*PI**3)
+     &                        (
+     &                         12*(-dgbsph_chichi_drho_n)
+     &                        +8*PI**2
+     &                            *(-dgbsph_rhorho_drho_n)
+     &                        +3*(-dgbsph_xixi_drho_n)
+     &                         /((sin(PI*chi0))**2)
+     &                        )
+     &                        /(64*PI**3)
+
+              quasiset_angmomdensityxll(i,j,k)=
+     &                        -3*(-dgbsph_txi_drho_n)
+     &                       /(32*PI**2)
+              quasiset_angmomdensityyll(i,j,k)=
+     &                        3*(
+     &                         2*sin(2*PI*xi0)*(-dgbsph_tchi_drho_n)
+     &                        +cos(2*PI*xi0)*(-dgbsph_txi_drho_n)
+     &                        )
+     &                        /(32*PI**2)
+              quasiset_angmomdensityzll(i,j,k)=
+     &                        3*(
+     &                         -2*cos(2*PI*xi0)*(-dgbsph_tchi_drho_n)
+     &                        +(cos(PI*chi0)/sin(PI*chi0))*
+     &                          sin(2*PI*xi0)*(-dgbsph_txi_drho_n)
+     &                        )
+     &                        /(32*PI**2)
 
            else !excised points or points with y0=z0=0
 
@@ -2638,6 +2680,9 @@ c----------------------------------------------------------------------
               quasiset_xixi_ll(i,j,k)=0
               quasiset_tracell(i,j,k)=0
               quasiset_massdensityll(i,j,k)=0
+              quasiset_angmomdensityxll(i,j,k)=0
+              quasiset_angmomdensityyll(i,j,k)=0
+              quasiset_angmomdensityzll(i,j,k)=0
             end if
 
           end do
@@ -2666,11 +2711,17 @@ c-------------------------------------------------------------------------------
      &                  quasiset_xixi,
      &                  quasiset_trace,
      &                  quasiset_massdensity,
+     &                  quasiset_angmomdensityx,
+     &                  quasiset_angmomdensityy,
+     &                  quasiset_angmomdensityz,
      &                  quasiset_tt_ll,quasiset_tchi_ll,quasiset_txi_ll,
      &                  quasiset_chichi_ll,quasiset_chixi_ll,
      &                  quasiset_xixi_ll,
      &                  quasiset_tracell,
      &                  quasiset_massdensityll,
+     &                  quasiset_angmomdensityxll,
+     &                  quasiset_angmomdensityyll,
+     &                  quasiset_angmomdensityzll,
      &                  x_extrappt,y_extrappt,z_extrappt,
      &                  chrbdy,numbdypoints,
      &                  bdy_extrappt_order,
@@ -2707,30 +2758,45 @@ c-------------------------------------------------------------------------------
         real*8 quasiset_chixi_ll(Nx,Ny,Nz),quasiset_xixi_ll(Nx,Ny,Nz)
         real*8 quasiset_tracell(Nx,Ny,Nz)
         real*8 quasiset_massdensityll(Nx,Ny,Nz)
+        real*8 quasiset_angmomdensityxll(Nx,Ny,Nz)
+        real*8 quasiset_angmomdensityyll(Nx,Ny,Nz)
+        real*8 quasiset_angmomdensityzll(Nx,Ny,Nz)
 
         real*8 quasiset_tt_p1,quasiset_tchi_p1
         real*8 quasiset_txi_p1,quasiset_chichi_p1
         real*8 quasiset_chixi_p1,quasiset_xixi_p1
         real*8 quasiset_trace_p1
         real*8 quasiset_massdensity_p1
+        real*8 quasiset_angmomdensityx_p1
+        real*8 quasiset_angmomdensityy_p1
+        real*8 quasiset_angmomdensityz_p1
 
         real*8 quasiset_tt_p2,quasiset_tchi_p2
         real*8 quasiset_txi_p2,quasiset_chichi_p2
         real*8 quasiset_chixi_p2,quasiset_xixi_p2
         real*8 quasiset_trace_p2
         real*8 quasiset_massdensity_p2
+        real*8 quasiset_angmomdensityx_p2
+        real*8 quasiset_angmomdensityy_p2
+        real*8 quasiset_angmomdensityz_p2
 
         real*8 quasiset_tt_p3,quasiset_tchi_p3
         real*8 quasiset_txi_p3,quasiset_chichi_p3
         real*8 quasiset_chixi_p3,quasiset_xixi_p3
         real*8 quasiset_trace_p3
         real*8 quasiset_massdensity_p3
+        real*8 quasiset_angmomdensityx_p3
+        real*8 quasiset_angmomdensityy_p3
+        real*8 quasiset_angmomdensityz_p3
 
         real*8 quasiset_tt_p4,quasiset_tchi_p4
         real*8 quasiset_txi_p4,quasiset_chichi_p4
         real*8 quasiset_chixi_p4,quasiset_xixi_p4
         real*8 quasiset_trace_p4
         real*8 quasiset_massdensity_p4
+        real*8 quasiset_angmomdensityx_p4
+        real*8 quasiset_angmomdensityy_p4
+        real*8 quasiset_angmomdensityz_p4
 
 
         real*8 gamma0sphbdy_uu_tt
@@ -2745,6 +2811,9 @@ c-------------------------------------------------------------------------------
         real*8 quasiset_chixi(numbdypoints),quasiset_xixi(numbdypoints)
         real*8 quasiset_trace(numbdypoints)
         real*8 quasiset_massdensity(numbdypoints)
+        real*8 quasiset_angmomdensityx(numbdypoints)
+        real*8 quasiset_angmomdensityy(numbdypoints)
+        real*8 quasiset_angmomdensityz(numbdypoints)
 
         real*8 x_extrappt(numbdypoints)
         real*8 y_extrappt(numbdypoints)
@@ -2826,6 +2895,9 @@ c-------------------------------------------------------------------------------
            quasiset_xixi_p1=quasiset_xixi_ll(i,j,k)
            quasiset_trace_p1=quasiset_tracell(i,j,k)
            quasiset_massdensity_p1=quasiset_massdensityll(i,j,k)
+           quasiset_angmomdensityx_p1=quasiset_angmomdensityxll(i,j,k)
+           quasiset_angmomdensityy_p1=quasiset_angmomdensityyll(i,j,k)
+           quasiset_angmomdensityz_p1=quasiset_angmomdensityzll(i,j,k)
            maxxyzp1=max(abs(xp1),abs(yp1),abs(zp1))
 
            if (chrbdy(i,j,k).ne.ex) then
@@ -2865,6 +2937,12 @@ c-------------------------------------------------------------------------------
                   quasiset_trace_p2=quasiset_tracell(i-1,j,k)
                   quasiset_massdensity_p2=
      &             quasiset_massdensityll(i-1,j,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i-1,j,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i-1,j,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i-1,j,k)
 
 
               else
@@ -2878,6 +2956,12 @@ c-------------------------------------------------------------------------------
                   quasiset_trace_p2=quasiset_tracell(i+1,j,k)
                   quasiset_massdensity_p2=
      &             quasiset_massdensityll(i+1,j,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i+1,j,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i+1,j,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i+1,j,k)
 
 
                end if
@@ -2915,6 +2999,15 @@ c-------------------------------------------------------------------------------
                  quasiset_massdensity(lind)=
      &                 firstord_extrap(quasiset_massdensity_p1
      &                  ,quasiset_massdensity_p2,xp1,xp2,xex)
+                 quasiset_angmomdensityx(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityx_p1
+     &                  ,quasiset_angmomdensityx_p2,xp1,xp2,xex)
+                 quasiset_angmomdensityy(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityy_p1
+     &                  ,quasiset_angmomdensityy_p2,xp1,xp2,xex)
+                 quasiset_angmomdensityz(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityz_p1
+     &                  ,quasiset_angmomdensityz_p2,xp1,xp2,xex)
 
              else if ((abs(maxxyzp1-abs(yp1)).lt.10.0d0**(-10))) then
               if (yp1.gt.0) then
@@ -2928,6 +3021,12 @@ c-------------------------------------------------------------------------------
                   quasiset_trace_p2=quasiset_tracell(i,j-1,k)
                   quasiset_massdensity_p2=
      &             quasiset_massdensityll(i,j-1,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j-1,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j-1,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j-1,k)
 
 
  
@@ -2942,6 +3041,12 @@ c-------------------------------------------------------------------------------
                   quasiset_trace_p2=quasiset_tracell(i,j+1,k)
                   quasiset_massdensity_p2=
      &             quasiset_massdensityll(i,j+1,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j+1,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j+1,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j+1,k)
 
 
               end if             
@@ -2979,6 +3084,15 @@ c-------------------------------------------------------------------------------
                  quasiset_massdensity(lind)=
      &                 firstord_extrap(quasiset_massdensity_p1
      &                  ,quasiset_massdensity_p2,yp1,yp2,yex)
+                 quasiset_angmomdensityx(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityx_p1
+     &                  ,quasiset_angmomdensityx_p2,yp1,yp2,yex)
+                 quasiset_angmomdensityy(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityy_p1
+     &                  ,quasiset_angmomdensityy_p2,yp1,yp2,yex)
+                 quasiset_angmomdensityz(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityz_p1
+     &                  ,quasiset_angmomdensityz_p2,yp1,yp2,yex)
              else
                  if (zp1.gt.0) then
                   zp2=z(k-1)
@@ -2991,6 +3105,12 @@ c-------------------------------------------------------------------------------
                   quasiset_trace_p2=quasiset_tracell(i,j,k-1)
                   quasiset_massdensity_p2=
      &             quasiset_massdensityll(i,j,k-1)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j,k-1)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j,k-1)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j,k-1)
 
 
               else
@@ -3004,6 +3124,12 @@ c-------------------------------------------------------------------------------
                   quasiset_trace_p2=quasiset_tracell(i,j,k+1)
                   quasiset_massdensity_p2=
      &             quasiset_massdensityll(i,j,k+1)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j,k+1)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j,k+1)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j,k+1)
 
 
                end if
@@ -3041,6 +3167,15 @@ c-------------------------------------------------------------------------------
                  quasiset_massdensity(lind)=
      &                 firstord_extrap(quasiset_massdensity_p1
      &                  ,quasiset_massdensity_p2,zp1,zp2,zex)
+                  quasiset_angmomdensityx(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityx_p1
+     &                  ,quasiset_angmomdensityx_p2,zp1,zp2,zex)
+                  quasiset_angmomdensityy(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityy_p1
+     &                  ,quasiset_angmomdensityy_p2,zp1,zp2,zex)
+                  quasiset_angmomdensityz(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityz_p1
+     &                  ,quasiset_angmomdensityz_p2,zp1,zp2,zex)
               end if
 
 !               quasiset_massdensity(lind)=sin(PI*chiex)*cos(2*PI*xiex)  !TEST
@@ -3076,6 +3211,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i-1,j,k)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i-2,j,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i-1,j,k)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i-2,j,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i-1,j,k)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i-2,j,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i-1,j,k)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i-2,j,k)
 
 
               else
@@ -3101,6 +3248,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i+1,j,k)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i+2,j,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i+1,j,k)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i+2,j,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i+1,j,k)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i+2,j,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i+1,j,k)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i+2,j,k)
 
 
                end if
@@ -3162,6 +3321,24 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
      &                   xp1,xp2,xp3,xex)
+                 quasiset_angmomdensityx(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   xp1,xp2,xp3,xex)
+                 quasiset_angmomdensityy(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   xp1,xp2,xp3,xex)
+                 quasiset_angmomdensityz(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
+     &                   xp1,xp2,xp3,xex)
 
 
              else if ((abs(maxxyzp1-abs(yp1)).lt.10.0d0**(-10))) then
@@ -3188,6 +3365,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j-1,k)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i,j-2,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j-1,k)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i,j-2,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j-1,k)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i,j-2,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j-1,k)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i,j-2,k)
 
 
 
@@ -3214,6 +3403,19 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j+1,k)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i,j+2,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j+1,k)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i,j+2,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j+1,k)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i,j+2,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j+1,k)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i,j+2,k)
+
 
               end if
                  quasiset_tt(lind)=
@@ -3273,6 +3475,24 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
      &                   yp1,yp2,yp3,yex)
+                 quasiset_angmomdensityx(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   yp1,yp2,yp3,yex)
+                 quasiset_angmomdensityy(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   yp1,yp2,yp3,yex)
+                 quasiset_angmomdensityz(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
+     &                   yp1,yp2,yp3,yex)
              else
                  if (zp1.gt.0) then
                   zp2=z(k-1)
@@ -3297,6 +3517,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j,k-1)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i,j,k-2)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j,k-1)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i,j,k-2)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j,k-1)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i,j,k-2)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j,k-1)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i,j,k-2)
 
               else
                   zp2=z(k+1)
@@ -3321,6 +3553,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j,k+1)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i,j,k+2)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j,k+1)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i,j,k+2)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j,k+1)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i,j,k+2)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j,k+1)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i,j,k+2)
 
                end if
                  quasiset_tt(lind)=
@@ -3379,6 +3623,24 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p1,
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
+     &                   zp1,zp2,zp3,zex)
+                 quasiset_angmomdensityx(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   zp1,zp2,zp3,zex)
+                 quasiset_angmomdensityy(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   zp1,zp2,zp3,zex)
+                 quasiset_angmomdensityz(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
      &                   zp1,zp2,zp3,zex)
               end if
 
@@ -3426,6 +3688,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i-2,j,k)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i-3,j,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i-1,j,k)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i-2,j,k)
+                  quasiset_angmomdensityx_p4=
+     &             quasiset_angmomdensityxll(i-3,j,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i-1,j,k)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i-2,j,k)
+                  quasiset_angmomdensityy_p4=
+     &             quasiset_angmomdensityyll(i-3,j,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i-1,j,k)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i-2,j,k)
+                  quasiset_angmomdensityz_p4=
+     &             quasiset_angmomdensityzll(i-3,j,k)
 
 
               else
@@ -3462,6 +3742,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i+2,j,k)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i+3,j,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i+1,j,k)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i+2,j,k)
+                  quasiset_angmomdensityx_p4=
+     &             quasiset_angmomdensityxll(i+3,j,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i+1,j,k)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i+2,j,k)
+                  quasiset_angmomdensityy_p4=
+     &             quasiset_angmomdensityyll(i+3,j,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i+1,j,k)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i+2,j,k)
+                  quasiset_angmomdensityz_p4=
+     &             quasiset_angmomdensityzll(i+3,j,k)
 
 
                end if
@@ -3530,6 +3828,27 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
      &                   quasiset_massdensity_p4,
+     &                   xp1,xp2,xp3,xp4,xex)
+                 quasiset_angmomdensityx(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   quasiset_angmomdensityx_p4,
+     &                   xp1,xp2,xp3,xp4,xex)
+                 quasiset_angmomdensityy(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   quasiset_angmomdensityy_p4,
+     &                   xp1,xp2,xp3,xp4,xex)
+                 quasiset_angmomdensityz(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
+     &                   quasiset_angmomdensityz_p4,
      &                   xp1,xp2,xp3,xp4,xex)
 
 
@@ -3569,6 +3888,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j-2,k)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i,j-3,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j-1,k)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i,j-2,k)
+                  quasiset_angmomdensityx_p4=
+     &             quasiset_angmomdensityxll(i,j-3,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j-1,k)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i,j-2,k)
+                  quasiset_angmomdensityy_p4=
+     &             quasiset_angmomdensityyll(i,j-3,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j-1,k)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i,j-2,k)
+                  quasiset_angmomdensityz_p4=
+     &             quasiset_angmomdensityzll(i,j-3,k)
 
 
               else
@@ -3605,6 +3942,25 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j+2,k)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i,j+3,k)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j+1,k)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i,j+2,k)
+                  quasiset_angmomdensityx_p4=
+     &             quasiset_angmomdensityxll(i,j+3,k)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j+1,k)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i,j+2,k)
+                  quasiset_angmomdensityy_p4=
+     &             quasiset_angmomdensityyll(i,j+3,k)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j+1,k)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i,j+2,k)
+                  quasiset_angmomdensityz_p4=
+     &             quasiset_angmomdensityzll(i,j+3,k)
+
 
 
                end if
@@ -3673,6 +4029,27 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
      &                   quasiset_massdensity_p4,
+     &                   yp1,yp2,yp3,yp4,yex)
+                 quasiset_angmomdensityx(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   quasiset_angmomdensityx_p4,
+     &                   yp1,yp2,yp3,yp4,yex)
+                 quasiset_angmomdensityy(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   quasiset_angmomdensityy_p4,
+     &                   yp1,yp2,yp3,yp4,yex)
+                 quasiset_angmomdensityz(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
+     &                   quasiset_angmomdensityz_p4,
      &                   yp1,yp2,yp3,yp4,yex)
              else
                 if (zp1.gt.0) then
@@ -3710,6 +4087,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j,k-2)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i,j,k-3)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j,k-1)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i,j,k-2)
+                  quasiset_angmomdensityx_p4=
+     &             quasiset_angmomdensityxll(i,j,k-3)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j,k-1)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i,j,k-2)
+                  quasiset_angmomdensityy_p4=
+     &             quasiset_angmomdensityyll(i,j,k-3)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j,k-1)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i,j,k-2)
+                  quasiset_angmomdensityz_p4=
+     &             quasiset_angmomdensityzll(i,j,k-3)
 
 
               else
@@ -3746,6 +4141,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j,k+2)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i,j,k+3)
+                  quasiset_angmomdensityx_p2=
+     &             quasiset_angmomdensityxll(i,j,k+1)
+                  quasiset_angmomdensityx_p3=
+     &             quasiset_angmomdensityxll(i,j,k+2)
+                  quasiset_angmomdensityx_p4=
+     &             quasiset_angmomdensityxll(i,j,k+3)
+                  quasiset_angmomdensityy_p2=
+     &             quasiset_angmomdensityyll(i,j,k+1)
+                  quasiset_angmomdensityy_p3=
+     &             quasiset_angmomdensityyll(i,j,k+2)
+                  quasiset_angmomdensityy_p4=
+     &             quasiset_angmomdensityyll(i,j,k+3)
+                  quasiset_angmomdensityz_p2=
+     &             quasiset_angmomdensityzll(i,j,k+1)
+                  quasiset_angmomdensityz_p3=
+     &             quasiset_angmomdensityzll(i,j,k+2)
+                  quasiset_angmomdensityz_p4=
+     &             quasiset_angmomdensityzll(i,j,k+3)
 
 
                end if
@@ -3814,6 +4227,27 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
      &                   quasiset_massdensity_p4,
+     &                   zp1,zp2,zp3,zp4,zex)
+                 quasiset_angmomdensityx(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   quasiset_angmomdensityx_p4,
+     &                   zp1,zp2,zp3,zp4,zex)
+                 quasiset_angmomdensityy(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   quasiset_angmomdensityy_p4,
+     &                   zp1,zp2,zp3,zp4,zex)
+                 quasiset_angmomdensityz(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
+     &                   quasiset_angmomdensityz_p4,
      &                   zp1,zp2,zp3,zp4,zex)
               end if
 
@@ -3859,6 +4293,9 @@ c-------------------------------------------------------------------------------
      &                  quasiset_xixi_ll,
      &                  quasiset_tracell,
      &                  quasiset_massdensityll,
+     &                  quasiset_angmomdensityxll,
+     &                  quasiset_angmomdensityyll,
+     &                  quasiset_angmomdensityzll,
      &                  x_extrappt,y_extrappt,z_extrappt,
      &                  chrbdy,numbdypoints,
      &                  bdy_extrappt_order,
@@ -3891,48 +4328,67 @@ c-------------------------------------------------------------------------------
        real*8 PI
        parameter (PI=3.141592653589793d0)
 
-       real*8 quasiset_tt_ll(Nx,Ny,Nz),quasiset_tchi_ll(Nx,Ny,Nz)
-       real*8 quasiset_txi_ll(Nx,Ny,Nz),quasiset_chichi_ll(Nx,Ny,Nz)
-       real*8 quasiset_chixi_ll(Nx,Ny,Nz),quasiset_xixi_ll(Nx,Ny,Nz)
-       real*8 quasiset_tracell(Nx,Ny,Nz)
-       real*8 quasiset_massdensityll(Nx,Ny,Nz)
+        real*8 quasiset_tt_ll(Nx,Ny,Nz),quasiset_tchi_ll(Nx,Ny,Nz)
+        real*8 quasiset_txi_ll(Nx,Ny,Nz),quasiset_chichi_ll(Nx,Ny,Nz)
+        real*8 quasiset_chixi_ll(Nx,Ny,Nz),quasiset_xixi_ll(Nx,Ny,Nz)
+        real*8 quasiset_tracell(Nx,Ny,Nz)
+        real*8 quasiset_massdensityll(Nx,Ny,Nz)
+        real*8 quasiset_angmomdensityxll(Nx,Ny,Nz)
+        real*8 quasiset_angmomdensityyll(Nx,Ny,Nz)
+        real*8 quasiset_angmomdensityzll(Nx,Ny,Nz)
 
-       real*8 quasiset_tt_p1,quasiset_tchi_p1
-       real*8 quasiset_txi_p1,quasiset_chichi_p1
-       real*8 quasiset_chixi_p1,quasiset_xixi_p1
-       real*8 quasiset_trace_p1
-       real*8 quasiset_massdensity_p1
+        real*8 quasiset_tt_p1,quasiset_tchi_p1
+        real*8 quasiset_txi_p1,quasiset_chichi_p1
+        real*8 quasiset_chixi_p1,quasiset_xixi_p1
+        real*8 quasiset_trace_p1
+        real*8 quasiset_massdensity_p1
+        real*8 quasiset_angmomdensityx_p1
+        real*8 quasiset_angmomdensityy_p1
+        real*8 quasiset_angmomdensityz_p1
 
-       real*8 quasiset_tt_p2,quasiset_tchi_p2
-       real*8 quasiset_txi_p2,quasiset_chichi_p2
-       real*8 quasiset_chixi_p2,quasiset_xixi_p2
-       real*8 quasiset_trace_p2
-       real*8 quasiset_massdensity_p2
+        real*8 quasiset_tt_p2,quasiset_tchi_p2
+        real*8 quasiset_txi_p2,quasiset_chichi_p2
+        real*8 quasiset_chixi_p2,quasiset_xixi_p2
+        real*8 quasiset_trace_p2
+        real*8 quasiset_massdensity_p2
+        real*8 quasiset_angmomdensityx_p2
+        real*8 quasiset_angmomdensityy_p2
+        real*8 quasiset_angmomdensityz_p2
 
-       real*8 quasiset_tt_p3,quasiset_tchi_p3
-       real*8 quasiset_txi_p3,quasiset_chichi_p3
-       real*8 quasiset_chixi_p3,quasiset_xixi_p3
-       real*8 quasiset_trace_p3
-       real*8 quasiset_massdensity_p3
+        real*8 quasiset_tt_p3,quasiset_tchi_p3
+        real*8 quasiset_txi_p3,quasiset_chichi_p3
+        real*8 quasiset_chixi_p3,quasiset_xixi_p3
+        real*8 quasiset_trace_p3
+        real*8 quasiset_massdensity_p3
+        real*8 quasiset_angmomdensityx_p3
+        real*8 quasiset_angmomdensityy_p3
+        real*8 quasiset_angmomdensityz_p3
 
-       real*8 quasiset_tt_p4,quasiset_tchi_p4
-       real*8 quasiset_txi_p4,quasiset_chichi_p4
-       real*8 quasiset_chixi_p4,quasiset_xixi_p4
-       real*8 quasiset_trace_p4
-       real*8 quasiset_massdensity_p4
+        real*8 quasiset_tt_p4,quasiset_tchi_p4
+        real*8 quasiset_txi_p4,quasiset_chichi_p4
+        real*8 quasiset_chixi_p4,quasiset_xixi_p4
+        real*8 quasiset_trace_p4
+        real*8 quasiset_massdensity_p4
+        real*8 quasiset_angmomdensityx_p4
+        real*8 quasiset_angmomdensityy_p4
+        real*8 quasiset_angmomdensityz_p4
 
-       real*8 gamma0sphbdy_uu_tt
-       real*8 gamma0sphbdy_uu_tchi
-       real*8 gamma0sphbdy_uu_txi
-       real*8 gamma0sphbdy_uu_chichi
-       real*8 gamma0sphbdy_uu_chixi
-       real*8 gamma0sphbdy_uu_xixi
 
-       real*8 quasiset_tt(numbdypoints),quasiset_tchi(numbdypoints)
-       real*8 quasiset_txi(numbdypoints),quasiset_chichi(numbdypoints)
-       real*8 quasiset_chixi(numbdypoints),quasiset_xixi(numbdypoints)
-       real*8 quasiset_trace(numbdypoints)
-       real*8 quasiset_massdensity(numbdypoints)
+        real*8 gamma0sphbdy_uu_tt
+        real*8 gamma0sphbdy_uu_tchi
+        real*8 gamma0sphbdy_uu_txi
+        real*8 gamma0sphbdy_uu_chichi
+        real*8 gamma0sphbdy_uu_chixi
+        real*8 gamma0sphbdy_uu_xixi
+
+        real*8 quasiset_tt(numbdypoints),quasiset_tchi(numbdypoints)
+        real*8 quasiset_txi(numbdypoints),quasiset_chichi(numbdypoints)
+        real*8 quasiset_chixi(numbdypoints),quasiset_xixi(numbdypoints)
+        real*8 quasiset_trace(numbdypoints)
+        real*8 quasiset_massdensity(numbdypoints)
+        real*8 quasiset_angmomdensityx(numbdypoints)
+        real*8 quasiset_angmomdensityy(numbdypoints)
+        real*8 quasiset_angmomdensityz(numbdypoints)
 
        real*8 x_extrappt(numbdypoints)
        real*8 y_extrappt(numbdypoints)
@@ -4017,8 +4473,11 @@ c-------------------------------------------------------------------------------
           quasiset_chichi_p1=quasiset_chichi_ll(i,j,k)
           quasiset_chixi_p1=quasiset_chixi_ll(i,j,k)
           quasiset_xixi_p1=quasiset_xixi_ll(i,j,k)
-          quasiset_massdensity_p1=quasiset_massdensityll(i,j,k)
           quasiset_trace_p1=quasiset_tracell(i,j,k)
+          quasiset_massdensity_p1=quasiset_massdensityll(i,j,k)
+          quasiset_angmomdensityx_p1=quasiset_angmomdensityxll(i,j,k)
+          quasiset_angmomdensityy_p1=quasiset_angmomdensityyll(i,j,k)
+          quasiset_angmomdensityz_p1=quasiset_angmomdensityzll(i,j,k)
           maxxyzp1=max(abs(xp1),abs(yp1),abs(zp1))
 
           if (chrbdy(i,j,k).ne.ex) then
@@ -4065,6 +4524,13 @@ c-------------------------------------------------------------------------------
      &               quasiset_tracell(i-ind_distance_fixedpts,j,k)
                  quasiset_massdensity_p2=
      &               quasiset_massdensityll(i-ind_distance_fixedpts,j,k)
+                 quasiset_angmomdensityx_p2=
+     &      quasiset_angmomdensityxll(i-ind_distance_fixedpts,j,k)
+                 quasiset_angmomdensityy_p2=
+     &      quasiset_angmomdensityyll(i-ind_distance_fixedpts,j,k)
+                 quasiset_angmomdensityz_p2=
+     &      quasiset_angmomdensityzll(i-ind_distance_fixedpts,j,k)
+
 
 
              else
@@ -4085,6 +4551,12 @@ c-------------------------------------------------------------------------------
      &               quasiset_tracell(i+ind_distance_fixedpts,j,k)
                  quasiset_massdensity_p2=
      &               quasiset_massdensityll(i+ind_distance_fixedpts,j,k)
+                 quasiset_angmomdensityx_p2=
+     &      quasiset_angmomdensityxll(i+ind_distance_fixedpts,j,k)
+                 quasiset_angmomdensityy_p2=
+     &      quasiset_angmomdensityyll(i+ind_distance_fixedpts,j,k)
+                 quasiset_angmomdensityz_p2=
+     &      quasiset_angmomdensityzll(i+ind_distance_fixedpts,j,k)
 
 
               end if
@@ -4122,6 +4594,15 @@ c-------------------------------------------------------------------------------
                  quasiset_massdensity(lind)=
      &                 firstord_extrap(quasiset_massdensity_p1
      &                  ,quasiset_massdensity_p2,xp1,xp2,xex)
+                 quasiset_angmomdensityx(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityx_p1
+     &                  ,quasiset_angmomdensityx_p2,xp1,xp2,xex)
+                 quasiset_angmomdensityy(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityy_p1
+     &                  ,quasiset_angmomdensityy_p2,xp1,xp2,xex)
+                 quasiset_angmomdensityz(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityz_p1
+     &                  ,quasiset_angmomdensityz_p2,xp1,xp2,xex)
  
                   
             else if ((abs(maxxyzp1-abs(yp1)).lt.10.0d0**(-10))) then
@@ -4143,6 +4624,12 @@ c-------------------------------------------------------------------------------
      &               quasiset_tracell(i,j-ind_distance_fixedpts,k)
                  quasiset_massdensity_p2=
      &               quasiset_massdensityll(i,j-ind_distance_fixedpts,k)
+                 quasiset_angmomdensityx_p2=
+     &      quasiset_angmomdensityxll(i,j-ind_distance_fixedpts,k)
+                 quasiset_angmomdensityy_p2=
+     &      quasiset_angmomdensityyll(i,j-ind_distance_fixedpts,k)
+                 quasiset_angmomdensityz_p2=
+     &      quasiset_angmomdensityzll(i,j-ind_distance_fixedpts,k)
 
 
              else
@@ -4163,6 +4650,13 @@ c-------------------------------------------------------------------------------
      &               quasiset_tracell(i,j+ind_distance_fixedpts,k)
                  quasiset_massdensity_p2=
      &               quasiset_massdensityll(i,j+ind_distance_fixedpts,k)
+                 quasiset_angmomdensityx_p2=
+     &      quasiset_angmomdensityxll(i,j+ind_distance_fixedpts,k)
+                 quasiset_angmomdensityy_p2=
+     &      quasiset_angmomdensityyll(i,j+ind_distance_fixedpts,k)
+                 quasiset_angmomdensityz_p2=
+     &      quasiset_angmomdensityzll(i,j+ind_distance_fixedpts,k)
+
 
 
 
@@ -4201,6 +4695,15 @@ c-------------------------------------------------------------------------------
                  quasiset_massdensity(lind)=
      &                 firstord_extrap(quasiset_massdensity_p1
      &                  ,quasiset_massdensity_p2,yp1,yp2,yex)
+                 quasiset_angmomdensityx(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityx_p1
+     &                  ,quasiset_angmomdensityx_p2,yp1,yp2,yex)
+                 quasiset_angmomdensityy(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityy_p1
+     &                  ,quasiset_angmomdensityy_p2,yp1,yp2,yex)
+                 quasiset_angmomdensityz(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityz_p1
+     &                  ,quasiset_angmomdensityz_p2,yp1,yp2,yex)
             else
                 if (zp1.gt.0) then
                  zp2=z(k-ind_distance_fixedpts)
@@ -4220,6 +4723,13 @@ c-------------------------------------------------------------------------------
      &               quasiset_tracell(i,j,k-ind_distance_fixedpts)
                  quasiset_massdensity_p2=
      &               quasiset_massdensityll(i,j,k-ind_distance_fixedpts)
+                 quasiset_angmomdensityx_p2=
+     &      quasiset_angmomdensityxll(i,j,k-ind_distance_fixedpts)
+                 quasiset_angmomdensityy_p2=
+     &      quasiset_angmomdensityyll(i,j,k-ind_distance_fixedpts)
+                 quasiset_angmomdensityz_p2=
+     &      quasiset_angmomdensityzll(i,j,k-ind_distance_fixedpts)
+
 
              else
                  zp2=z(k+ind_distance_fixedpts)
@@ -4239,6 +4749,13 @@ c-------------------------------------------------------------------------------
      &               quasiset_tracell(i,j,k+ind_distance_fixedpts)
                  quasiset_massdensity_p2=
      &               quasiset_massdensityll(i,j,k+ind_distance_fixedpts)
+                 quasiset_angmomdensityx_p2=
+     &      quasiset_angmomdensityxll(i,j,k+ind_distance_fixedpts)
+                 quasiset_angmomdensityy_p2=
+     &      quasiset_angmomdensityyll(i,j,k+ind_distance_fixedpts)
+                 quasiset_angmomdensityz_p2=
+     &      quasiset_angmomdensityzll(i,j,k+ind_distance_fixedpts)
+
 
 
               end if
@@ -4276,6 +4793,15 @@ c-------------------------------------------------------------------------------
                  quasiset_massdensity(lind)=
      &                 firstord_extrap(quasiset_massdensity_p1
      &                  ,quasiset_massdensity_p2,zp1,zp2,zex)
+                 quasiset_angmomdensityx(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityx_p1
+     &                  ,quasiset_angmomdensityx_p2,zp1,zp2,zex)
+                 quasiset_angmomdensityy(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityy_p1
+     &                  ,quasiset_angmomdensityy_p2,zp1,zp2,zex)
+                 quasiset_angmomdensityz(lind)=
+     &                 firstord_extrap(quasiset_angmomdensityz_p1
+     &                  ,quasiset_angmomdensityz_p2,zp1,zp2,zex)
              end if
 
 !              quasiset_massdensity(lind)=sin(PI*chiex)*cos(2*PI*xiex)  !TEST
@@ -4321,6 +4847,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i-ind_distance_fixedpts,j,k)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i-2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i-ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i-2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i-ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i-2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i-ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i-2*ind_distance_fixedpts,j,k)
 
 
               else
@@ -4358,6 +4896,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i+ind_distance_fixedpts,j,k)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i+2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i+ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i+2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i+ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i+2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i+ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i+2*ind_distance_fixedpts,j,k)
 
 
                end if
@@ -4419,6 +4969,24 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
      &                   xp1,xp2,xp3,xex)
+                 quasiset_angmomdensityx(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   xp1,xp2,xp3,xex)
+                 quasiset_angmomdensityy(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   xp1,xp2,xp3,xex)
+                 quasiset_angmomdensityz(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
+     &                   xp1,xp2,xp3,xex)
 
 
              else if ((abs(maxxyzp1-abs(yp1)).lt.10.0d0**(-10))) then
@@ -4457,6 +5025,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j-ind_distance_fixedpts,k)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i,j-2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i,j-ind_distance_fixedpts,k)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i,j-2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i,j-ind_distance_fixedpts,k)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i,j-2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i,j-ind_distance_fixedpts,k)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i,j-2*ind_distance_fixedpts,k)
 
 
 
@@ -4495,6 +5075,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j+ind_distance_fixedpts,k)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i,j+2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i,j+ind_distance_fixedpts,k)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i,j+2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i,j+ind_distance_fixedpts,k)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i,j+2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i,j+ind_distance_fixedpts,k)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i,j+2*ind_distance_fixedpts,k)
 
               end if
                  quasiset_tt(lind)=
@@ -4554,6 +5146,25 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
      &                   yp1,yp2,yp3,yex)
+                 quasiset_angmomdensityx(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   yp1,yp2,yp3,yex)
+                 quasiset_angmomdensityy(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   yp1,yp2,yp3,yex)
+                 quasiset_angmomdensityz(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
+     &                   yp1,yp2,yp3,yex)
+
              else
                  if (zp1.gt.0) then
                   zp2=z(k-ind_distance_fixedpts)
@@ -4590,6 +5201,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j,k-ind_distance_fixedpts)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i,j,k-2*ind_distance_fixedpts)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i,j,k-ind_distance_fixedpts)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i,j,k-2*ind_distance_fixedpts)
+                  quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i,j,k-ind_distance_fixedpts)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i,j,k-2*ind_distance_fixedpts)
+                  quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i,j,k-ind_distance_fixedpts)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i,j,k-2*ind_distance_fixedpts)
 
               else
                   zp2=z(k+ind_distance_fixedpts)
@@ -4626,6 +5249,18 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j,k+ind_distance_fixedpts)
                   quasiset_massdensity_p3=
      &             quasiset_massdensityll(i,j,k+2*ind_distance_fixedpts)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i,j,k+ind_distance_fixedpts)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i,j,k+2*ind_distance_fixedpts)
+                  quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i,j,k+ind_distance_fixedpts)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i,j,k+2*ind_distance_fixedpts)
+                  quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i,j,k+ind_distance_fixedpts)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i,j,k+2*ind_distance_fixedpts)
 
                end if
                  quasiset_tt(lind)=
@@ -4684,6 +5319,24 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p1,
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
+     &                   zp1,zp2,zp3,zex)
+                 quasiset_angmomdensityx(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   zp1,zp2,zp3,zex)
+                 quasiset_angmomdensityy(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   zp1,zp2,zp3,zex)
+                 quasiset_angmomdensityz(lind)=
+     &                 secondord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
      &                   zp1,zp2,zp3,zex)
               end if
 
@@ -4747,6 +5400,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i-2*ind_distance_fixedpts,j,k)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i-3*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i-1*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i-2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityx_p4=
+     &       quasiset_angmomdensityxll(i-3*ind_distance_fixedpts,j,k)
+                 quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i-1*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i-2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityy_p4=
+     &       quasiset_angmomdensityyll(i-3*ind_distance_fixedpts,j,k)
+                 quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i-1*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i-2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityz_p4=
+     &       quasiset_angmomdensityzll(i-3*ind_distance_fixedpts,j,k)
 
 
               else
@@ -4801,6 +5472,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i+2*ind_distance_fixedpts,j,k)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i+3*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i+1*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i+2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityx_p4=
+     &       quasiset_angmomdensityxll(i+3*ind_distance_fixedpts,j,k)
+                 quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i+1*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i+2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityy_p4=
+     &       quasiset_angmomdensityyll(i+3*ind_distance_fixedpts,j,k)
+                 quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i+1*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i+2*ind_distance_fixedpts,j,k)
+                  quasiset_angmomdensityz_p4=
+     &       quasiset_angmomdensityzll(i+3*ind_distance_fixedpts,j,k)
 
 
                end if
@@ -4869,6 +5558,27 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
      &                   quasiset_massdensity_p4,
+     &                   xp1,xp2,xp3,xp4,xex)
+                 quasiset_angmomdensityx(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   quasiset_angmomdensityx_p4,
+     &                   xp1,xp2,xp3,xp4,xex)
+                 quasiset_angmomdensityy(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   quasiset_angmomdensityy_p4,
+     &                   xp1,xp2,xp3,xp4,xex)
+                 quasiset_angmomdensityz(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
+     &                   quasiset_angmomdensityz_p4,
      &                   xp1,xp2,xp3,xp4,xex)
 
 
@@ -4926,6 +5636,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j-2*ind_distance_fixedpts,k)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i,j-3*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i,j-1*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i,j-2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityx_p4=
+     &       quasiset_angmomdensityxll(i,j-3*ind_distance_fixedpts,k)
+                 quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i,j-1*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i,j-2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityy_p4=
+     &       quasiset_angmomdensityyll(i,j-3*ind_distance_fixedpts,k)
+                 quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i,j-1*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i,j-2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityz_p4=
+     &       quasiset_angmomdensityzll(i,j-3*ind_distance_fixedpts,k)
 
 
               else
@@ -4980,6 +5708,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j+2*ind_distance_fixedpts,k)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i,j+3*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i,j+1*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i,j+2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityx_p4=
+     &       quasiset_angmomdensityxll(i,j+3*ind_distance_fixedpts,k)
+                 quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i,j+1*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i,j+2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityy_p4=
+     &       quasiset_angmomdensityyll(i,j+3*ind_distance_fixedpts,k)
+                 quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i,j+1*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i,j+2*ind_distance_fixedpts,k)
+                  quasiset_angmomdensityz_p4=
+     &       quasiset_angmomdensityzll(i,j+3*ind_distance_fixedpts,k)
 
 
                end if
@@ -5048,6 +5794,27 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
      &                   quasiset_massdensity_p4,
+     &                   yp1,yp2,yp3,yp4,yex)
+                 quasiset_angmomdensityx(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   quasiset_angmomdensityx_p4,
+     &                   yp1,yp2,yp3,yp4,yex)
+                 quasiset_angmomdensityy(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   quasiset_angmomdensityy_p4,
+     &                   yp1,yp2,yp3,yp4,yex)
+                 quasiset_angmomdensityz(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityz_p1,
+     &                   quasiset_angmomdensityz_p2,
+     &                   quasiset_angmomdensityz_p3,
+     &                   quasiset_angmomdensityz_p4,
      &                   yp1,yp2,yp3,yp4,yex)
              else
                 if (zp1.gt.0) then
@@ -5103,6 +5870,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j,k-2*ind_distance_fixedpts)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i,j,k-3*ind_distance_fixedpts)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i,j,k-1*ind_distance_fixedpts)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i,j,k-2*ind_distance_fixedpts)
+                  quasiset_angmomdensityx_p4=
+     &       quasiset_angmomdensityxll(i,j,k-3*ind_distance_fixedpts)
+                 quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i,j,k-1*ind_distance_fixedpts)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i,j,k-2*ind_distance_fixedpts)
+                  quasiset_angmomdensityy_p4=
+     &       quasiset_angmomdensityyll(i,j,k-3*ind_distance_fixedpts)
+                 quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i,j,k-1*ind_distance_fixedpts)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i,j,k-2*ind_distance_fixedpts)
+                  quasiset_angmomdensityz_p4=
+     &       quasiset_angmomdensityzll(i,j,k-3*ind_distance_fixedpts)
 
 
               else
@@ -5157,6 +5942,24 @@ c-------------------------------------------------------------------------------
      &             quasiset_massdensityll(i,j,k+2*ind_distance_fixedpts)
                   quasiset_massdensity_p4=
      &             quasiset_massdensityll(i,j,k+3*ind_distance_fixedpts)
+                  quasiset_angmomdensityx_p2=
+     &       quasiset_angmomdensityxll(i,j,k+1*ind_distance_fixedpts)
+                  quasiset_angmomdensityx_p3=
+     &       quasiset_angmomdensityxll(i,j,k+2*ind_distance_fixedpts)
+                  quasiset_angmomdensityx_p4=
+     &       quasiset_angmomdensityxll(i,j,k+3*ind_distance_fixedpts)
+                 quasiset_angmomdensityy_p2=
+     &       quasiset_angmomdensityyll(i,j,k+1*ind_distance_fixedpts)
+                  quasiset_angmomdensityy_p3=
+     &       quasiset_angmomdensityyll(i,j,k+2*ind_distance_fixedpts)
+                  quasiset_angmomdensityy_p4=
+     &       quasiset_angmomdensityyll(i,j,k+3*ind_distance_fixedpts)
+                 quasiset_angmomdensityz_p2=
+     &       quasiset_angmomdensityzll(i,j,k+1*ind_distance_fixedpts)
+                  quasiset_angmomdensityz_p3=
+     &       quasiset_angmomdensityzll(i,j,k+2*ind_distance_fixedpts)
+                  quasiset_angmomdensityz_p4=
+     &       quasiset_angmomdensityzll(i,j,k+3*ind_distance_fixedpts)
 
 
                end if
@@ -5225,6 +6028,27 @@ c-------------------------------------------------------------------------------
      &                   quasiset_massdensity_p2,
      &                   quasiset_massdensity_p3,
      &                   quasiset_massdensity_p4,
+     &                   zp1,zp2,zp3,zp4,zex)
+                 quasiset_angmomdensityx(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityx_p1,
+     &                   quasiset_angmomdensityx_p2,
+     &                   quasiset_angmomdensityx_p3,
+     &                   quasiset_angmomdensityx_p4,
+     &                   zp1,zp2,zp3,zp4,zex)
+                 quasiset_angmomdensityy(lind)=
+     &                 thirdord_extrap(
+     &                   quasiset_angmomdensityy_p1,
+     &                   quasiset_angmomdensityy_p2,
+     &                   quasiset_angmomdensityy_p3,
+     &                   quasiset_angmomdensityy_p4,
+     &                   zp1,zp2,zp3,zp4,zex)
+                 quasiset_angmomdensityz(lind)=
+     &                 thirdord_extrap(
+     &           quasiset_angmomdensityz_p1,
+     &           quasiset_angmomdensityz_p2,
+     &           quasiset_angmomdensityz_p3,
+     &           quasiset_angmomdensityz_p4,
      &                   zp1,zp2,zp3,zp4,zex)
               end if
 
