@@ -2767,6 +2767,8 @@ void AdS4D_t0_cnst_data(void)
     // initialize gbars and nm1, np1 time levels
     if ((background || skip_constraints) && ief_bh_r0==0)
     {   
+    	if (gb_xx_nm1) //"np1,n,nm1" variables only allocated on finest MG level
+        {   
     //   for (i=0; i<Nx; i++)  
     //   {    
     //      for (j=0; j<Ny; j++)    
@@ -2784,7 +2786,7 @@ void AdS4D_t0_cnst_data(void)
     //       } 
     //      }    
     //   }  
-        init_ghb_ads_(gb_tt,gb_tx,gb_ty,
+        	init_ghb_ads_(gb_tt,gb_tx,gb_ty,
                     gb_tz,
                     gb_xx,gb_xy,
                     gb_xz,
@@ -2810,24 +2812,25 @@ void AdS4D_t0_cnst_data(void)
                     //       }  
                     //      } 
                     //   }   
-        for (i=0; i<size; i++)
-        {
-            gb_tt_np1[i]=gb_tt_nm1[i]=gb_tt[i];
-            gb_tx_np1[i]=gb_tx_nm1[i]=gb_tx[i];
-            gb_ty_np1[i]=gb_ty_nm1[i]=gb_ty[i];
-            gb_tz_np1[i]=gb_tz_nm1[i]=gb_tz[i];
-            gb_xx_np1[i]=gb_xx_nm1[i]=gb_xx[i];
-            gb_xy_np1[i]=gb_xy_nm1[i]=gb_xy[i];
-            gb_xz_np1[i]=gb_xz_nm1[i]=gb_xz[i];
-            gb_yy_np1[i]=gb_yy_nm1[i]=gb_yy[i];
-            gb_yz_np1[i]=gb_yz_nm1[i]=gb_yz[i];
-            gb_zz_np1[i]=gb_zz_nm1[i]=gb_zz[i];
-            Hb_t_np1[i]=Hb_t_nm1[i]=Hb_t_n[i];
-            Hb_x_np1[i]=Hb_x_nm1[i]=Hb_x_n[i];
-            Hb_y_np1[i]=Hb_y_nm1[i]=Hb_y_n[i];
-            Hb_z_np1[i]=Hb_z_nm1[i]=Hb_z_n[i];
-            phi1_np1[i]=phi1_nm1[i]=phi1[i];
-        }
+	        for (i=0; i<size; i++)
+    	    {
+        	    gb_tt_np1[i]=gb_tt_nm1[i]=gb_tt[i];
+	            gb_tx_np1[i]=gb_tx_nm1[i]=gb_tx[i];
+	            gb_ty_np1[i]=gb_ty_nm1[i]=gb_ty[i];
+	            gb_tz_np1[i]=gb_tz_nm1[i]=gb_tz[i];
+	            gb_xx_np1[i]=gb_xx_nm1[i]=gb_xx[i];
+	            gb_xy_np1[i]=gb_xy_nm1[i]=gb_xy[i];
+	            gb_xz_np1[i]=gb_xz_nm1[i]=gb_xz[i];
+	            gb_yy_np1[i]=gb_yy_nm1[i]=gb_yy[i];
+	            gb_yz_np1[i]=gb_yz_nm1[i]=gb_yz[i];
+	            gb_zz_np1[i]=gb_zz_nm1[i]=gb_zz[i];
+	            Hb_t_np1[i]=Hb_t_nm1[i]=Hb_t_n[i];
+	            Hb_x_np1[i]=Hb_x_nm1[i]=Hb_x_n[i];
+	            Hb_y_np1[i]=Hb_y_nm1[i]=Hb_y_n[i];
+	            Hb_z_np1[i]=Hb_z_nm1[i]=Hb_z_n[i];
+	            phi1_np1[i]=phi1_nm1[i]=phi1[i];
+	        }
+	    }
     }
     else if (background || skip_constraints)
     {
