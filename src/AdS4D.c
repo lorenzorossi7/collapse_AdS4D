@@ -3244,7 +3244,9 @@ void AdS4D_pre_io_calc(void)
 		//We are not solving the momentum constraint, so this initial data violates the constraints of GR.
 		//Thanks to constraint-damping, we can expect to return to a solution of the Einstein equations in a short amount of evolution time
 		//only if the boost velocity is small enough.
-        if ((!AMRD_cp_restart)&&((fabs(boost_v_1[0])>pow(10.0,-10))||(fabs(boost_v_1[1])>pow(10.0,-10))||(fabs(boost_v_1[2])>pow(10.0,-10))||
+        if ((!AMRD_cp_restart)&&
+	    ((fabs(boost_amp_1)>pow(10.0,-10))||(fabs(boost_amp_2)>pow(10.0,-10)))&&
+	    ((fabs(boost_v_1[0])>pow(10.0,-10))||(fabs(boost_v_1[1])>pow(10.0,-10))||(fabs(boost_v_1[2])>pow(10.0,-10))||
         	(fabs(boost_v_2[0])>pow(10.0,-10))||(fabs(boost_v_2[1])>pow(10.0,-10))||(fabs(boost_v_2[2])>pow(10.0,-10))))
         {
 
