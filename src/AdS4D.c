@@ -84,6 +84,7 @@ int background,skip_constraints;
 int output_ires,output_relkretschcentregrid,output_kretsch,output_relkretsch,output_riemanncube;
 int output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf;
 int output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_diagnosticAH_ascii;
+int rad_extrap;
 int output_bdyquantities,output_AdS_mass;
 int output_bdyphi;
 int output_bdytrace;
@@ -308,9 +309,9 @@ real *quasiset_angmomdensityxll;
 real *quasiset_angmomdensityyll;
 real *quasiset_angmomdensityzll;
 
-real *x_extrappt_tmp;
-real *y_extrappt_tmp;
-real *z_extrappt_tmp;
+real *xpbdy_tmp;
+real *ypbdy_tmp;
+real *zpbdy_tmp;
 real *x_outermostpt_tmp;
 real *y_outermostpt_tmp;
 real *z_outermostpt_tmp;
@@ -328,9 +329,9 @@ real *quasiset_angmomdensityy_freepts_extraporder1_paramset1;
 real *quasiset_angmomdensityz_freepts_extraporder1_paramset1;
 real *AdS_mass_freepts_extraporder1_paramset1;
 real *bdyphi_freepts_extraporder1_paramset1;
-real *x_extrappt_freepts_extraporder1_paramset1;
-real *y_extrappt_freepts_extraporder1_paramset1;
-real *z_extrappt_freepts_extraporder1_paramset1;
+real *xpbdy_freepts_extraporder1_paramset1;
+real *ypbdy_freepts_extraporder1_paramset1;
+real *zpbdy_freepts_extraporder1_paramset1;
 real *x_outermostpt_freepts_extraporder1_paramset1;
 real *y_outermostpt_freepts_extraporder1_paramset1;
 real *z_outermostpt_freepts_extraporder1_paramset1;
@@ -348,9 +349,9 @@ real *quasiset_angmomdensityy_freepts_extraporder2_paramset1;
 real *quasiset_angmomdensityz_freepts_extraporder2_paramset1;
 real *AdS_mass_freepts_extraporder2_paramset1;
 real *bdyphi_freepts_extraporder2_paramset1;
-real *x_extrappt_freepts_extraporder2_paramset1;
-real *y_extrappt_freepts_extraporder2_paramset1;
-real *z_extrappt_freepts_extraporder2_paramset1;
+real *xpbdy_freepts_extraporder2_paramset1;
+real *ypbdy_freepts_extraporder2_paramset1;
+real *zpbdy_freepts_extraporder2_paramset1;
 real *x_outermostpt_freepts_extraporder2_paramset1;
 real *y_outermostpt_freepts_extraporder2_paramset1;
 real *z_outermostpt_freepts_extraporder2_paramset1;
@@ -369,9 +370,9 @@ real *quasiset_angmomdensityy_freepts_extraporder3_paramset1;
 real *quasiset_angmomdensityz_freepts_extraporder3_paramset1;
 real *AdS_mass_freepts_extraporder3_paramset1;
 real *bdyphi_freepts_extraporder3_paramset1;
-real *x_extrappt_freepts_extraporder3_paramset1;
-real *y_extrappt_freepts_extraporder3_paramset1;
-real *z_extrappt_freepts_extraporder3_paramset1;
+real *xpbdy_freepts_extraporder3_paramset1;
+real *ypbdy_freepts_extraporder3_paramset1;
+real *zpbdy_freepts_extraporder3_paramset1;
 real *x_outermostpt_freepts_extraporder3_paramset1;
 real *y_outermostpt_freepts_extraporder3_paramset1;
 real *z_outermostpt_freepts_extraporder3_paramset1;
@@ -390,9 +391,9 @@ real *quasiset_angmomdensityy_fixedpts_extraporder1_paramset1;
 real *quasiset_angmomdensityz_fixedpts_extraporder1_paramset1;
 real *AdS_mass_fixedpts_extraporder1_paramset1;
 real *bdyphi_fixedpts_extraporder1_paramset1;
-real *x_extrappt_fixedpts_extraporder1_paramset1;
-real *y_extrappt_fixedpts_extraporder1_paramset1;
-real *z_extrappt_fixedpts_extraporder1_paramset1;
+real *xpbdy_fixedpts_extraporder1_paramset1;
+real *ypbdy_fixedpts_extraporder1_paramset1;
+real *zpbdy_fixedpts_extraporder1_paramset1;
 real *x_outermostpt_fixedpts_extraporder1_paramset1;
 real *y_outermostpt_fixedpts_extraporder1_paramset1;
 real *z_outermostpt_fixedpts_extraporder1_paramset1;
@@ -411,9 +412,9 @@ real *quasiset_angmomdensityy_fixedpts_extraporder2_paramset1;
 real *quasiset_angmomdensityz_fixedpts_extraporder2_paramset1;
 real *AdS_mass_fixedpts_extraporder2_paramset1;
 real *bdyphi_fixedpts_extraporder2_paramset1;
-real *x_extrappt_fixedpts_extraporder2_paramset1;
-real *y_extrappt_fixedpts_extraporder2_paramset1;
-real *z_extrappt_fixedpts_extraporder2_paramset1;
+real *xpbdy_fixedpts_extraporder2_paramset1;
+real *ypbdy_fixedpts_extraporder2_paramset1;
+real *zpbdy_fixedpts_extraporder2_paramset1;
 real *x_outermostpt_fixedpts_extraporder2_paramset1;
 real *y_outermostpt_fixedpts_extraporder2_paramset1;
 real *z_outermostpt_fixedpts_extraporder2_paramset1;
@@ -431,9 +432,9 @@ real *quasiset_angmomdensityy_fixedpts_extraporder3_paramset1;
 real *quasiset_angmomdensityz_fixedpts_extraporder3_paramset1;
 real *AdS_mass_fixedpts_extraporder3_paramset1;
 real *bdyphi_fixedpts_extraporder3_paramset1;
-real *x_extrappt_fixedpts_extraporder3_paramset1;
-real *y_extrappt_fixedpts_extraporder3_paramset1;
-real *z_extrappt_fixedpts_extraporder3_paramset1;
+real *xpbdy_fixedpts_extraporder3_paramset1;
+real *ypbdy_fixedpts_extraporder3_paramset1;
+real *zpbdy_fixedpts_extraporder3_paramset1;
 real *x_outermostpt_fixedpts_extraporder3_paramset1;
 real *y_outermostpt_fixedpts_extraporder3_paramset1;
 real *z_outermostpt_fixedpts_extraporder3_paramset1;
@@ -452,9 +453,9 @@ real *quasiset_angmomdensityy_freepts_extraporder1_paramset2;
 real *quasiset_angmomdensityz_freepts_extraporder1_paramset2;
 real *AdS_mass_freepts_extraporder1_paramset2;
 real *bdyphi_freepts_extraporder1_paramset2;
-real *x_extrappt_freepts_extraporder1_paramset2;
-real *y_extrappt_freepts_extraporder1_paramset2;
-real *z_extrappt_freepts_extraporder1_paramset2;
+real *xpbdy_freepts_extraporder1_paramset2;
+real *ypbdy_freepts_extraporder1_paramset2;
+real *zpbdy_freepts_extraporder1_paramset2;
 real *x_outermostpt_freepts_extraporder1_paramset2;
 real *y_outermostpt_freepts_extraporder1_paramset2;
 real *z_outermostpt_freepts_extraporder1_paramset2;
@@ -472,9 +473,9 @@ real *quasiset_angmomdensityy_freepts_extraporder2_paramset2;
 real *quasiset_angmomdensityz_freepts_extraporder2_paramset2;
 real *AdS_mass_freepts_extraporder2_paramset2;
 real *bdyphi_freepts_extraporder2_paramset2;
-real *x_extrappt_freepts_extraporder2_paramset2;
-real *y_extrappt_freepts_extraporder2_paramset2;
-real *z_extrappt_freepts_extraporder2_paramset2;
+real *xpbdy_freepts_extraporder2_paramset2;
+real *ypbdy_freepts_extraporder2_paramset2;
+real *zpbdy_freepts_extraporder2_paramset2;
 real *x_outermostpt_freepts_extraporder2_paramset2;
 real *y_outermostpt_freepts_extraporder2_paramset2;
 real *z_outermostpt_freepts_extraporder2_paramset2;
@@ -493,9 +494,9 @@ real *quasiset_angmomdensityy_freepts_extraporder3_paramset2;
 real *quasiset_angmomdensityz_freepts_extraporder3_paramset2;
 real *AdS_mass_freepts_extraporder3_paramset2;
 real *bdyphi_freepts_extraporder3_paramset2;
-real *x_extrappt_freepts_extraporder3_paramset2;
-real *y_extrappt_freepts_extraporder3_paramset2;
-real *z_extrappt_freepts_extraporder3_paramset2;
+real *xpbdy_freepts_extraporder3_paramset2;
+real *ypbdy_freepts_extraporder3_paramset2;
+real *zpbdy_freepts_extraporder3_paramset2;
 real *x_outermostpt_freepts_extraporder3_paramset2;
 real *y_outermostpt_freepts_extraporder3_paramset2;
 real *z_outermostpt_freepts_extraporder3_paramset2;
@@ -514,9 +515,9 @@ real *quasiset_angmomdensityy_fixedpts_extraporder1_paramset2;
 real *quasiset_angmomdensityz_fixedpts_extraporder1_paramset2;
 real *AdS_mass_fixedpts_extraporder1_paramset2;
 real *bdyphi_fixedpts_extraporder1_paramset2;
-real *x_extrappt_fixedpts_extraporder1_paramset2;
-real *y_extrappt_fixedpts_extraporder1_paramset2;
-real *z_extrappt_fixedpts_extraporder1_paramset2;
+real *xpbdy_fixedpts_extraporder1_paramset2;
+real *ypbdy_fixedpts_extraporder1_paramset2;
+real *zpbdy_fixedpts_extraporder1_paramset2;
 real *x_outermostpt_fixedpts_extraporder1_paramset2;
 real *y_outermostpt_fixedpts_extraporder1_paramset2;
 real *z_outermostpt_fixedpts_extraporder1_paramset2;
@@ -535,9 +536,9 @@ real *quasiset_angmomdensityy_fixedpts_extraporder2_paramset2;
 real *quasiset_angmomdensityz_fixedpts_extraporder2_paramset2;
 real *AdS_mass_fixedpts_extraporder2_paramset2;
 real *bdyphi_fixedpts_extraporder2_paramset2;
-real *x_extrappt_fixedpts_extraporder2_paramset2;
-real *y_extrappt_fixedpts_extraporder2_paramset2;
-real *z_extrappt_fixedpts_extraporder2_paramset2;
+real *xpbdy_fixedpts_extraporder2_paramset2;
+real *ypbdy_fixedpts_extraporder2_paramset2;
+real *zpbdy_fixedpts_extraporder2_paramset2;
 real *x_outermostpt_fixedpts_extraporder2_paramset2;
 real *y_outermostpt_fixedpts_extraporder2_paramset2;
 real *z_outermostpt_fixedpts_extraporder2_paramset2;
@@ -555,9 +556,9 @@ real *quasiset_angmomdensityy_fixedpts_extraporder3_paramset2;
 real *quasiset_angmomdensityz_fixedpts_extraporder3_paramset2;
 real *AdS_mass_fixedpts_extraporder3_paramset2;
 real *bdyphi_fixedpts_extraporder3_paramset2;
-real *x_extrappt_fixedpts_extraporder3_paramset2;
-real *y_extrappt_fixedpts_extraporder3_paramset2;
-real *z_extrappt_fixedpts_extraporder3_paramset2;
+real *xpbdy_fixedpts_extraporder3_paramset2;
+real *ypbdy_fixedpts_extraporder3_paramset2;
+real *zpbdy_fixedpts_extraporder3_paramset2;
 real *x_outermostpt_fixedpts_extraporder3_paramset2;
 real *y_outermostpt_fixedpts_extraporder3_paramset2;
 real *z_outermostpt_fixedpts_extraporder3_paramset2;
@@ -763,9 +764,9 @@ real *quasiset_angmomdensityz0_freepts_extraporder1_paramset1;
 real *AdS_mass0_freepts_extraporder1_paramset1;
 real *bdyphi0_freepts_extraporder1_paramset1;
 
-real *x_extrappt0_freepts_extraporder1_paramset1;
-real *y_extrappt0_freepts_extraporder1_paramset1;
-real *z_extrappt0_freepts_extraporder1_paramset1;
+real *xpbdy0_freepts_extraporder1_paramset1;
+real *ypbdy0_freepts_extraporder1_paramset1;
+real *zpbdy0_freepts_extraporder1_paramset1;
 real *x_outermostpt0_freepts_extraporder1_paramset1;
 real *y_outermostpt0_freepts_extraporder1_paramset1;
 real *z_outermostpt0_freepts_extraporder1_paramset1;
@@ -832,9 +833,9 @@ real *quasiset_angmomdensityz0_freepts_extraporder2_paramset1;
 real *AdS_mass0_freepts_extraporder2_paramset1;
 real *bdyphi0_freepts_extraporder2_paramset1;
 
-real *x_extrappt0_freepts_extraporder2_paramset1;
-real *y_extrappt0_freepts_extraporder2_paramset1;
-real *z_extrappt0_freepts_extraporder2_paramset1;
+real *xpbdy0_freepts_extraporder2_paramset1;
+real *ypbdy0_freepts_extraporder2_paramset1;
+real *zpbdy0_freepts_extraporder2_paramset1;
 real *x_outermostpt0_freepts_extraporder2_paramset1;
 real *y_outermostpt0_freepts_extraporder2_paramset1;
 real *z_outermostpt0_freepts_extraporder2_paramset1;
@@ -900,9 +901,9 @@ real *quasiset_angmomdensityz0_freepts_extraporder3_paramset1;
 real *AdS_mass0_freepts_extraporder3_paramset1;
 real *bdyphi0_freepts_extraporder3_paramset1;
 
-real *x_extrappt0_freepts_extraporder3_paramset1;
-real *y_extrappt0_freepts_extraporder3_paramset1;
-real *z_extrappt0_freepts_extraporder3_paramset1;
+real *xpbdy0_freepts_extraporder3_paramset1;
+real *ypbdy0_freepts_extraporder3_paramset1;
+real *zpbdy0_freepts_extraporder3_paramset1;
 real *x_outermostpt0_freepts_extraporder3_paramset1;
 real *y_outermostpt0_freepts_extraporder3_paramset1;
 real *z_outermostpt0_freepts_extraporder3_paramset1;
@@ -968,9 +969,9 @@ real *quasiset_angmomdensityz0_fixedpts_extraporder1_paramset1;
 real *AdS_mass0_fixedpts_extraporder1_paramset1;
 real *bdyphi0_fixedpts_extraporder1_paramset1;
 
-real *x_extrappt0_fixedpts_extraporder1_paramset1;
-real *y_extrappt0_fixedpts_extraporder1_paramset1;
-real *z_extrappt0_fixedpts_extraporder1_paramset1;
+real *xpbdy0_fixedpts_extraporder1_paramset1;
+real *ypbdy0_fixedpts_extraporder1_paramset1;
+real *zpbdy0_fixedpts_extraporder1_paramset1;
 real *x_outermostpt0_fixedpts_extraporder1_paramset1;
 real *y_outermostpt0_fixedpts_extraporder1_paramset1;
 real *z_outermostpt0_fixedpts_extraporder1_paramset1;
@@ -1037,9 +1038,9 @@ real *quasiset_angmomdensityz0_fixedpts_extraporder2_paramset1;
 real *AdS_mass0_fixedpts_extraporder2_paramset1;
 real *bdyphi0_fixedpts_extraporder2_paramset1;
 
-real *x_extrappt0_fixedpts_extraporder2_paramset1;
-real *y_extrappt0_fixedpts_extraporder2_paramset1;
-real *z_extrappt0_fixedpts_extraporder2_paramset1;
+real *xpbdy0_fixedpts_extraporder2_paramset1;
+real *ypbdy0_fixedpts_extraporder2_paramset1;
+real *zpbdy0_fixedpts_extraporder2_paramset1;
 real *x_outermostpt0_fixedpts_extraporder2_paramset1;
 real *y_outermostpt0_fixedpts_extraporder2_paramset1;
 real *z_outermostpt0_fixedpts_extraporder2_paramset1;
@@ -1105,9 +1106,9 @@ real *quasiset_angmomdensityz0_fixedpts_extraporder3_paramset1;
 real *AdS_mass0_fixedpts_extraporder3_paramset1;
 real *bdyphi0_fixedpts_extraporder3_paramset1;
 
-real *x_extrappt0_fixedpts_extraporder3_paramset1;
-real *y_extrappt0_fixedpts_extraporder3_paramset1;
-real *z_extrappt0_fixedpts_extraporder3_paramset1;
+real *xpbdy0_fixedpts_extraporder3_paramset1;
+real *ypbdy0_fixedpts_extraporder3_paramset1;
+real *zpbdy0_fixedpts_extraporder3_paramset1;
 real *x_outermostpt0_fixedpts_extraporder3_paramset1;
 real *y_outermostpt0_fixedpts_extraporder3_paramset1;
 real *z_outermostpt0_fixedpts_extraporder3_paramset1;
@@ -1175,9 +1176,9 @@ real *quasiset_angmomdensityz0_freepts_extraporder1_paramset2;
 real *AdS_mass0_freepts_extraporder1_paramset2;
 real *bdyphi0_freepts_extraporder1_paramset2;
 
-real *x_extrappt0_freepts_extraporder1_paramset2;
-real *y_extrappt0_freepts_extraporder1_paramset2;
-real *z_extrappt0_freepts_extraporder1_paramset2;
+real *xpbdy0_freepts_extraporder1_paramset2;
+real *ypbdy0_freepts_extraporder1_paramset2;
+real *zpbdy0_freepts_extraporder1_paramset2;
 real *x_outermostpt0_freepts_extraporder1_paramset2;
 real *y_outermostpt0_freepts_extraporder1_paramset2;
 real *z_outermostpt0_freepts_extraporder1_paramset2;
@@ -1244,9 +1245,9 @@ real *quasiset_angmomdensityz0_freepts_extraporder2_paramset2;
 real *AdS_mass0_freepts_extraporder2_paramset2;
 real *bdyphi0_freepts_extraporder2_paramset2;
 
-real *x_extrappt0_freepts_extraporder2_paramset2;
-real *y_extrappt0_freepts_extraporder2_paramset2;
-real *z_extrappt0_freepts_extraporder2_paramset2;
+real *xpbdy0_freepts_extraporder2_paramset2;
+real *ypbdy0_freepts_extraporder2_paramset2;
+real *zpbdy0_freepts_extraporder2_paramset2;
 real *x_outermostpt0_freepts_extraporder2_paramset2;
 real *y_outermostpt0_freepts_extraporder2_paramset2;
 real *z_outermostpt0_freepts_extraporder2_paramset2;
@@ -1312,9 +1313,9 @@ real *quasiset_angmomdensityz0_freepts_extraporder3_paramset2;
 real *AdS_mass0_freepts_extraporder3_paramset2;
 real *bdyphi0_freepts_extraporder3_paramset2;
 
-real *x_extrappt0_freepts_extraporder3_paramset2;
-real *y_extrappt0_freepts_extraporder3_paramset2;
-real *z_extrappt0_freepts_extraporder3_paramset2;
+real *xpbdy0_freepts_extraporder3_paramset2;
+real *ypbdy0_freepts_extraporder3_paramset2;
+real *zpbdy0_freepts_extraporder3_paramset2;
 real *x_outermostpt0_freepts_extraporder3_paramset2;
 real *y_outermostpt0_freepts_extraporder3_paramset2;
 real *z_outermostpt0_freepts_extraporder3_paramset2;
@@ -1380,9 +1381,9 @@ real *quasiset_angmomdensityz0_fixedpts_extraporder1_paramset2;
 real *AdS_mass0_fixedpts_extraporder1_paramset2;
 real *bdyphi0_fixedpts_extraporder1_paramset2;
 
-real *x_extrappt0_fixedpts_extraporder1_paramset2;
-real *y_extrappt0_fixedpts_extraporder1_paramset2;
-real *z_extrappt0_fixedpts_extraporder1_paramset2;
+real *xpbdy0_fixedpts_extraporder1_paramset2;
+real *ypbdy0_fixedpts_extraporder1_paramset2;
+real *zpbdy0_fixedpts_extraporder1_paramset2;
 real *x_outermostpt0_fixedpts_extraporder1_paramset2;
 real *y_outermostpt0_fixedpts_extraporder1_paramset2;
 real *z_outermostpt0_fixedpts_extraporder1_paramset2;
@@ -1449,9 +1450,9 @@ real *quasiset_angmomdensityz0_fixedpts_extraporder2_paramset2;
 real *AdS_mass0_fixedpts_extraporder2_paramset2;
 real *bdyphi0_fixedpts_extraporder2_paramset2;
 
-real *x_extrappt0_fixedpts_extraporder2_paramset2;
-real *y_extrappt0_fixedpts_extraporder2_paramset2;
-real *z_extrappt0_fixedpts_extraporder2_paramset2;
+real *xpbdy0_fixedpts_extraporder2_paramset2;
+real *ypbdy0_fixedpts_extraporder2_paramset2;
+real *zpbdy0_fixedpts_extraporder2_paramset2;
 real *x_outermostpt0_fixedpts_extraporder2_paramset2;
 real *y_outermostpt0_fixedpts_extraporder2_paramset2;
 real *z_outermostpt0_fixedpts_extraporder2_paramset2;
@@ -1517,9 +1518,9 @@ real *quasiset_angmomdensityz0_fixedpts_extraporder3_paramset2;
 real *AdS_mass0_fixedpts_extraporder3_paramset2;
 real *bdyphi0_fixedpts_extraporder3_paramset2;
 
-real *x_extrappt0_fixedpts_extraporder3_paramset2;
-real *y_extrappt0_fixedpts_extraporder3_paramset2;
-real *z_extrappt0_fixedpts_extraporder3_paramset2;
+real *xpbdy0_fixedpts_extraporder3_paramset2;
+real *ypbdy0_fixedpts_extraporder3_paramset2;
+real *zpbdy0_fixedpts_extraporder3_paramset2;
 real *x_outermostpt0_fixedpts_extraporder3_paramset2;
 real *y_outermostpt0_fixedpts_extraporder3_paramset2;
 real *z_outermostpt0_fixedpts_extraporder3_paramset2;
@@ -1541,9 +1542,9 @@ real xex2,yex2,zex2;
 real xout1,yout1,zout1;
 real xout2,yout2,zout2;
 
-real *x_extrappt0_tmp;
-real *y_extrappt0_tmp;
-real *z_extrappt0_tmp;
+real *xpbdy0_tmp;
+real *ypbdy0_tmp;
+real *zpbdy0_tmp;
 real *x_outermostpt0_tmp;
 real *y_outermostpt0_tmp;
 real *z_outermostpt0_tmp;
@@ -2345,6 +2346,7 @@ void AdS4D_var_post_init(char *pfile)
 	output_metricAH_sph_ascii=0; AMRD_int_param(pfile,"output_metricAH_sph_ascii",&output_metricAH_sph_ascii,1);
 	output_diagnosticAH_ascii=0; AMRD_int_param(pfile,"output_diagnosticAH_ascii",&output_diagnosticAH_ascii,1);
     output_bdyquantities=0; AMRD_int_param(pfile,"output_bdyquantities",&output_bdyquantities,1);
+    rad_extrap=0; AMRD_int_param(pfile,"rad_extrap",&rad_extrap,1);
     output_outermostpts=0; AMRD_int_param(pfile,"output_outermostpts",&output_outermostpts,1);
     output_bdyphi=0; AMRD_int_param(pfile,"output_bdyphi",&output_bdyphi,1);
     output_bdytrace=0; AMRD_int_param(pfile,"output_bdytrace",&output_bdytrace,1);
@@ -3400,9 +3402,16 @@ void AdS4D_pre_io_calc(void)
                 	if (remove_repeated_bdypoints)
                 	{
                 		//routine that sets a mask for near bdy points. We will call these "nexttobdypoints". The number of nexttobdypoints is also the number of points at the boundary where we will extrapolate the stress-energy tensor in AdS4D_pre_tstep and AdS4D_post_tstep. We call this number numbdypoints.
+                		if (rad_extrap)
+                		{
+                			if (my_rank==0) printf("\nFirst order radial extrapolation of boundary quantities using paramset1 parameters (saved in freepts_extraporder1_paramset1*.txt files\n");
+                			nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                		}
+                		else
+                		{
+                			nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+						}
 
-                		nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
-	
                 		MPI_Comm_size(MPI_COMM_WORLD,&uniSize); 
                     	vecbdypoints_tmp = malloc(uniSize*sizeof(int));
                     	dsplsbdypoints_tmp = malloc(uniSize*sizeof(int));    
@@ -3413,15 +3422,15 @@ void AdS4D_pre_io_calc(void)
                     	MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
 
 	
-                    	x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                    	y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                    	z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                    	xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                    	ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                    	zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                     	x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                     	y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                     	z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                    	x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                    	y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                    	z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                    	xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                    	ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                    	zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                     	x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                     	y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                     	z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
@@ -3430,18 +3439,18 @@ void AdS4D_pre_io_calc(void)
                     	//initialize
                     	for (i=0;i<numbdypoints_tmp;i++)
                     	{                        
-                        	x_extrappt_tmp               [i] = 0;
-                        	y_extrappt_tmp               [i] = 0;
-                        	z_extrappt_tmp               [i] = 0;
+                        	xpbdy_tmp               [i] = 0;
+                        	ypbdy_tmp               [i] = 0;
+                        	zpbdy_tmp               [i] = 0;
                         	x_outermostpt_tmp            [i] = 0;
                         	y_outermostpt_tmp            [i] = 0;
                         	z_outermostpt_tmp            [i] = 0;
                     	}   
                     	for (i=0;i<basenumbdypoints_tmp;i++)
                     	{
-                    		x_extrappt0_tmp              [i] = 0;
-                        	y_extrappt0_tmp              [i] = 0;
-                        	z_extrappt0_tmp              [i] = 0;  
+                    		xpbdy0_tmp              [i] = 0;
+                        	ypbdy0_tmp              [i] = 0;
+                        	zpbdy0_tmp              [i] = 0;  
                         	x_outermostpt0_tmp           [i] = 0;
                         	y_outermostpt0_tmp           [i] = 0;
                         	z_outermostpt0_tmp           [i] = 0;  
@@ -3477,15 +3486,23 @@ void AdS4D_pre_io_calc(void)
                         	}
                     	}  
 
-	
-                    	xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                    	if (rad_extrap)
+                    	{
+                    		xyz_bdy_out_radextrap_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                         			x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                         			chrbdy_freepts_extraporder1_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
-	
-                    	//x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                    	MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                    	MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                    	MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                    	}
+                    	else
+                    	{
+                    		xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
+                        			x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
+                        			chrbdy_freepts_extraporder1_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
+						}
+
+                    	//x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                    	MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                    	MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                    	MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                     	MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                     	MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                     	MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -3496,18 +3513,18 @@ void AdS4D_pre_io_calc(void)
                     	for (m=0;m<basenumbdypoints_tmp;m++)
                     	{
                     		//Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                        	xex1=x_extrappt0_tmp[m];
-                        	yex1=y_extrappt0_tmp[m];
-                        	zex1=z_extrappt0_tmp[m];
+                        	xex1=xpbdy0_tmp[m];
+                        	yex1=ypbdy0_tmp[m];
+                        	zex1=zpbdy0_tmp[m];
                         	xout1=x_outermostpt0_tmp[m];
                         	yout1=y_outermostpt0_tmp[m];
                         	zout1=z_outermostpt0_tmp[m];
 
                         	for (l=0;l<basenumbdypoints_tmp;l++)
                         	{
-                            	xex2=x_extrappt0_tmp[l];
-                            	yex2=y_extrappt0_tmp[l];
-                            	zex2=z_extrappt0_tmp[l];
+                            	xex2=xpbdy0_tmp[l];
+                            	yex2=ypbdy0_tmp[l];
+                            	zex2=zpbdy0_tmp[l];
                             	xout2=x_outermostpt0_tmp[l];
                             	yout2=y_outermostpt0_tmp[l];
                             	zout2=z_outermostpt0_tmp[l];
@@ -3624,15 +3641,15 @@ void AdS4D_pre_io_calc(void)
 	
                     	free(vecbdypoints_tmp);
                     	free(dsplsbdypoints_tmp);
-                    	free(x_extrappt_tmp);
-                    	free(y_extrappt_tmp);
-                    	free(z_extrappt_tmp);
+                    	free(xpbdy_tmp);
+                    	free(ypbdy_tmp);
+                    	free(zpbdy_tmp);
                     	free(x_outermostpt_tmp);
                     	free(y_outermostpt_tmp);
                     	free(z_outermostpt_tmp);
-                    	free(x_extrappt0_tmp);
-                    	free(y_extrappt0_tmp);
-                    	free(z_extrappt0_tmp);
+                    	free(xpbdy0_tmp);
+                    	free(ypbdy0_tmp);
+                    	free(zpbdy0_tmp);
                     	free(x_outermostpt0_tmp);
                     	free(y_outermostpt0_tmp);
                     	free(z_outermostpt0_tmp);
@@ -3641,9 +3658,17 @@ void AdS4D_pre_io_calc(void)
                 	} //closes condition on remove_repeated_bdypoints
                 	else
                 	{
-                		nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                		if (rad_extrap)
+                		{
+                			if (my_rank==0) printf("\nFirst order radial extrapolation of boundary quantities using paramset1 parameters (saved in freepts_extraporder1_paramset1*.txt files\n");
+                			nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                		}
+                		else
+                		{
+                			nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
                 		//printf("half_steps_from_bdy_ext_paramset1=%i\n",half_steps_from_bdy_ext_paramset1);
                 		//printf("numbdypoints_freepts_extraporder1_paramset1=%i\n",numbdypoints_freepts_extraporder1_paramset1);
+                		}
                 	}
 
             	}   
@@ -3665,15 +3690,15 @@ void AdS4D_pre_io_calc(void)
                         //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -3681,18 +3706,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -3728,15 +3753,15 @@ void AdS4D_pre_io_calc(void)
                             }
                         }   
     
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     chrbdy_freepts_extraporder2_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
     
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -3746,17 +3771,17 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -3874,15 +3899,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -3913,15 +3938,15 @@ void AdS4D_pre_io_calc(void)
                         //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -3929,18 +3954,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -3976,15 +4001,15 @@ void AdS4D_pre_io_calc(void)
                             }
                         }   
     
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     chrbdy_freepts_extraporder3_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
     
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -3994,17 +4019,17 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -4122,15 +4147,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -4150,9 +4175,15 @@ void AdS4D_pre_io_calc(void)
                     if (remove_repeated_bdypoints)
                     {
                         //routine that sets a mask for near bdy points. We will call these "nexttobdypoints". The number of nexttobdypoints is also the number of points at the boundary where we will extrapolate the stress-energy tensor in AdS4D_pre_tstep and AdS4D_post_tstep. We call this number numbdypoints.
-
-                        nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
-    
+                    	if (rad_extrap)
+                		{
+                			if (my_rank==0) printf("\nFirst order radial extrapolation of boundary quantities using parameterset2 parameters (saved in freepts_extraporder1_paramset2*.txt files\n");
+                			nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                		}
+                		else
+                		{
+                        	nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+    					}
                         MPI_Comm_size(MPI_COMM_WORLD,&uniSize); 
                         vecbdypoints_tmp = malloc(uniSize*sizeof(int));
                         dsplsbdypoints_tmp = malloc(uniSize*sizeof(int));    
@@ -4163,15 +4194,15 @@ void AdS4D_pre_io_calc(void)
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
 
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
@@ -4180,18 +4211,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -4227,15 +4258,23 @@ void AdS4D_pre_io_calc(void)
                             }
                         }  
 
-    
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+    					if (rad_extrap)
+						{
+							xyz_bdy_out_radextrap_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
-                                    chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
+                                    chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);
+						}
+                    	else
+                    	{
+                        	xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
+                                    x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
+                                    chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);
+                        }
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -4246,18 +4285,18 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
 
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -4374,15 +4413,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -4391,9 +4430,17 @@ void AdS4D_pre_io_calc(void)
                     } //closes condition on remove_repeated_bdypoints
                     else
                     {
-                        nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
-                        //printf("half_steps_from_bdy_ext_paramset2=%i\n",half_steps_from_bdy_ext_paramset2);
-                        //printf("numbdypoints_freepts_extraporder1_paramset2=%i\n",numbdypoints_freepts_extraporder1_paramset2);
+                    	if (rad_extrap)
+                		{
+                			if (my_rank==0) printf("\nFirst order radial extrapolation of boundary quantities using parameterset2 parameters (saved in freepts_extraporder1_paramset2*.txt files\n");
+                			nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                		}
+                		else
+                		{
+                        	nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                        	//printf("half_steps_from_bdy_ext_paramset2=%i\n",half_steps_from_bdy_ext_paramset2);
+                        	//printf("numbdypoints_freepts_extraporder1_paramset2=%i\n",numbdypoints_freepts_extraporder1_paramset2);
+                        }
                     }
 
                 }   
@@ -4415,15 +4462,15 @@ void AdS4D_pre_io_calc(void)
                         //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -4431,18 +4478,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -4478,15 +4525,15 @@ void AdS4D_pre_io_calc(void)
                             }
                         }   
     
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     chrbdy_freepts_extraporder2_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
     
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -4496,17 +4543,17 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -4624,15 +4671,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -4663,15 +4710,15 @@ void AdS4D_pre_io_calc(void)
                         //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -4679,18 +4726,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -4726,15 +4773,15 @@ void AdS4D_pre_io_calc(void)
                             }
                         }   
     
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     chrbdy_freepts_extraporder3_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
     
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -4744,17 +4791,17 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -4872,15 +4919,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -4923,15 +4970,15 @@ void AdS4D_pre_io_calc(void)
                         //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -4939,18 +4986,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -4986,15 +5033,15 @@ void AdS4D_pre_io_calc(void)
                             }
                         }   
     
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     chrbdy_fixedpts_extraporder1_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
     
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -5004,17 +5051,17 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -5132,15 +5179,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -5168,15 +5215,15 @@ void AdS4D_pre_io_calc(void)
                         //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -5184,18 +5231,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -5231,15 +5278,15 @@ void AdS4D_pre_io_calc(void)
                             }
                         }   
     
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     chrbdy_fixedpts_extraporder2_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
     
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -5249,17 +5296,17 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -5377,15 +5424,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -5412,15 +5459,15 @@ void AdS4D_pre_io_calc(void)
                         //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -5428,18 +5475,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -5475,15 +5522,15 @@ void AdS4D_pre_io_calc(void)
                             }
                         }   
     
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     chrbdy_fixedpts_extraporder3_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
     
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -5493,17 +5540,17 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -5621,15 +5668,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -5657,15 +5704,15 @@ void AdS4D_pre_io_calc(void)
                         //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -5673,18 +5720,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -5720,15 +5767,15 @@ void AdS4D_pre_io_calc(void)
                             }
                         }   
     
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     chrbdy_fixedpts_extraporder1_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
     
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -5738,17 +5785,17 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -5866,15 +5913,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -5902,15 +5949,15 @@ void AdS4D_pre_io_calc(void)
                         //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -5918,18 +5965,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -5965,15 +6012,15 @@ void AdS4D_pre_io_calc(void)
                             }
                         }   
     
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     chrbdy_fixedpts_extraporder2_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
     
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -5983,17 +6030,17 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -6111,15 +6158,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -6146,15 +6193,15 @@ void AdS4D_pre_io_calc(void)
                         //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
     
-                        x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -6162,18 +6209,18 @@ void AdS4D_pre_io_calc(void)
                         //initialize
                         for (i=0;i<numbdypoints_tmp;i++)
                         {                        
-                            x_extrappt_tmp               [i] = 0;
-                            y_extrappt_tmp               [i] = 0;
-                            z_extrappt_tmp               [i] = 0;
+                            xpbdy_tmp               [i] = 0;
+                            ypbdy_tmp               [i] = 0;
+                            zpbdy_tmp               [i] = 0;
                             x_outermostpt_tmp            [i] = 0;
                             y_outermostpt_tmp            [i] = 0;
                             z_outermostpt_tmp            [i] = 0;
                         }   
                         for (i=0;i<basenumbdypoints_tmp;i++)
                         {
-                            x_extrappt0_tmp              [i] = 0;
-                            y_extrappt0_tmp              [i] = 0;
-                            z_extrappt0_tmp              [i] = 0;  
+                            xpbdy0_tmp              [i] = 0;
+                            ypbdy0_tmp              [i] = 0;
+                            zpbdy0_tmp              [i] = 0;  
                             x_outermostpt0_tmp           [i] = 0;
                             y_outermostpt0_tmp           [i] = 0;
                             z_outermostpt0_tmp           [i] = 0;  
@@ -6209,15 +6256,15 @@ void AdS4D_pre_io_calc(void)
                             }
                         }   
     
-                        xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     chrbdy_fixedpts_extraporder3_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
     
     
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -6227,17 +6274,17 @@ void AdS4D_pre_io_calc(void)
                         for (m=0;m<basenumbdypoints_tmp;m++)
                         {
                             //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            xex1=x_extrappt0_tmp[m];
-                            yex1=y_extrappt0_tmp[m];
-                            zex1=z_extrappt0_tmp[m];
+                            xex1=xpbdy0_tmp[m];
+                            yex1=ypbdy0_tmp[m];
+                            zex1=zpbdy0_tmp[m];
                             xout1=x_outermostpt0_tmp[m];
                             yout1=y_outermostpt0_tmp[m];
                             zout1=z_outermostpt0_tmp[m];
                             for (l=0;l<basenumbdypoints_tmp;l++)
                             {
-                                xex2=x_extrappt0_tmp[l];
-                                yex2=y_extrappt0_tmp[l];
-                                zex2=z_extrappt0_tmp[l];
+                                xex2=xpbdy0_tmp[l];
+                                yex2=ypbdy0_tmp[l];
+                                zex2=zpbdy0_tmp[l];
                                 xout2=x_outermostpt0_tmp[l];
                                 yout2=y_outermostpt0_tmp[l];
                                 zout2=z_outermostpt0_tmp[l];
@@ -6355,15 +6402,15 @@ void AdS4D_pre_io_calc(void)
     
                         free(vecbdypoints_tmp);
                         free(dsplsbdypoints_tmp);
-                        free(x_extrappt_tmp);
-                        free(y_extrappt_tmp);
-                        free(z_extrappt_tmp);
+                        free(xpbdy_tmp);
+                        free(ypbdy_tmp);
+                        free(zpbdy_tmp);
                         free(x_outermostpt_tmp);
                         free(y_outermostpt_tmp);
                         free(z_outermostpt_tmp);
-                        free(x_extrappt0_tmp);
-                        free(y_extrappt0_tmp);
-                        free(z_extrappt0_tmp);
+                        free(xpbdy0_tmp);
+                        free(ypbdy0_tmp);
+                        free(zpbdy0_tmp);
                         free(x_outermostpt0_tmp);
                         free(y_outermostpt0_tmp);
                         free(z_outermostpt0_tmp);
@@ -6994,9 +7041,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder1_paramset1  = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder1_paramset1  = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                         bdyphi_freepts_extraporder1_paramset1                   = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));   
-                        x_extrappt_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
-                        y_extrappt_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
-                        z_extrappt_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));  
+                        xpbdy_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
+                        ypbdy_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
+                        zpbdy_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));  
                        	x_outermostpt_freepts_extraporder1_paramset1            = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                        	y_outermostpt_freepts_extraporder1_paramset1            = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                        	z_outermostpt_freepts_extraporder1_paramset1            = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real)); 
@@ -7050,9 +7097,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder1_paramset1 = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                         AdS_mass0_freepts_extraporder1_paramset1                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder1_paramset1                  = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
-                        y_extrappt0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
-                        z_extrappt0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));   
+                        xpbdy0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
+                        ypbdy0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
+                        zpbdy0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));   
                        	x_outermostpt0_freepts_extraporder1_paramset1           = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                        	y_outermostpt0_freepts_extraporder1_paramset1           = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                        	z_outermostpt0_freepts_extraporder1_paramset1           = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));   
@@ -7073,9 +7120,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder1_paramset1  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder1_paramset1  [i] = 0;
                             bdyphi_freepts_extraporder1_paramset1                   [i] = 0;   
-                            x_extrappt_freepts_extraporder1_paramset1               [i] = 0;
-                            y_extrappt_freepts_extraporder1_paramset1               [i] = 0;
-                            z_extrappt_freepts_extraporder1_paramset1               [i] = 0;
+                            xpbdy_freepts_extraporder1_paramset1               [i] = 0;
+                            ypbdy_freepts_extraporder1_paramset1               [i] = 0;
+                            zpbdy_freepts_extraporder1_paramset1               [i] = 0;
                            	x_outermostpt_freepts_extraporder1_paramset1            [i] = 0;
                            	y_outermostpt_freepts_extraporder1_paramset1            [i] = 0;
                            	z_outermostpt_freepts_extraporder1_paramset1            [i] = 0;
@@ -7131,9 +7178,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder1_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder1_paramset1 [i] = 0;
                             bdyphi0_freepts_extraporder1_paramset1                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder1_paramset1              [i] = 0;
-                            y_extrappt0_freepts_extraporder1_paramset1              [i] = 0;
-                            z_extrappt0_freepts_extraporder1_paramset1              [i] = 0;
+                            xpbdy0_freepts_extraporder1_paramset1              [i] = 0;
+                            ypbdy0_freepts_extraporder1_paramset1              [i] = 0;
+                            zpbdy0_freepts_extraporder1_paramset1              [i] = 0;
                            	x_outermostpt0_freepts_extraporder1_paramset1           [i] = 0;
                            	y_outermostpt0_freepts_extraporder1_paramset1           [i] = 0;
                            	z_outermostpt0_freepts_extraporder1_paramset1           [i] = 0;
@@ -7171,14 +7218,23 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder1_paramset1,y_extrappt_freepts_extraporder1_paramset1,z_extrappt_freepts_extraporder1_paramset1,
+                        if (rad_extrap)
+                    	{
+                    		xyz_bdy_out_radextrap_(xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
+                        						x_outermostpt_freepts_extraporder1_paramset1,y_outermostpt_freepts_extraporder1_paramset1,z_outermostpt_freepts_extraporder1_paramset1,
+                        						chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);
+                    	}
+                    	else
+                    	{
+                        	xyz_extrap_outermost_(xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
                         						x_outermostpt_freepts_extraporder1_paramset1,y_outermostpt_freepts_extraporder1_paramset1,z_outermostpt_freepts_extraporder1_paramset1,
                         						chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
-                        
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,x_extrappt0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,y_extrappt0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,z_extrappt0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        }
+
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,xpbdy0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,ypbdy0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,zpbdy0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                         	MPI_Allgatherv(x_outermostpt_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,x_outermostpt0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -7203,7 +7259,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_freepts_extraporder1_paramset1 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder1_paramset1 = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                                 xiextrap0_freepts_extraporder1_paramset1  = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder1_paramset1,chiextrap0_freepts_extraporder1_paramset1,xiextrap0_freepts_extraporder1_paramset1,x_extrappt0_freepts_extraporder1_paramset1,y_extrappt0_freepts_extraporder1_paramset1,z_extrappt0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder1_paramset1,chiextrap0_freepts_extraporder1_paramset1,xiextrap0_freepts_extraporder1_paramset1,xpbdy0_freepts_extraporder1_paramset1,ypbdy0_freepts_extraporder1_paramset1,zpbdy0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1);  
                                 basebdy_Nchi_freepts_extraporder1_paramset1=0;//initialize
                                 basebdy_Nxi_freepts_extraporder1_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder1_paramset1,&basebdy_Nxi_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1,chiextrap0_freepts_extraporder1_paramset1,xiextrap0_freepts_extraporder1_paramset1);  
@@ -7213,14 +7269,16 @@ void AdS4D_pre_tstep(int L)
                             }
                         }
 
-   
-                        extrap_bdyphi_freepts_(bdyphi_freepts_extraporder1_paramset1,
+                        if (rad_extrap)
+                		{
+                			
+                			bdyphi_radextrap_(bdyphi_freepts_extraporder1_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder1_paramset1,y_extrappt_freepts_extraporder1_paramset1,z_extrappt_freepts_extraporder1_paramset1,
+                                        xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
                                         chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
-                        extrap_quasiset_freepts_(quasiset_tt_freepts_extraporder1_paramset1,quasiset_tchi_freepts_extraporder1_paramset1,quasiset_txi_freepts_extraporder1_paramset1,
+                        	quasiset_radextrap_(quasiset_tt_freepts_extraporder1_paramset1,quasiset_tchi_freepts_extraporder1_paramset1,quasiset_txi_freepts_extraporder1_paramset1,
                                 quasiset_chichi_freepts_extraporder1_paramset1,quasiset_chixi_freepts_extraporder1_paramset1,
                                 quasiset_xixi_freepts_extraporder1_paramset1,
                                 quasiset_trace_freepts_extraporder1_paramset1,
@@ -7236,10 +7294,42 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder1_paramset1,y_extrappt_freepts_extraporder1_paramset1,z_extrappt_freepts_extraporder1_paramset1,
+                                xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
                                 chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,
                                 &bdy_extrap_order,
-                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
+                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);  
+                        	MPI_Barrier(MPI_COMM_WORLD);
+							if (my_rank==0) {printf("POST:bdyphi_radextrap_(bdyphi_freepts_extraporder1_paramset1,quasiset_radextrap_(quasiset_tt_freepts_extraporder1_paramset1,\n"); fflush(stdout);}
+                		}
+                		else
+                		{
+                        	extrap_bdyphi_freepts_(bdyphi_freepts_extraporder1_paramset1,
+                                        leadordcoeff_phi1,
+                                        xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
+                                        chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,
+                                        &bdy_extrap_order,
+                                        x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
+                        	extrap_quasiset_freepts_(quasiset_tt_freepts_extraporder1_paramset1,quasiset_tchi_freepts_extraporder1_paramset1,quasiset_txi_freepts_extraporder1_paramset1,
+                                quasiset_chichi_freepts_extraporder1_paramset1,quasiset_chixi_freepts_extraporder1_paramset1,
+                                quasiset_xixi_freepts_extraporder1_paramset1,
+                                quasiset_trace_freepts_extraporder1_paramset1,
+                                quasiset_massdensity_freepts_extraporder1_paramset1,
+                                quasiset_angmomdensityx_freepts_extraporder1_paramset1,
+                                quasiset_angmomdensityy_freepts_extraporder1_paramset1,
+                                quasiset_angmomdensityz_freepts_extraporder1_paramset1,
+                                quasiset_tt_ll,quasiset_tchi_ll,quasiset_txi_ll,
+                                quasiset_chichi_ll,quasiset_chixi_ll,
+                                quasiset_xixi_ll,
+                                quasiset_tracell,
+                                quasiset_massdensityll,
+                                quasiset_angmomdensityxll,
+                                quasiset_angmomdensityyll,
+                                quasiset_angmomdensityzll,
+                                xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
+                                chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,
+                                &bdy_extrap_order,
+                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);   
+                        } 
                         //distributing the values of the quasiset components of each process over an array lquasiset_ll0 defined globally. This array will be different for each process, in fact it will be zero everywhere except for a certain position (next to the one for the previous processor) containing the values of quasiset_ll of a specific process. This is repeated after each step of the evolution. 
                         for (i=is_bdy_freepts_extraporder1_paramset1; i<ie_bdy_freepts_extraporder1_paramset1; i++)
                         {
@@ -7283,9 +7373,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder2_paramset1  = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder2_paramset1  = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         bdyphi_freepts_extraporder2_paramset1                   = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));   
-                        x_extrappt_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
-                        y_extrappt_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
-                        z_extrappt_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));  
+                        xpbdy_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
+                        ypbdy_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
+                        zpbdy_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));  
                         x_outermostpt_freepts_extraporder2_paramset1            = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         y_outermostpt_freepts_extraporder2_paramset1            = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         z_outermostpt_freepts_extraporder2_paramset1            = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real)); 
@@ -7339,9 +7429,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder2_paramset1 = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         AdS_mass0_freepts_extraporder2_paramset1                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder2_paramset1                  = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
-                        y_extrappt0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
-                        z_extrappt0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));   
+                        xpbdy0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
+                        ypbdy0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
+                        zpbdy0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));   
                         x_outermostpt0_freepts_extraporder2_paramset1           = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         y_outermostpt0_freepts_extraporder2_paramset1           = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         z_outermostpt0_freepts_extraporder2_paramset1           = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));   
@@ -7362,9 +7452,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder2_paramset1  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder2_paramset1  [i] = 0;
                             bdyphi_freepts_extraporder2_paramset1                   [i] = 0;   
-                            x_extrappt_freepts_extraporder2_paramset1               [i] = 0;
-                            y_extrappt_freepts_extraporder2_paramset1               [i] = 0;
-                            z_extrappt_freepts_extraporder2_paramset1               [i] = 0;
+                            xpbdy_freepts_extraporder2_paramset1               [i] = 0;
+                            ypbdy_freepts_extraporder2_paramset1               [i] = 0;
+                            zpbdy_freepts_extraporder2_paramset1               [i] = 0;
                             x_outermostpt_freepts_extraporder2_paramset1            [i] = 0;
                             y_outermostpt_freepts_extraporder2_paramset1            [i] = 0;
                             z_outermostpt_freepts_extraporder2_paramset1            [i] = 0;
@@ -7420,9 +7510,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder2_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder2_paramset1 [i] = 0;
                             bdyphi0_freepts_extraporder2_paramset1                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder2_paramset1              [i] = 0;
-                            y_extrappt0_freepts_extraporder2_paramset1              [i] = 0;
-                            z_extrappt0_freepts_extraporder2_paramset1              [i] = 0;
+                            xpbdy0_freepts_extraporder2_paramset1              [i] = 0;
+                            ypbdy0_freepts_extraporder2_paramset1              [i] = 0;
+                            zpbdy0_freepts_extraporder2_paramset1              [i] = 0;
 							x_outermostpt0_freepts_extraporder2_paramset1           [i] = 0;
 							y_outermostpt0_freepts_extraporder2_paramset1           [i] = 0;
 							z_outermostpt0_freepts_extraporder2_paramset1           [i] = 0;
@@ -7460,14 +7550,14 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder2_paramset1,y_extrappt_freepts_extraporder2_paramset1,z_extrappt_freepts_extraporder2_paramset1,
+                        xyz_extrap_outermost_(xpbdy_freepts_extraporder2_paramset1,ypbdy_freepts_extraporder2_paramset1,zpbdy_freepts_extraporder2_paramset1,
                                               x_outermostpt_freepts_extraporder2_paramset1,y_outermostpt_freepts_extraporder2_paramset1,z_outermostpt_freepts_extraporder2_paramset1,
                                               chrbdy_freepts_extraporder2_paramset1,&numbdypoints_freepts_extraporder2_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,x_extrappt0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,y_extrappt0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,z_extrappt0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,xpbdy0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,ypbdy0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,zpbdy0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,x_outermostpt0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -7492,7 +7582,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_freepts_extraporder2_paramset1 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder2_paramset1 = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                                 xiextrap0_freepts_extraporder2_paramset1  = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder2_paramset1,chiextrap0_freepts_extraporder2_paramset1,xiextrap0_freepts_extraporder2_paramset1,x_extrappt0_freepts_extraporder2_paramset1,y_extrappt0_freepts_extraporder2_paramset1,z_extrappt0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder2_paramset1,chiextrap0_freepts_extraporder2_paramset1,xiextrap0_freepts_extraporder2_paramset1,xpbdy0_freepts_extraporder2_paramset1,ypbdy0_freepts_extraporder2_paramset1,zpbdy0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1);  
                                 basebdy_Nchi_freepts_extraporder2_paramset1=0;//initialize
                                 basebdy_Nxi_freepts_extraporder2_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder2_paramset1,&basebdy_Nxi_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1,chiextrap0_freepts_extraporder2_paramset1,xiextrap0_freepts_extraporder2_paramset1);  
@@ -7505,7 +7595,7 @@ void AdS4D_pre_tstep(int L)
    
                         extrap_bdyphi_freepts_(bdyphi_freepts_extraporder2_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder2_paramset1,y_extrappt_freepts_extraporder2_paramset1,z_extrappt_freepts_extraporder2_paramset1,
+                                        xpbdy_freepts_extraporder2_paramset1,ypbdy_freepts_extraporder2_paramset1,zpbdy_freepts_extraporder2_paramset1,
                                         chrbdy_freepts_extraporder2_paramset1,&numbdypoints_freepts_extraporder2_paramset1,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -7525,7 +7615,7 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder2_paramset1,y_extrappt_freepts_extraporder2_paramset1,z_extrappt_freepts_extraporder2_paramset1,
+                                xpbdy_freepts_extraporder2_paramset1,ypbdy_freepts_extraporder2_paramset1,zpbdy_freepts_extraporder2_paramset1,
                                 chrbdy_freepts_extraporder2_paramset1,&numbdypoints_freepts_extraporder2_paramset1,
                                 &bdy_extrap_order,
                                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -7572,9 +7662,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder3_paramset1  = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder3_paramset1  = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         bdyphi_freepts_extraporder3_paramset1                   = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));   
-                        x_extrappt_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
-                        y_extrappt_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
-                        z_extrappt_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));  
+                        xpbdy_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
+                        ypbdy_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
+                        zpbdy_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));  
                         x_outermostpt_freepts_extraporder3_paramset1            = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         y_outermostpt_freepts_extraporder3_paramset1            = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         z_outermostpt_freepts_extraporder3_paramset1            = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real)); 
@@ -7628,9 +7718,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder3_paramset1 = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         AdS_mass0_freepts_extraporder3_paramset1                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder3_paramset1                  = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
-                        y_extrappt0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
-                        z_extrappt0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));   
+                        xpbdy0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
+                        ypbdy0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
+                        zpbdy0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));   
                         x_outermostpt0_freepts_extraporder3_paramset1           = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         y_outermostpt0_freepts_extraporder3_paramset1           = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         z_outermostpt0_freepts_extraporder3_paramset1           = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));   
@@ -7651,9 +7741,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder3_paramset1  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder3_paramset1  [i] = 0;
                             bdyphi_freepts_extraporder3_paramset1                   [i] = 0;   
-                            x_extrappt_freepts_extraporder3_paramset1               [i] = 0;
-                            y_extrappt_freepts_extraporder3_paramset1               [i] = 0;
-                            z_extrappt_freepts_extraporder3_paramset1               [i] = 0;
+                            xpbdy_freepts_extraporder3_paramset1               [i] = 0;
+                            ypbdy_freepts_extraporder3_paramset1               [i] = 0;
+                            zpbdy_freepts_extraporder3_paramset1               [i] = 0;
                                 x_outermostpt_freepts_extraporder3_paramset1            [i] = 0;
                                 y_outermostpt_freepts_extraporder3_paramset1            [i] = 0;
                                 z_outermostpt_freepts_extraporder3_paramset1            [i] = 0;
@@ -7709,9 +7799,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder3_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder3_paramset1 [i] = 0;
                             bdyphi0_freepts_extraporder3_paramset1                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder3_paramset1              [i] = 0;
-                            y_extrappt0_freepts_extraporder3_paramset1              [i] = 0;
-                            z_extrappt0_freepts_extraporder3_paramset1              [i] = 0;
+                            xpbdy0_freepts_extraporder3_paramset1              [i] = 0;
+                            ypbdy0_freepts_extraporder3_paramset1              [i] = 0;
+                            zpbdy0_freepts_extraporder3_paramset1              [i] = 0;
                                 x_outermostpt0_freepts_extraporder3_paramset1           [i] = 0;
                                 y_outermostpt0_freepts_extraporder3_paramset1           [i] = 0;
                                 z_outermostpt0_freepts_extraporder3_paramset1           [i] = 0;
@@ -7749,14 +7839,14 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder3_paramset1,y_extrappt_freepts_extraporder3_paramset1,z_extrappt_freepts_extraporder3_paramset1,
+                        xyz_extrap_outermost_(xpbdy_freepts_extraporder3_paramset1,ypbdy_freepts_extraporder3_paramset1,zpbdy_freepts_extraporder3_paramset1,
                                                                         x_outermostpt_freepts_extraporder3_paramset1,y_outermostpt_freepts_extraporder3_paramset1,z_outermostpt_freepts_extraporder3_paramset1,
                                                                         chrbdy_freepts_extraporder3_paramset1,&numbdypoints_freepts_extraporder3_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,x_extrappt0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,y_extrappt0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,z_extrappt0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,xpbdy0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,ypbdy0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,zpbdy0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,x_outermostpt0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -7781,7 +7871,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_freepts_extraporder3_paramset1 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder3_paramset1 = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                                 xiextrap0_freepts_extraporder3_paramset1  = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder3_paramset1,chiextrap0_freepts_extraporder3_paramset1,xiextrap0_freepts_extraporder3_paramset1,x_extrappt0_freepts_extraporder3_paramset1,y_extrappt0_freepts_extraporder3_paramset1,z_extrappt0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder3_paramset1,chiextrap0_freepts_extraporder3_paramset1,xiextrap0_freepts_extraporder3_paramset1,xpbdy0_freepts_extraporder3_paramset1,ypbdy0_freepts_extraporder3_paramset1,zpbdy0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1);  
                                 basebdy_Nchi_freepts_extraporder3_paramset1=0;//initialize
                                 basebdy_Nxi_freepts_extraporder3_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder3_paramset1,&basebdy_Nxi_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1,chiextrap0_freepts_extraporder3_paramset1,xiextrap0_freepts_extraporder3_paramset1);  
@@ -7794,7 +7884,7 @@ void AdS4D_pre_tstep(int L)
    
                         extrap_bdyphi_freepts_(bdyphi_freepts_extraporder3_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder3_paramset1,y_extrappt_freepts_extraporder3_paramset1,z_extrappt_freepts_extraporder3_paramset1,
+                                        xpbdy_freepts_extraporder3_paramset1,ypbdy_freepts_extraporder3_paramset1,zpbdy_freepts_extraporder3_paramset1,
                                         chrbdy_freepts_extraporder3_paramset1,&numbdypoints_freepts_extraporder3_paramset1,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -7814,7 +7904,7 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder3_paramset1,y_extrappt_freepts_extraporder3_paramset1,z_extrappt_freepts_extraporder3_paramset1,
+                                xpbdy_freepts_extraporder3_paramset1,ypbdy_freepts_extraporder3_paramset1,zpbdy_freepts_extraporder3_paramset1,
                                 chrbdy_freepts_extraporder3_paramset1,&numbdypoints_freepts_extraporder3_paramset1,
                                 &bdy_extrap_order,
                                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -7863,9 +7953,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder1_paramset2  = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder1_paramset2  = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         bdyphi_freepts_extraporder1_paramset2                   = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));   
-                        x_extrappt_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
-                        y_extrappt_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
-                        z_extrappt_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));  
+                        xpbdy_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
+                        ypbdy_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
+                        zpbdy_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));  
                         x_outermostpt_freepts_extraporder1_paramset2            = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         y_outermostpt_freepts_extraporder1_paramset2            = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         z_outermostpt_freepts_extraporder1_paramset2            = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real)); 
@@ -7919,9 +8009,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder1_paramset2 = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         AdS_mass0_freepts_extraporder1_paramset2                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder1_paramset2                  = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
-                        y_extrappt0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
-                        z_extrappt0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));   
+                        xpbdy0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
+                        ypbdy0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
+                        zpbdy0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));   
                         x_outermostpt0_freepts_extraporder1_paramset2           = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         y_outermostpt0_freepts_extraporder1_paramset2           = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         z_outermostpt0_freepts_extraporder1_paramset2           = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));   
@@ -7942,9 +8032,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder1_paramset2  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder1_paramset2  [i] = 0;
                             bdyphi_freepts_extraporder1_paramset2                   [i] = 0;   
-                            x_extrappt_freepts_extraporder1_paramset2               [i] = 0;
-                            y_extrappt_freepts_extraporder1_paramset2               [i] = 0;
-                            z_extrappt_freepts_extraporder1_paramset2               [i] = 0;
+                            xpbdy_freepts_extraporder1_paramset2               [i] = 0;
+                            ypbdy_freepts_extraporder1_paramset2               [i] = 0;
+                            zpbdy_freepts_extraporder1_paramset2               [i] = 0;
                                 x_outermostpt_freepts_extraporder1_paramset2            [i] = 0;
                                 y_outermostpt_freepts_extraporder1_paramset2            [i] = 0;
                                 z_outermostpt_freepts_extraporder1_paramset2            [i] = 0;
@@ -8000,9 +8090,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder1_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder1_paramset2 [i] = 0;
                             bdyphi0_freepts_extraporder1_paramset2                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder1_paramset2              [i] = 0;
-                            y_extrappt0_freepts_extraporder1_paramset2              [i] = 0;
-                            z_extrappt0_freepts_extraporder1_paramset2              [i] = 0;
+                            xpbdy0_freepts_extraporder1_paramset2              [i] = 0;
+                            ypbdy0_freepts_extraporder1_paramset2              [i] = 0;
+                            zpbdy0_freepts_extraporder1_paramset2              [i] = 0;
                                 x_outermostpt0_freepts_extraporder1_paramset2           [i] = 0;
                                 y_outermostpt0_freepts_extraporder1_paramset2           [i] = 0;
                                 z_outermostpt0_freepts_extraporder1_paramset2           [i] = 0;
@@ -8040,14 +8130,24 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder1_paramset2,y_extrappt_freepts_extraporder1_paramset2,z_extrappt_freepts_extraporder1_paramset2,
+                        if (rad_extrap)
+                    	{
+                    		xyz_bdy_out_radextrap_(xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
                                                                         x_outermostpt_freepts_extraporder1_paramset2,y_outermostpt_freepts_extraporder1_paramset2,z_outermostpt_freepts_extraporder1_paramset2,
                                                                         chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
-                        
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,x_extrappt0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,y_extrappt0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,z_extrappt0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                    		MPI_Barrier(MPI_COMM_WORLD);
+							if (my_rank==0) {printf("xyz_bdy_out_radextrap_(xpbdy_freepts_extraporder1_paramset2\n"); fflush(stdout);}
+                    	}
+                    	else
+                    	{
+                        	xyz_extrap_outermost_(xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
+                                                                        x_outermostpt_freepts_extraporder1_paramset2,y_outermostpt_freepts_extraporder1_paramset2,z_outermostpt_freepts_extraporder1_paramset2,
+                                                                        chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width); 
+                        }
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,xpbdy0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,ypbdy0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,zpbdy0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,x_outermostpt0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -8072,7 +8172,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_freepts_extraporder1_paramset2 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder1_paramset2 = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                                 xiextrap0_freepts_extraporder1_paramset2  = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder1_paramset2,chiextrap0_freepts_extraporder1_paramset2,xiextrap0_freepts_extraporder1_paramset2,x_extrappt0_freepts_extraporder1_paramset2,y_extrappt0_freepts_extraporder1_paramset2,z_extrappt0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder1_paramset2,chiextrap0_freepts_extraporder1_paramset2,xiextrap0_freepts_extraporder1_paramset2,xpbdy0_freepts_extraporder1_paramset2,ypbdy0_freepts_extraporder1_paramset2,zpbdy0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2);  
                                 basebdy_Nchi_freepts_extraporder1_paramset2=0;//initialize
                                 basebdy_Nxi_freepts_extraporder1_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder1_paramset2,&basebdy_Nxi_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2,chiextrap0_freepts_extraporder1_paramset2,xiextrap0_freepts_extraporder1_paramset2);  
@@ -8082,14 +8182,16 @@ void AdS4D_pre_tstep(int L)
                             }
                         }
 
-   
-                        extrap_bdyphi_freepts_(bdyphi_freepts_extraporder1_paramset2,
+						if (rad_extrap)
+                		{
+                			
+                			bdyphi_radextrap_(bdyphi_freepts_extraporder1_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder1_paramset2,y_extrappt_freepts_extraporder1_paramset2,z_extrappt_freepts_extraporder1_paramset2,
+                                        xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
                                         chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
-                        extrap_quasiset_freepts_(quasiset_tt_freepts_extraporder1_paramset2,quasiset_tchi_freepts_extraporder1_paramset2,quasiset_txi_freepts_extraporder1_paramset2,
+                        	quasiset_radextrap_(quasiset_tt_freepts_extraporder1_paramset2,quasiset_tchi_freepts_extraporder1_paramset2,quasiset_txi_freepts_extraporder1_paramset2,
                                 quasiset_chichi_freepts_extraporder1_paramset2,quasiset_chixi_freepts_extraporder1_paramset2,
                                 quasiset_xixi_freepts_extraporder1_paramset2,
                                 quasiset_trace_freepts_extraporder1_paramset2,
@@ -8105,10 +8207,42 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder1_paramset2,y_extrappt_freepts_extraporder1_paramset2,z_extrappt_freepts_extraporder1_paramset2,
+                                xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
                                 chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,
                                 &bdy_extrap_order,
-                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
+                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                        	MPI_Barrier(MPI_COMM_WORLD);
+							if (my_rank==0) {printf("bdyphi_radextrap_(bdyphi_freepts_extraporder1_paramset2,quasiset_radextrap_(quasiset_tt_freepts_extraporder1_paramset2,\n"); fflush(stdout);}
+                		}
+                		else
+                		{
+                        	extrap_bdyphi_freepts_(bdyphi_freepts_extraporder1_paramset2,
+                                        leadordcoeff_phi1,
+                                        xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
+                                        chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,
+                                        &bdy_extrap_order,
+                                        x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
+                        	extrap_quasiset_freepts_(quasiset_tt_freepts_extraporder1_paramset2,quasiset_tchi_freepts_extraporder1_paramset2,quasiset_txi_freepts_extraporder1_paramset2,
+                                quasiset_chichi_freepts_extraporder1_paramset2,quasiset_chixi_freepts_extraporder1_paramset2,
+                                quasiset_xixi_freepts_extraporder1_paramset2,
+                                quasiset_trace_freepts_extraporder1_paramset2,
+                                quasiset_massdensity_freepts_extraporder1_paramset2,
+                                quasiset_angmomdensityx_freepts_extraporder1_paramset2,
+                                quasiset_angmomdensityy_freepts_extraporder1_paramset2,
+                                quasiset_angmomdensityz_freepts_extraporder1_paramset2,
+                                quasiset_tt_ll,quasiset_tchi_ll,quasiset_txi_ll,
+                                quasiset_chichi_ll,quasiset_chixi_ll,
+                                quasiset_xixi_ll,
+                                quasiset_tracell,
+                                quasiset_massdensityll,
+                                quasiset_angmomdensityxll,
+                                quasiset_angmomdensityyll,
+                                quasiset_angmomdensityzll,
+                                xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
+                                chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,
+                                &bdy_extrap_order,
+                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                        } 
                         //distributing the values of the quasiset components of each process over an array lquasiset_ll0 defined globally. This array will be different for each process, in fact it will be zero everywhere except for a certain position (next to the one for the previous processor) containing the values of quasiset_ll of a specific process. This is repeated after each step of the evolution. 
                         for (i=is_bdy_freepts_extraporder1_paramset2; i<ie_bdy_freepts_extraporder1_paramset2; i++)
                         {
@@ -8152,9 +8286,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder2_paramset2  = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder2_paramset2  = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         bdyphi_freepts_extraporder2_paramset2                   = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));   
-                        x_extrappt_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
-                        y_extrappt_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
-                        z_extrappt_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));  
+                        xpbdy_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
+                        ypbdy_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
+                        zpbdy_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));  
                         x_outermostpt_freepts_extraporder2_paramset2            = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         y_outermostpt_freepts_extraporder2_paramset2            = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         z_outermostpt_freepts_extraporder2_paramset2            = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real)); 
@@ -8208,9 +8342,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder2_paramset2 = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         AdS_mass0_freepts_extraporder2_paramset2                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder2_paramset2                  = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
-                        y_extrappt0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
-                        z_extrappt0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));   
+                        xpbdy0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
+                        ypbdy0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
+                        zpbdy0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));   
                         x_outermostpt0_freepts_extraporder2_paramset2           = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         y_outermostpt0_freepts_extraporder2_paramset2           = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         z_outermostpt0_freepts_extraporder2_paramset2           = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));   
@@ -8231,9 +8365,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder2_paramset2  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder2_paramset2  [i] = 0;
                             bdyphi_freepts_extraporder2_paramset2                   [i] = 0;   
-                            x_extrappt_freepts_extraporder2_paramset2               [i] = 0;
-                            y_extrappt_freepts_extraporder2_paramset2               [i] = 0;
-                            z_extrappt_freepts_extraporder2_paramset2               [i] = 0;
+                            xpbdy_freepts_extraporder2_paramset2               [i] = 0;
+                            ypbdy_freepts_extraporder2_paramset2               [i] = 0;
+                            zpbdy_freepts_extraporder2_paramset2               [i] = 0;
                                 x_outermostpt_freepts_extraporder2_paramset2            [i] = 0;
                                 y_outermostpt_freepts_extraporder2_paramset2            [i] = 0;
                                 z_outermostpt_freepts_extraporder2_paramset2            [i] = 0;
@@ -8289,9 +8423,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder2_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder2_paramset2 [i] = 0;
                             bdyphi0_freepts_extraporder2_paramset2                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder2_paramset2              [i] = 0;
-                            y_extrappt0_freepts_extraporder2_paramset2              [i] = 0;
-                            z_extrappt0_freepts_extraporder2_paramset2              [i] = 0;
+                            xpbdy0_freepts_extraporder2_paramset2              [i] = 0;
+                            ypbdy0_freepts_extraporder2_paramset2              [i] = 0;
+                            zpbdy0_freepts_extraporder2_paramset2              [i] = 0;
                                 x_outermostpt0_freepts_extraporder2_paramset2           [i] = 0;
                                 y_outermostpt0_freepts_extraporder2_paramset2           [i] = 0;
                                 z_outermostpt0_freepts_extraporder2_paramset2           [i] = 0;
@@ -8329,14 +8463,14 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder2_paramset2,y_extrappt_freepts_extraporder2_paramset2,z_extrappt_freepts_extraporder2_paramset2,
+                        xyz_extrap_outermost_(xpbdy_freepts_extraporder2_paramset2,ypbdy_freepts_extraporder2_paramset2,zpbdy_freepts_extraporder2_paramset2,
                                                                         x_outermostpt_freepts_extraporder2_paramset2,y_outermostpt_freepts_extraporder2_paramset2,z_outermostpt_freepts_extraporder2_paramset2,
                                                                         chrbdy_freepts_extraporder2_paramset2,&numbdypoints_freepts_extraporder2_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,x_extrappt0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,y_extrappt0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,z_extrappt0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,xpbdy0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,ypbdy0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,zpbdy0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,x_outermostpt0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -8361,7 +8495,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_freepts_extraporder2_paramset2 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder2_paramset2 = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                                 xiextrap0_freepts_extraporder2_paramset2  = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder2_paramset2,chiextrap0_freepts_extraporder2_paramset2,xiextrap0_freepts_extraporder2_paramset2,x_extrappt0_freepts_extraporder2_paramset2,y_extrappt0_freepts_extraporder2_paramset2,z_extrappt0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder2_paramset2,chiextrap0_freepts_extraporder2_paramset2,xiextrap0_freepts_extraporder2_paramset2,xpbdy0_freepts_extraporder2_paramset2,ypbdy0_freepts_extraporder2_paramset2,zpbdy0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2);  
                                 basebdy_Nchi_freepts_extraporder2_paramset2=0;//initialize
                                 basebdy_Nxi_freepts_extraporder2_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder2_paramset2,&basebdy_Nxi_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2,chiextrap0_freepts_extraporder2_paramset2,xiextrap0_freepts_extraporder2_paramset2);  
@@ -8374,7 +8508,7 @@ void AdS4D_pre_tstep(int L)
    
                         extrap_bdyphi_freepts_(bdyphi_freepts_extraporder2_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder2_paramset2,y_extrappt_freepts_extraporder2_paramset2,z_extrappt_freepts_extraporder2_paramset2,
+                                        xpbdy_freepts_extraporder2_paramset2,ypbdy_freepts_extraporder2_paramset2,zpbdy_freepts_extraporder2_paramset2,
                                         chrbdy_freepts_extraporder2_paramset2,&numbdypoints_freepts_extraporder2_paramset2,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -8394,7 +8528,7 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder2_paramset2,y_extrappt_freepts_extraporder2_paramset2,z_extrappt_freepts_extraporder2_paramset2,
+                                xpbdy_freepts_extraporder2_paramset2,ypbdy_freepts_extraporder2_paramset2,zpbdy_freepts_extraporder2_paramset2,
                                 chrbdy_freepts_extraporder2_paramset2,&numbdypoints_freepts_extraporder2_paramset2,
                                 &bdy_extrap_order,
                                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -8441,9 +8575,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder3_paramset2  = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder3_paramset2  = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         bdyphi_freepts_extraporder3_paramset2                   = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));   
-                        x_extrappt_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
-                        y_extrappt_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
-                        z_extrappt_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));  
+                        xpbdy_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
+                        ypbdy_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
+                        zpbdy_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));  
                         x_outermostpt_freepts_extraporder3_paramset2            = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         y_outermostpt_freepts_extraporder3_paramset2            = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         z_outermostpt_freepts_extraporder3_paramset2            = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real)); 
@@ -8497,9 +8631,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder3_paramset2 = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         AdS_mass0_freepts_extraporder3_paramset2                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder3_paramset2                  = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
-                        y_extrappt0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
-                        z_extrappt0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));   
+                        xpbdy0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
+                        ypbdy0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
+                        zpbdy0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));   
                         x_outermostpt0_freepts_extraporder3_paramset2           = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         y_outermostpt0_freepts_extraporder3_paramset2           = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         z_outermostpt0_freepts_extraporder3_paramset2           = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));   
@@ -8520,9 +8654,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder3_paramset2  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder3_paramset2  [i] = 0;
                             bdyphi_freepts_extraporder3_paramset2                   [i] = 0;   
-                            x_extrappt_freepts_extraporder3_paramset2               [i] = 0;
-                            y_extrappt_freepts_extraporder3_paramset2               [i] = 0;
-                            z_extrappt_freepts_extraporder3_paramset2               [i] = 0;
+                            xpbdy_freepts_extraporder3_paramset2               [i] = 0;
+                            ypbdy_freepts_extraporder3_paramset2               [i] = 0;
+                            zpbdy_freepts_extraporder3_paramset2               [i] = 0;
                                 x_outermostpt_freepts_extraporder3_paramset2            [i] = 0;
                                 y_outermostpt_freepts_extraporder3_paramset2            [i] = 0;
                                 z_outermostpt_freepts_extraporder3_paramset2            [i] = 0;
@@ -8578,9 +8712,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder3_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder3_paramset2 [i] = 0;
                             bdyphi0_freepts_extraporder3_paramset2                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder3_paramset2              [i] = 0;
-                            y_extrappt0_freepts_extraporder3_paramset2              [i] = 0;
-                            z_extrappt0_freepts_extraporder3_paramset2              [i] = 0;
+                            xpbdy0_freepts_extraporder3_paramset2              [i] = 0;
+                            ypbdy0_freepts_extraporder3_paramset2              [i] = 0;
+                            zpbdy0_freepts_extraporder3_paramset2              [i] = 0;
                                 x_outermostpt0_freepts_extraporder3_paramset2           [i] = 0;
                                 y_outermostpt0_freepts_extraporder3_paramset2           [i] = 0;
                                 z_outermostpt0_freepts_extraporder3_paramset2           [i] = 0;
@@ -8618,14 +8752,14 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder3_paramset2,y_extrappt_freepts_extraporder3_paramset2,z_extrappt_freepts_extraporder3_paramset2,
+                        xyz_extrap_outermost_(xpbdy_freepts_extraporder3_paramset2,ypbdy_freepts_extraporder3_paramset2,zpbdy_freepts_extraporder3_paramset2,
                                                                         x_outermostpt_freepts_extraporder3_paramset2,y_outermostpt_freepts_extraporder3_paramset2,z_outermostpt_freepts_extraporder3_paramset2,
                                                                         chrbdy_freepts_extraporder3_paramset2,&numbdypoints_freepts_extraporder3_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,x_extrappt0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,y_extrappt0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,z_extrappt0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,xpbdy0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,ypbdy0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,zpbdy0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,x_outermostpt0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -8650,7 +8784,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_freepts_extraporder3_paramset2 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder3_paramset2 = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                                 xiextrap0_freepts_extraporder3_paramset2  = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder3_paramset2,chiextrap0_freepts_extraporder3_paramset2,xiextrap0_freepts_extraporder3_paramset2,x_extrappt0_freepts_extraporder3_paramset2,y_extrappt0_freepts_extraporder3_paramset2,z_extrappt0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder3_paramset2,chiextrap0_freepts_extraporder3_paramset2,xiextrap0_freepts_extraporder3_paramset2,xpbdy0_freepts_extraporder3_paramset2,ypbdy0_freepts_extraporder3_paramset2,zpbdy0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2);  
                                 basebdy_Nchi_freepts_extraporder3_paramset2=0;//initialize
                                 basebdy_Nxi_freepts_extraporder3_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder3_paramset2,&basebdy_Nxi_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2,chiextrap0_freepts_extraporder3_paramset2,xiextrap0_freepts_extraporder3_paramset2);  
@@ -8663,7 +8797,7 @@ void AdS4D_pre_tstep(int L)
    
                         extrap_bdyphi_freepts_(bdyphi_freepts_extraporder3_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder3_paramset2,y_extrappt_freepts_extraporder3_paramset2,z_extrappt_freepts_extraporder3_paramset2,
+                                        xpbdy_freepts_extraporder3_paramset2,ypbdy_freepts_extraporder3_paramset2,zpbdy_freepts_extraporder3_paramset2,
                                         chrbdy_freepts_extraporder3_paramset2,&numbdypoints_freepts_extraporder3_paramset2,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -8683,7 +8817,7 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder3_paramset2,y_extrappt_freepts_extraporder3_paramset2,z_extrappt_freepts_extraporder3_paramset2,
+                                xpbdy_freepts_extraporder3_paramset2,ypbdy_freepts_extraporder3_paramset2,zpbdy_freepts_extraporder3_paramset2,
                                 chrbdy_freepts_extraporder3_paramset2,&numbdypoints_freepts_extraporder3_paramset2,
                                 &bdy_extrap_order,
                                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -8737,9 +8871,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder1_paramset1  = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder1_paramset1  = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                         bdyphi_fixedpts_extraporder1_paramset1                   = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
+                        ypbdy_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
+                        zpbdy_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));  
                        	x_outermostpt_fixedpts_extraporder1_paramset1            = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                        	y_outermostpt_fixedpts_extraporder1_paramset1            = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                        	z_outermostpt_fixedpts_extraporder1_paramset1            = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real)); 
@@ -8793,9 +8927,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder1_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder1_paramset1                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder1_paramset1                  = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));   
                        	x_outermostpt0_fixedpts_extraporder1_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                        	y_outermostpt0_fixedpts_extraporder1_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                        	z_outermostpt0_fixedpts_extraporder1_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));   
@@ -8816,9 +8950,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder1_paramset1  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder1_paramset1  [i] = 0;
                             bdyphi_fixedpts_extraporder1_paramset1                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder1_paramset1               [i] = 0;
-                            y_extrappt_fixedpts_extraporder1_paramset1               [i] = 0;
-                            z_extrappt_fixedpts_extraporder1_paramset1               [i] = 0;
+                            xpbdy_fixedpts_extraporder1_paramset1               [i] = 0;
+                            ypbdy_fixedpts_extraporder1_paramset1               [i] = 0;
+                            zpbdy_fixedpts_extraporder1_paramset1               [i] = 0;
                            	x_outermostpt_fixedpts_extraporder1_paramset1            [i] = 0;
                            	y_outermostpt_fixedpts_extraporder1_paramset1            [i] = 0;
                            	z_outermostpt_fixedpts_extraporder1_paramset1            [i] = 0;
@@ -8874,9 +9008,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder1_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder1_paramset1 [i] = 0;
                             bdyphi0_fixedpts_extraporder1_paramset1                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder1_paramset1              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder1_paramset1              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder1_paramset1              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder1_paramset1              [i] = 0;
+                            ypbdy0_fixedpts_extraporder1_paramset1              [i] = 0;
+                            zpbdy0_fixedpts_extraporder1_paramset1              [i] = 0;  
                            	x_outermostpt0_fixedpts_extraporder1_paramset1           [i] = 0;
                            	y_outermostpt0_fixedpts_extraporder1_paramset1           [i] = 0;
                            	z_outermostpt0_fixedpts_extraporder1_paramset1           [i] = 0;
@@ -8914,14 +9048,14 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder1_paramset1,y_extrappt_fixedpts_extraporder1_paramset1,z_extrappt_fixedpts_extraporder1_paramset1,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder1_paramset1,ypbdy_fixedpts_extraporder1_paramset1,zpbdy_fixedpts_extraporder1_paramset1,
                         						x_outermostpt_fixedpts_extraporder1_paramset1,y_outermostpt_fixedpts_extraporder1_paramset1,z_outermostpt_fixedpts_extraporder1_paramset1,
                         						chrbdy_fixedpts_extraporder1_paramset1,&numbdypoints_fixedpts_extraporder1_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,xpbdy0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,ypbdy0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,zpbdy0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                         	MPI_Allgatherv(x_outermostpt_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -8946,7 +9080,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder1_paramset1 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder1_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder1_paramset1  = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder1_paramset1,chiextrap0_fixedpts_extraporder1_paramset1,xiextrap0_fixedpts_extraporder1_paramset1,x_extrappt0_fixedpts_extraporder1_paramset1,y_extrappt0_fixedpts_extraporder1_paramset1,z_extrappt0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder1_paramset1,chiextrap0_fixedpts_extraporder1_paramset1,xiextrap0_fixedpts_extraporder1_paramset1,xpbdy0_fixedpts_extraporder1_paramset1,ypbdy0_fixedpts_extraporder1_paramset1,zpbdy0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1);  
                                 basebdy_Nchi_fixedpts_extraporder1_paramset1=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder1_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder1_paramset1,&basebdy_Nxi_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1,chiextrap0_fixedpts_extraporder1_paramset1,xiextrap0_fixedpts_extraporder1_paramset1);  
@@ -8959,7 +9093,7 @@ void AdS4D_pre_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder1_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder1_paramset1,y_extrappt_fixedpts_extraporder1_paramset1,z_extrappt_fixedpts_extraporder1_paramset1,
+                                        xpbdy_fixedpts_extraporder1_paramset1,ypbdy_fixedpts_extraporder1_paramset1,zpbdy_fixedpts_extraporder1_paramset1,
                                         chrbdy_fixedpts_extraporder1_paramset1,&numbdypoints_fixedpts_extraporder1_paramset1,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -8980,7 +9114,7 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder1_paramset1,y_extrappt_fixedpts_extraporder1_paramset1,z_extrappt_fixedpts_extraporder1_paramset1,
+                                xpbdy_fixedpts_extraporder1_paramset1,ypbdy_fixedpts_extraporder1_paramset1,zpbdy_fixedpts_extraporder1_paramset1,
                                 chrbdy_fixedpts_extraporder1_paramset1,&numbdypoints_fixedpts_extraporder1_paramset1,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -9028,9 +9162,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder2_paramset1  = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder2_paramset1  = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         bdyphi_fixedpts_extraporder2_paramset1                   = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
+                        ypbdy_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
+                        zpbdy_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));  
                         x_outermostpt_fixedpts_extraporder2_paramset1            = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         y_outermostpt_fixedpts_extraporder2_paramset1            = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         z_outermostpt_fixedpts_extraporder2_paramset1            = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real)); 
@@ -9084,9 +9218,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder2_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder2_paramset1                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder2_paramset1                  = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));   
                         x_outermostpt0_fixedpts_extraporder2_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         y_outermostpt0_fixedpts_extraporder2_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         z_outermostpt0_fixedpts_extraporder2_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));   
@@ -9107,9 +9241,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder2_paramset1  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder2_paramset1  [i] = 0;
                             bdyphi_fixedpts_extraporder2_paramset1                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder2_paramset1               [i] = 0;
-                            y_extrappt_fixedpts_extraporder2_paramset1               [i] = 0;
-                            z_extrappt_fixedpts_extraporder2_paramset1               [i] = 0;
+                            xpbdy_fixedpts_extraporder2_paramset1               [i] = 0;
+                            ypbdy_fixedpts_extraporder2_paramset1               [i] = 0;
+                            zpbdy_fixedpts_extraporder2_paramset1               [i] = 0;
                                 x_outermostpt_fixedpts_extraporder2_paramset1            [i] = 0;
                                 y_outermostpt_fixedpts_extraporder2_paramset1            [i] = 0;
                                 z_outermostpt_fixedpts_extraporder2_paramset1            [i] = 0;
@@ -9165,9 +9299,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder2_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder2_paramset1 [i] = 0;
                             bdyphi0_fixedpts_extraporder2_paramset1                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder2_paramset1              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder2_paramset1              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder2_paramset1              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder2_paramset1              [i] = 0;
+                            ypbdy0_fixedpts_extraporder2_paramset1              [i] = 0;
+                            zpbdy0_fixedpts_extraporder2_paramset1              [i] = 0;  
                                 x_outermostpt0_fixedpts_extraporder2_paramset1           [i] = 0;
                                 y_outermostpt0_fixedpts_extraporder2_paramset1           [i] = 0;
                                 z_outermostpt0_fixedpts_extraporder2_paramset1           [i] = 0;
@@ -9205,14 +9339,14 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder2_paramset1,y_extrappt_fixedpts_extraporder2_paramset1,z_extrappt_fixedpts_extraporder2_paramset1,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder2_paramset1,ypbdy_fixedpts_extraporder2_paramset1,zpbdy_fixedpts_extraporder2_paramset1,
                                                                         x_outermostpt_fixedpts_extraporder2_paramset1,y_outermostpt_fixedpts_extraporder2_paramset1,z_outermostpt_fixedpts_extraporder2_paramset1,
                                                                         chrbdy_fixedpts_extraporder2_paramset1,&numbdypoints_fixedpts_extraporder2_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,xpbdy0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,ypbdy0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,zpbdy0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -9237,7 +9371,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder2_paramset1 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder2_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder2_paramset1  = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder2_paramset1,chiextrap0_fixedpts_extraporder2_paramset1,xiextrap0_fixedpts_extraporder2_paramset1,x_extrappt0_fixedpts_extraporder2_paramset1,y_extrappt0_fixedpts_extraporder2_paramset1,z_extrappt0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder2_paramset1,chiextrap0_fixedpts_extraporder2_paramset1,xiextrap0_fixedpts_extraporder2_paramset1,xpbdy0_fixedpts_extraporder2_paramset1,ypbdy0_fixedpts_extraporder2_paramset1,zpbdy0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1);  
                                 basebdy_Nchi_fixedpts_extraporder2_paramset1=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder2_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder2_paramset1,&basebdy_Nxi_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1,chiextrap0_fixedpts_extraporder2_paramset1,xiextrap0_fixedpts_extraporder2_paramset1);  
@@ -9250,7 +9384,7 @@ void AdS4D_pre_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder2_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder2_paramset1,y_extrappt_fixedpts_extraporder2_paramset1,z_extrappt_fixedpts_extraporder2_paramset1,
+                                        xpbdy_fixedpts_extraporder2_paramset1,ypbdy_fixedpts_extraporder2_paramset1,zpbdy_fixedpts_extraporder2_paramset1,
                                         chrbdy_fixedpts_extraporder2_paramset1,&numbdypoints_fixedpts_extraporder2_paramset1,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -9271,7 +9405,7 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder2_paramset1,y_extrappt_fixedpts_extraporder2_paramset1,z_extrappt_fixedpts_extraporder2_paramset1,
+                                xpbdy_fixedpts_extraporder2_paramset1,ypbdy_fixedpts_extraporder2_paramset1,zpbdy_fixedpts_extraporder2_paramset1,
                                 chrbdy_fixedpts_extraporder2_paramset1,&numbdypoints_fixedpts_extraporder2_paramset1,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -9319,9 +9453,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder3_paramset1  = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder3_paramset1  = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         bdyphi_fixedpts_extraporder3_paramset1                   = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
+                        ypbdy_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
+                        zpbdy_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));  
                         x_outermostpt_fixedpts_extraporder3_paramset1            = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         y_outermostpt_fixedpts_extraporder3_paramset1            = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         z_outermostpt_fixedpts_extraporder3_paramset1            = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real)); 
@@ -9375,9 +9509,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder3_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder3_paramset1                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder3_paramset1                  = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));   
                         x_outermostpt0_fixedpts_extraporder3_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         y_outermostpt0_fixedpts_extraporder3_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         z_outermostpt0_fixedpts_extraporder3_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));   
@@ -9398,9 +9532,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder3_paramset1  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder3_paramset1  [i] = 0;
                             bdyphi_fixedpts_extraporder3_paramset1                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder3_paramset1               [i] = 0;
-                            y_extrappt_fixedpts_extraporder3_paramset1               [i] = 0;
-                            z_extrappt_fixedpts_extraporder3_paramset1               [i] = 0;
+                            xpbdy_fixedpts_extraporder3_paramset1               [i] = 0;
+                            ypbdy_fixedpts_extraporder3_paramset1               [i] = 0;
+                            zpbdy_fixedpts_extraporder3_paramset1               [i] = 0;
                                 x_outermostpt_fixedpts_extraporder3_paramset1            [i] = 0;
                                 y_outermostpt_fixedpts_extraporder3_paramset1            [i] = 0;
                                 z_outermostpt_fixedpts_extraporder3_paramset1            [i] = 0;
@@ -9456,9 +9590,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder3_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder3_paramset1 [i] = 0;
                             bdyphi0_fixedpts_extraporder3_paramset1                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder3_paramset1              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder3_paramset1              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder3_paramset1              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder3_paramset1              [i] = 0;
+                            ypbdy0_fixedpts_extraporder3_paramset1              [i] = 0;
+                            zpbdy0_fixedpts_extraporder3_paramset1              [i] = 0;  
                                 x_outermostpt0_fixedpts_extraporder3_paramset1           [i] = 0;
                                 y_outermostpt0_fixedpts_extraporder3_paramset1           [i] = 0;
                                 z_outermostpt0_fixedpts_extraporder3_paramset1           [i] = 0;
@@ -9496,14 +9630,14 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder3_paramset1,y_extrappt_fixedpts_extraporder3_paramset1,z_extrappt_fixedpts_extraporder3_paramset1,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder3_paramset1,ypbdy_fixedpts_extraporder3_paramset1,zpbdy_fixedpts_extraporder3_paramset1,
                                                                         x_outermostpt_fixedpts_extraporder3_paramset1,y_outermostpt_fixedpts_extraporder3_paramset1,z_outermostpt_fixedpts_extraporder3_paramset1,
                                                                         chrbdy_fixedpts_extraporder3_paramset1,&numbdypoints_fixedpts_extraporder3_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,xpbdy0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,ypbdy0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,zpbdy0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -9528,7 +9662,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder3_paramset1 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder3_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder3_paramset1  = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder3_paramset1,chiextrap0_fixedpts_extraporder3_paramset1,xiextrap0_fixedpts_extraporder3_paramset1,x_extrappt0_fixedpts_extraporder3_paramset1,y_extrappt0_fixedpts_extraporder3_paramset1,z_extrappt0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder3_paramset1,chiextrap0_fixedpts_extraporder3_paramset1,xiextrap0_fixedpts_extraporder3_paramset1,xpbdy0_fixedpts_extraporder3_paramset1,ypbdy0_fixedpts_extraporder3_paramset1,zpbdy0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1);  
                                 basebdy_Nchi_fixedpts_extraporder3_paramset1=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder3_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder3_paramset1,&basebdy_Nxi_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1,chiextrap0_fixedpts_extraporder3_paramset1,xiextrap0_fixedpts_extraporder3_paramset1);  
@@ -9541,7 +9675,7 @@ void AdS4D_pre_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder3_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder3_paramset1,y_extrappt_fixedpts_extraporder3_paramset1,z_extrappt_fixedpts_extraporder3_paramset1,
+                                        xpbdy_fixedpts_extraporder3_paramset1,ypbdy_fixedpts_extraporder3_paramset1,zpbdy_fixedpts_extraporder3_paramset1,
                                         chrbdy_fixedpts_extraporder3_paramset1,&numbdypoints_fixedpts_extraporder3_paramset1,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -9562,7 +9696,7 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder3_paramset1,y_extrappt_fixedpts_extraporder3_paramset1,z_extrappt_fixedpts_extraporder3_paramset1,
+                                xpbdy_fixedpts_extraporder3_paramset1,ypbdy_fixedpts_extraporder3_paramset1,zpbdy_fixedpts_extraporder3_paramset1,
                                 chrbdy_fixedpts_extraporder3_paramset1,&numbdypoints_fixedpts_extraporder3_paramset1,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -9612,9 +9746,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder1_paramset2  = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder1_paramset2  = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         bdyphi_fixedpts_extraporder1_paramset2                   = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
+                        ypbdy_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
+                        zpbdy_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));  
                         x_outermostpt_fixedpts_extraporder1_paramset2            = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         y_outermostpt_fixedpts_extraporder1_paramset2            = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         z_outermostpt_fixedpts_extraporder1_paramset2            = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real)); 
@@ -9668,9 +9802,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder1_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder1_paramset2                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder1_paramset2                  = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));   
                         x_outermostpt0_fixedpts_extraporder1_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         y_outermostpt0_fixedpts_extraporder1_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         z_outermostpt0_fixedpts_extraporder1_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));   
@@ -9691,9 +9825,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder1_paramset2  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder1_paramset2  [i] = 0;
                             bdyphi_fixedpts_extraporder1_paramset2                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder1_paramset2               [i] = 0;
-                            y_extrappt_fixedpts_extraporder1_paramset2               [i] = 0;
-                            z_extrappt_fixedpts_extraporder1_paramset2               [i] = 0;
+                            xpbdy_fixedpts_extraporder1_paramset2               [i] = 0;
+                            ypbdy_fixedpts_extraporder1_paramset2               [i] = 0;
+                            zpbdy_fixedpts_extraporder1_paramset2               [i] = 0;
                                 x_outermostpt_fixedpts_extraporder1_paramset2            [i] = 0;
                                 y_outermostpt_fixedpts_extraporder1_paramset2            [i] = 0;
                                 z_outermostpt_fixedpts_extraporder1_paramset2            [i] = 0;
@@ -9749,9 +9883,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder1_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder1_paramset2 [i] = 0;
                             bdyphi0_fixedpts_extraporder1_paramset2                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder1_paramset2              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder1_paramset2              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder1_paramset2              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder1_paramset2              [i] = 0;
+                            ypbdy0_fixedpts_extraporder1_paramset2              [i] = 0;
+                            zpbdy0_fixedpts_extraporder1_paramset2              [i] = 0;  
                                 x_outermostpt0_fixedpts_extraporder1_paramset2           [i] = 0;
                                 y_outermostpt0_fixedpts_extraporder1_paramset2           [i] = 0;
                                 z_outermostpt0_fixedpts_extraporder1_paramset2           [i] = 0;
@@ -9789,14 +9923,14 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder1_paramset2,y_extrappt_fixedpts_extraporder1_paramset2,z_extrappt_fixedpts_extraporder1_paramset2,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder1_paramset2,ypbdy_fixedpts_extraporder1_paramset2,zpbdy_fixedpts_extraporder1_paramset2,
                                                                         x_outermostpt_fixedpts_extraporder1_paramset2,y_outermostpt_fixedpts_extraporder1_paramset2,z_outermostpt_fixedpts_extraporder1_paramset2,
                                                                         chrbdy_fixedpts_extraporder1_paramset2,&numbdypoints_fixedpts_extraporder1_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,xpbdy0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,ypbdy0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,zpbdy0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -9821,7 +9955,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder1_paramset2 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder1_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder1_paramset2  = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder1_paramset2,chiextrap0_fixedpts_extraporder1_paramset2,xiextrap0_fixedpts_extraporder1_paramset2,x_extrappt0_fixedpts_extraporder1_paramset2,y_extrappt0_fixedpts_extraporder1_paramset2,z_extrappt0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder1_paramset2,chiextrap0_fixedpts_extraporder1_paramset2,xiextrap0_fixedpts_extraporder1_paramset2,xpbdy0_fixedpts_extraporder1_paramset2,ypbdy0_fixedpts_extraporder1_paramset2,zpbdy0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2);  
                                 basebdy_Nchi_fixedpts_extraporder1_paramset2=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder1_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder1_paramset2,&basebdy_Nxi_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2,chiextrap0_fixedpts_extraporder1_paramset2,xiextrap0_fixedpts_extraporder1_paramset2);  
@@ -9834,7 +9968,7 @@ void AdS4D_pre_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder1_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder1_paramset2,y_extrappt_fixedpts_extraporder1_paramset2,z_extrappt_fixedpts_extraporder1_paramset2,
+                                        xpbdy_fixedpts_extraporder1_paramset2,ypbdy_fixedpts_extraporder1_paramset2,zpbdy_fixedpts_extraporder1_paramset2,
                                         chrbdy_fixedpts_extraporder1_paramset2,&numbdypoints_fixedpts_extraporder1_paramset2,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -9855,7 +9989,7 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder1_paramset2,y_extrappt_fixedpts_extraporder1_paramset2,z_extrappt_fixedpts_extraporder1_paramset2,
+                                xpbdy_fixedpts_extraporder1_paramset2,ypbdy_fixedpts_extraporder1_paramset2,zpbdy_fixedpts_extraporder1_paramset2,
                                 chrbdy_fixedpts_extraporder1_paramset2,&numbdypoints_fixedpts_extraporder1_paramset2,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -9903,9 +10037,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder2_paramset2  = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder2_paramset2  = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         bdyphi_fixedpts_extraporder2_paramset2                   = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
+                        ypbdy_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
+                        zpbdy_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));  
                         x_outermostpt_fixedpts_extraporder2_paramset2            = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         y_outermostpt_fixedpts_extraporder2_paramset2            = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         z_outermostpt_fixedpts_extraporder2_paramset2            = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real)); 
@@ -9959,9 +10093,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder2_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder2_paramset2                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder2_paramset2                  = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));   
                         x_outermostpt0_fixedpts_extraporder2_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         y_outermostpt0_fixedpts_extraporder2_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         z_outermostpt0_fixedpts_extraporder2_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));   
@@ -9982,9 +10116,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder2_paramset2  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder2_paramset2  [i] = 0;
                             bdyphi_fixedpts_extraporder2_paramset2                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder2_paramset2               [i] = 0;
-                            y_extrappt_fixedpts_extraporder2_paramset2               [i] = 0;
-                            z_extrappt_fixedpts_extraporder2_paramset2               [i] = 0;
+                            xpbdy_fixedpts_extraporder2_paramset2               [i] = 0;
+                            ypbdy_fixedpts_extraporder2_paramset2               [i] = 0;
+                            zpbdy_fixedpts_extraporder2_paramset2               [i] = 0;
                                 x_outermostpt_fixedpts_extraporder2_paramset2            [i] = 0;
                                 y_outermostpt_fixedpts_extraporder2_paramset2            [i] = 0;
                                 z_outermostpt_fixedpts_extraporder2_paramset2            [i] = 0;
@@ -10040,9 +10174,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder2_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder2_paramset2 [i] = 0;
                             bdyphi0_fixedpts_extraporder2_paramset2                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder2_paramset2              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder2_paramset2              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder2_paramset2              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder2_paramset2              [i] = 0;
+                            ypbdy0_fixedpts_extraporder2_paramset2              [i] = 0;
+                            zpbdy0_fixedpts_extraporder2_paramset2              [i] = 0;  
                                 x_outermostpt0_fixedpts_extraporder2_paramset2           [i] = 0;
                                 y_outermostpt0_fixedpts_extraporder2_paramset2           [i] = 0;
                                 z_outermostpt0_fixedpts_extraporder2_paramset2           [i] = 0;
@@ -10080,14 +10214,14 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder2_paramset2,y_extrappt_fixedpts_extraporder2_paramset2,z_extrappt_fixedpts_extraporder2_paramset2,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder2_paramset2,ypbdy_fixedpts_extraporder2_paramset2,zpbdy_fixedpts_extraporder2_paramset2,
                                                                         x_outermostpt_fixedpts_extraporder2_paramset2,y_outermostpt_fixedpts_extraporder2_paramset2,z_outermostpt_fixedpts_extraporder2_paramset2,
                                                                         chrbdy_fixedpts_extraporder2_paramset2,&numbdypoints_fixedpts_extraporder2_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,xpbdy0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,ypbdy0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,zpbdy0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -10112,7 +10246,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder2_paramset2 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder2_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder2_paramset2  = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder2_paramset2,chiextrap0_fixedpts_extraporder2_paramset2,xiextrap0_fixedpts_extraporder2_paramset2,x_extrappt0_fixedpts_extraporder2_paramset2,y_extrappt0_fixedpts_extraporder2_paramset2,z_extrappt0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder2_paramset2,chiextrap0_fixedpts_extraporder2_paramset2,xiextrap0_fixedpts_extraporder2_paramset2,xpbdy0_fixedpts_extraporder2_paramset2,ypbdy0_fixedpts_extraporder2_paramset2,zpbdy0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2);  
                                 basebdy_Nchi_fixedpts_extraporder2_paramset2=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder2_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder2_paramset2,&basebdy_Nxi_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2,chiextrap0_fixedpts_extraporder2_paramset2,xiextrap0_fixedpts_extraporder2_paramset2);  
@@ -10125,7 +10259,7 @@ void AdS4D_pre_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder2_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder2_paramset2,y_extrappt_fixedpts_extraporder2_paramset2,z_extrappt_fixedpts_extraporder2_paramset2,
+                                        xpbdy_fixedpts_extraporder2_paramset2,ypbdy_fixedpts_extraporder2_paramset2,zpbdy_fixedpts_extraporder2_paramset2,
                                         chrbdy_fixedpts_extraporder2_paramset2,&numbdypoints_fixedpts_extraporder2_paramset2,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -10146,7 +10280,7 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder2_paramset2,y_extrappt_fixedpts_extraporder2_paramset2,z_extrappt_fixedpts_extraporder2_paramset2,
+                                xpbdy_fixedpts_extraporder2_paramset2,ypbdy_fixedpts_extraporder2_paramset2,zpbdy_fixedpts_extraporder2_paramset2,
                                 chrbdy_fixedpts_extraporder2_paramset2,&numbdypoints_fixedpts_extraporder2_paramset2,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -10194,9 +10328,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder3_paramset2  = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder3_paramset2  = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         bdyphi_fixedpts_extraporder3_paramset2                   = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
+                        ypbdy_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
+                        zpbdy_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));  
                         x_outermostpt_fixedpts_extraporder3_paramset2            = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         y_outermostpt_fixedpts_extraporder3_paramset2            = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         z_outermostpt_fixedpts_extraporder3_paramset2            = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real)); 
@@ -10250,9 +10384,9 @@ void AdS4D_pre_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder3_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder3_paramset2                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder3_paramset2                  = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));   
                         x_outermostpt0_fixedpts_extraporder3_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         y_outermostpt0_fixedpts_extraporder3_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         z_outermostpt0_fixedpts_extraporder3_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));   
@@ -10273,9 +10407,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder3_paramset2  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder3_paramset2  [i] = 0;
                             bdyphi_fixedpts_extraporder3_paramset2                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder3_paramset2               [i] = 0;
-                            y_extrappt_fixedpts_extraporder3_paramset2               [i] = 0;
-                            z_extrappt_fixedpts_extraporder3_paramset2               [i] = 0;
+                            xpbdy_fixedpts_extraporder3_paramset2               [i] = 0;
+                            ypbdy_fixedpts_extraporder3_paramset2               [i] = 0;
+                            zpbdy_fixedpts_extraporder3_paramset2               [i] = 0;
                                 x_outermostpt_fixedpts_extraporder3_paramset2            [i] = 0;
                                 y_outermostpt_fixedpts_extraporder3_paramset2            [i] = 0;
                                 z_outermostpt_fixedpts_extraporder3_paramset2            [i] = 0;
@@ -10331,9 +10465,9 @@ void AdS4D_pre_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder3_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder3_paramset2 [i] = 0;
                             bdyphi0_fixedpts_extraporder3_paramset2                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder3_paramset2              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder3_paramset2              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder3_paramset2              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder3_paramset2              [i] = 0;
+                            ypbdy0_fixedpts_extraporder3_paramset2              [i] = 0;
+                            zpbdy0_fixedpts_extraporder3_paramset2              [i] = 0;  
                                 x_outermostpt0_fixedpts_extraporder3_paramset2           [i] = 0;
                                 y_outermostpt0_fixedpts_extraporder3_paramset2           [i] = 0;
                                 z_outermostpt0_fixedpts_extraporder3_paramset2           [i] = 0;
@@ -10371,14 +10505,14 @@ void AdS4D_pre_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder3_paramset2,y_extrappt_fixedpts_extraporder3_paramset2,z_extrappt_fixedpts_extraporder3_paramset2,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder3_paramset2,ypbdy_fixedpts_extraporder3_paramset2,zpbdy_fixedpts_extraporder3_paramset2,
                                                                         x_outermostpt_fixedpts_extraporder3_paramset2,y_outermostpt_fixedpts_extraporder3_paramset2,z_outermostpt_fixedpts_extraporder3_paramset2,
                                                                         chrbdy_fixedpts_extraporder3_paramset2,&numbdypoints_fixedpts_extraporder3_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,xpbdy0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,ypbdy0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,zpbdy0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -10403,7 +10537,7 @@ void AdS4D_pre_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder3_paramset2 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder3_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder3_paramset2  = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder3_paramset2,chiextrap0_fixedpts_extraporder3_paramset2,xiextrap0_fixedpts_extraporder3_paramset2,x_extrappt0_fixedpts_extraporder3_paramset2,y_extrappt0_fixedpts_extraporder3_paramset2,z_extrappt0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder3_paramset2,chiextrap0_fixedpts_extraporder3_paramset2,xiextrap0_fixedpts_extraporder3_paramset2,xpbdy0_fixedpts_extraporder3_paramset2,ypbdy0_fixedpts_extraporder3_paramset2,zpbdy0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2);  
                                 basebdy_Nchi_fixedpts_extraporder3_paramset2=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder3_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder3_paramset2,&basebdy_Nxi_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2,chiextrap0_fixedpts_extraporder3_paramset2,xiextrap0_fixedpts_extraporder3_paramset2);  
@@ -10416,7 +10550,7 @@ void AdS4D_pre_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder3_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder3_paramset2,y_extrappt_fixedpts_extraporder3_paramset2,z_extrappt_fixedpts_extraporder3_paramset2,
+                                        xpbdy_fixedpts_extraporder3_paramset2,ypbdy_fixedpts_extraporder3_paramset2,zpbdy_fixedpts_extraporder3_paramset2,
                                         chrbdy_fixedpts_extraporder3_paramset2,&numbdypoints_fixedpts_extraporder3_paramset2,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -10437,7 +10571,7 @@ void AdS4D_pre_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder3_paramset2,y_extrappt_fixedpts_extraporder3_paramset2,z_extrappt_fixedpts_extraporder3_paramset2,
+                                xpbdy_fixedpts_extraporder3_paramset2,ypbdy_fixedpts_extraporder3_paramset2,zpbdy_fixedpts_extraporder3_paramset2,
                                 chrbdy_fixedpts_extraporder3_paramset2,&numbdypoints_fixedpts_extraporder3_paramset2,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -10575,7 +10709,7 @@ void AdS4D_pre_tstep(int L)
 	                                    fp = fopen(name, "w+");
 	                                    for( j = 0; j < basenumbdypoints_freepts_extraporder1_paramset1; j++ )
 	                                    {
-	                                        fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder1_paramset1[j],y_extrappt0_freepts_extraporder1_paramset1[j],z_extrappt0_freepts_extraporder1_paramset1[j],j);
+	                                        fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder1_paramset1[j],ypbdy0_freepts_extraporder1_paramset1[j],zpbdy0_freepts_extraporder1_paramset1[j],j);
 	                                    }
 	                                    fclose(fp);   
 	                                if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -10587,7 +10721,7 @@ void AdS4D_pre_tstep(int L)
 	                                    {
 	                                        if ((j%reduction_factor_ascii)==0)
 	                                        {
-	                                            fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder1_paramset1[j],y_extrappt0_freepts_extraporder1_paramset1[j],z_extrappt0_freepts_extraporder1_paramset1[j],j_red);
+	                                            fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder1_paramset1[j],ypbdy0_freepts_extraporder1_paramset1[j],zpbdy0_freepts_extraporder1_paramset1[j],j_red);
 	                                            j_red=j_red+1;
 	                                        }
 	                                    }
@@ -10779,8 +10913,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder1_paramset1=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder1_paramset1,xibdy0_freepts_extraporder1_paramset1,x_extrappt0_freepts_extraporder1_paramset1,y_extrappt0_freepts_extraporder1_paramset1,z_extrappt0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1,chiextrap0_freepts_extraporder1_paramset1,xiextrap0_freepts_extraporder1_paramset1,&basebdy_Nchi_freepts_extraporder1_paramset1,&basebdy_Nxi_freepts_extraporder1_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder1_paramset1,quasiset_massdensity0_freepts_extraporder1_paramset1,x_extrappt0_freepts_extraporder1_paramset1,y_extrappt0_freepts_extraporder1_paramset1,z_extrappt0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1,rhobdy0_freepts_extraporder1_paramset1,chibdy0_freepts_extraporder1_paramset1,xibdy0_freepts_extraporder1_paramset1,&basebdy_Nchi_freepts_extraporder1_paramset1,&basebdy_Nxi_freepts_extraporder1_paramset1);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder1_paramset1,xibdy0_freepts_extraporder1_paramset1,xpbdy0_freepts_extraporder1_paramset1,ypbdy0_freepts_extraporder1_paramset1,zpbdy0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1,chiextrap0_freepts_extraporder1_paramset1,xiextrap0_freepts_extraporder1_paramset1,&basebdy_Nchi_freepts_extraporder1_paramset1,&basebdy_Nxi_freepts_extraporder1_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder1_paramset1,quasiset_massdensity0_freepts_extraporder1_paramset1,xpbdy0_freepts_extraporder1_paramset1,ypbdy0_freepts_extraporder1_paramset1,zpbdy0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1,rhobdy0_freepts_extraporder1_paramset1,chibdy0_freepts_extraporder1_paramset1,xibdy0_freepts_extraporder1_paramset1,&basebdy_Nchi_freepts_extraporder1_paramset1,&basebdy_Nxi_freepts_extraporder1_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder1_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -10864,7 +10998,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_freepts_extraporder2_paramset1; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder2_paramset1[j],y_extrappt0_freepts_extraporder2_paramset1[j],z_extrappt0_freepts_extraporder2_paramset1[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder2_paramset1[j],ypbdy0_freepts_extraporder2_paramset1[j],zpbdy0_freepts_extraporder2_paramset1[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -10876,7 +11010,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder2_paramset1[j],y_extrappt0_freepts_extraporder2_paramset1[j],z_extrappt0_freepts_extraporder2_paramset1[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder2_paramset1[j],ypbdy0_freepts_extraporder2_paramset1[j],zpbdy0_freepts_extraporder2_paramset1[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -11068,8 +11202,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder2_paramset1=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder2_paramset1,xibdy0_freepts_extraporder2_paramset1,x_extrappt0_freepts_extraporder2_paramset1,y_extrappt0_freepts_extraporder2_paramset1,z_extrappt0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1,chiextrap0_freepts_extraporder2_paramset1,xiextrap0_freepts_extraporder2_paramset1,&basebdy_Nchi_freepts_extraporder2_paramset1,&basebdy_Nxi_freepts_extraporder2_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder2_paramset1,quasiset_massdensity0_freepts_extraporder2_paramset1,x_extrappt0_freepts_extraporder2_paramset1,y_extrappt0_freepts_extraporder2_paramset1,z_extrappt0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1,rhobdy0_freepts_extraporder2_paramset1,chibdy0_freepts_extraporder2_paramset1,xibdy0_freepts_extraporder2_paramset1,&basebdy_Nchi_freepts_extraporder2_paramset1,&basebdy_Nxi_freepts_extraporder2_paramset1);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder2_paramset1,xibdy0_freepts_extraporder2_paramset1,xpbdy0_freepts_extraporder2_paramset1,ypbdy0_freepts_extraporder2_paramset1,zpbdy0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1,chiextrap0_freepts_extraporder2_paramset1,xiextrap0_freepts_extraporder2_paramset1,&basebdy_Nchi_freepts_extraporder2_paramset1,&basebdy_Nxi_freepts_extraporder2_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder2_paramset1,quasiset_massdensity0_freepts_extraporder2_paramset1,xpbdy0_freepts_extraporder2_paramset1,ypbdy0_freepts_extraporder2_paramset1,zpbdy0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1,rhobdy0_freepts_extraporder2_paramset1,chibdy0_freepts_extraporder2_paramset1,xibdy0_freepts_extraporder2_paramset1,&basebdy_Nchi_freepts_extraporder2_paramset1,&basebdy_Nxi_freepts_extraporder2_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder2_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -11153,7 +11287,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_freepts_extraporder3_paramset1; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder3_paramset1[j],y_extrappt0_freepts_extraporder3_paramset1[j],z_extrappt0_freepts_extraporder3_paramset1[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder3_paramset1[j],ypbdy0_freepts_extraporder3_paramset1[j],zpbdy0_freepts_extraporder3_paramset1[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -11165,7 +11299,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder3_paramset1[j],y_extrappt0_freepts_extraporder3_paramset1[j],z_extrappt0_freepts_extraporder3_paramset1[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder3_paramset1[j],ypbdy0_freepts_extraporder3_paramset1[j],zpbdy0_freepts_extraporder3_paramset1[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -11357,8 +11491,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder3_paramset1=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder3_paramset1,xibdy0_freepts_extraporder3_paramset1,x_extrappt0_freepts_extraporder3_paramset1,y_extrappt0_freepts_extraporder3_paramset1,z_extrappt0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1,chiextrap0_freepts_extraporder3_paramset1,xiextrap0_freepts_extraporder3_paramset1,&basebdy_Nchi_freepts_extraporder3_paramset1,&basebdy_Nxi_freepts_extraporder3_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder3_paramset1,quasiset_massdensity0_freepts_extraporder3_paramset1,x_extrappt0_freepts_extraporder3_paramset1,y_extrappt0_freepts_extraporder3_paramset1,z_extrappt0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1,rhobdy0_freepts_extraporder3_paramset1,chibdy0_freepts_extraporder3_paramset1,xibdy0_freepts_extraporder3_paramset1,&basebdy_Nchi_freepts_extraporder3_paramset1,&basebdy_Nxi_freepts_extraporder3_paramset1);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder3_paramset1,xibdy0_freepts_extraporder3_paramset1,xpbdy0_freepts_extraporder3_paramset1,ypbdy0_freepts_extraporder3_paramset1,zpbdy0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1,chiextrap0_freepts_extraporder3_paramset1,xiextrap0_freepts_extraporder3_paramset1,&basebdy_Nchi_freepts_extraporder3_paramset1,&basebdy_Nxi_freepts_extraporder3_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder3_paramset1,quasiset_massdensity0_freepts_extraporder3_paramset1,xpbdy0_freepts_extraporder3_paramset1,ypbdy0_freepts_extraporder3_paramset1,zpbdy0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1,rhobdy0_freepts_extraporder3_paramset1,chibdy0_freepts_extraporder3_paramset1,xibdy0_freepts_extraporder3_paramset1,&basebdy_Nchi_freepts_extraporder3_paramset1,&basebdy_Nxi_freepts_extraporder3_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder3_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -11444,7 +11578,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_freepts_extraporder1_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder1_paramset2[j],y_extrappt0_freepts_extraporder1_paramset2[j],z_extrappt0_freepts_extraporder1_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder1_paramset2[j],ypbdy0_freepts_extraporder1_paramset2[j],zpbdy0_freepts_extraporder1_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -11456,7 +11590,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder1_paramset2[j],y_extrappt0_freepts_extraporder1_paramset2[j],z_extrappt0_freepts_extraporder1_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder1_paramset2[j],ypbdy0_freepts_extraporder1_paramset2[j],zpbdy0_freepts_extraporder1_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -11648,8 +11782,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder1_paramset2=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder1_paramset2,xibdy0_freepts_extraporder1_paramset2,x_extrappt0_freepts_extraporder1_paramset2,y_extrappt0_freepts_extraporder1_paramset2,z_extrappt0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2,chiextrap0_freepts_extraporder1_paramset2,xiextrap0_freepts_extraporder1_paramset2,&basebdy_Nchi_freepts_extraporder1_paramset2,&basebdy_Nxi_freepts_extraporder1_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder1_paramset2,quasiset_massdensity0_freepts_extraporder1_paramset2,x_extrappt0_freepts_extraporder1_paramset2,y_extrappt0_freepts_extraporder1_paramset2,z_extrappt0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2,rhobdy0_freepts_extraporder1_paramset2,chibdy0_freepts_extraporder1_paramset2,xibdy0_freepts_extraporder1_paramset2,&basebdy_Nchi_freepts_extraporder1_paramset2,&basebdy_Nxi_freepts_extraporder1_paramset2);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder1_paramset2,xibdy0_freepts_extraporder1_paramset2,xpbdy0_freepts_extraporder1_paramset2,ypbdy0_freepts_extraporder1_paramset2,zpbdy0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2,chiextrap0_freepts_extraporder1_paramset2,xiextrap0_freepts_extraporder1_paramset2,&basebdy_Nchi_freepts_extraporder1_paramset2,&basebdy_Nxi_freepts_extraporder1_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder1_paramset2,quasiset_massdensity0_freepts_extraporder1_paramset2,xpbdy0_freepts_extraporder1_paramset2,ypbdy0_freepts_extraporder1_paramset2,zpbdy0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2,rhobdy0_freepts_extraporder1_paramset2,chibdy0_freepts_extraporder1_paramset2,xibdy0_freepts_extraporder1_paramset2,&basebdy_Nchi_freepts_extraporder1_paramset2,&basebdy_Nxi_freepts_extraporder1_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder1_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -11733,7 +11867,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_freepts_extraporder2_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder2_paramset2[j],y_extrappt0_freepts_extraporder2_paramset2[j],z_extrappt0_freepts_extraporder2_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder2_paramset2[j],ypbdy0_freepts_extraporder2_paramset2[j],zpbdy0_freepts_extraporder2_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -11745,7 +11879,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder2_paramset2[j],y_extrappt0_freepts_extraporder2_paramset2[j],z_extrappt0_freepts_extraporder2_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder2_paramset2[j],ypbdy0_freepts_extraporder2_paramset2[j],zpbdy0_freepts_extraporder2_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -11937,8 +12071,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder2_paramset2=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder2_paramset2,xibdy0_freepts_extraporder2_paramset2,x_extrappt0_freepts_extraporder2_paramset2,y_extrappt0_freepts_extraporder2_paramset2,z_extrappt0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2,chiextrap0_freepts_extraporder2_paramset2,xiextrap0_freepts_extraporder2_paramset2,&basebdy_Nchi_freepts_extraporder2_paramset2,&basebdy_Nxi_freepts_extraporder2_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder2_paramset2,quasiset_massdensity0_freepts_extraporder2_paramset2,x_extrappt0_freepts_extraporder2_paramset2,y_extrappt0_freepts_extraporder2_paramset2,z_extrappt0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2,rhobdy0_freepts_extraporder2_paramset2,chibdy0_freepts_extraporder2_paramset2,xibdy0_freepts_extraporder2_paramset2,&basebdy_Nchi_freepts_extraporder2_paramset2,&basebdy_Nxi_freepts_extraporder2_paramset2);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder2_paramset2,xibdy0_freepts_extraporder2_paramset2,xpbdy0_freepts_extraporder2_paramset2,ypbdy0_freepts_extraporder2_paramset2,zpbdy0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2,chiextrap0_freepts_extraporder2_paramset2,xiextrap0_freepts_extraporder2_paramset2,&basebdy_Nchi_freepts_extraporder2_paramset2,&basebdy_Nxi_freepts_extraporder2_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder2_paramset2,quasiset_massdensity0_freepts_extraporder2_paramset2,xpbdy0_freepts_extraporder2_paramset2,ypbdy0_freepts_extraporder2_paramset2,zpbdy0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2,rhobdy0_freepts_extraporder2_paramset2,chibdy0_freepts_extraporder2_paramset2,xibdy0_freepts_extraporder2_paramset2,&basebdy_Nchi_freepts_extraporder2_paramset2,&basebdy_Nxi_freepts_extraporder2_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder2_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -12022,7 +12156,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_freepts_extraporder3_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder3_paramset2[j],y_extrappt0_freepts_extraporder3_paramset2[j],z_extrappt0_freepts_extraporder3_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder3_paramset2[j],ypbdy0_freepts_extraporder3_paramset2[j],zpbdy0_freepts_extraporder3_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -12034,7 +12168,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder3_paramset2[j],y_extrappt0_freepts_extraporder3_paramset2[j],z_extrappt0_freepts_extraporder3_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder3_paramset2[j],ypbdy0_freepts_extraporder3_paramset2[j],zpbdy0_freepts_extraporder3_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -12226,8 +12360,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder3_paramset2=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder3_paramset2,xibdy0_freepts_extraporder3_paramset2,x_extrappt0_freepts_extraporder3_paramset2,y_extrappt0_freepts_extraporder3_paramset2,z_extrappt0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2,chiextrap0_freepts_extraporder3_paramset2,xiextrap0_freepts_extraporder3_paramset2,&basebdy_Nchi_freepts_extraporder3_paramset2,&basebdy_Nxi_freepts_extraporder3_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder3_paramset2,quasiset_massdensity0_freepts_extraporder3_paramset2,x_extrappt0_freepts_extraporder3_paramset2,y_extrappt0_freepts_extraporder3_paramset2,z_extrappt0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2,rhobdy0_freepts_extraporder3_paramset2,chibdy0_freepts_extraporder3_paramset2,xibdy0_freepts_extraporder3_paramset2,&basebdy_Nchi_freepts_extraporder3_paramset2,&basebdy_Nxi_freepts_extraporder3_paramset2);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder3_paramset2,xibdy0_freepts_extraporder3_paramset2,xpbdy0_freepts_extraporder3_paramset2,ypbdy0_freepts_extraporder3_paramset2,zpbdy0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2,chiextrap0_freepts_extraporder3_paramset2,xiextrap0_freepts_extraporder3_paramset2,&basebdy_Nchi_freepts_extraporder3_paramset2,&basebdy_Nxi_freepts_extraporder3_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder3_paramset2,quasiset_massdensity0_freepts_extraporder3_paramset2,xpbdy0_freepts_extraporder3_paramset2,ypbdy0_freepts_extraporder3_paramset2,zpbdy0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2,rhobdy0_freepts_extraporder3_paramset2,chibdy0_freepts_extraporder3_paramset2,xibdy0_freepts_extraporder3_paramset2,&basebdy_Nchi_freepts_extraporder3_paramset2,&basebdy_Nxi_freepts_extraporder3_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder3_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -12318,7 +12452,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder1_paramset1; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder1_paramset1[j],y_extrappt0_fixedpts_extraporder1_paramset1[j],z_extrappt0_fixedpts_extraporder1_paramset1[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder1_paramset1[j],ypbdy0_fixedpts_extraporder1_paramset1[j],zpbdy0_fixedpts_extraporder1_paramset1[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -12330,7 +12464,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder1_paramset1[j],y_extrappt0_fixedpts_extraporder1_paramset1[j],z_extrappt0_fixedpts_extraporder1_paramset1[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder1_paramset1[j],ypbdy0_fixedpts_extraporder1_paramset1[j],zpbdy0_fixedpts_extraporder1_paramset1[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -12522,8 +12656,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder1_paramset1=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder1_paramset1,xibdy0_fixedpts_extraporder1_paramset1,x_extrappt0_fixedpts_extraporder1_paramset1,y_extrappt0_fixedpts_extraporder1_paramset1,z_extrappt0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1,chiextrap0_fixedpts_extraporder1_paramset1,xiextrap0_fixedpts_extraporder1_paramset1,&basebdy_Nchi_fixedpts_extraporder1_paramset1,&basebdy_Nxi_fixedpts_extraporder1_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder1_paramset1,quasiset_massdensity0_fixedpts_extraporder1_paramset1,x_extrappt0_fixedpts_extraporder1_paramset1,y_extrappt0_fixedpts_extraporder1_paramset1,z_extrappt0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1,rhobdy0_fixedpts_extraporder1_paramset1,chibdy0_fixedpts_extraporder1_paramset1,xibdy0_fixedpts_extraporder1_paramset1,&basebdy_Nchi_fixedpts_extraporder1_paramset1,&basebdy_Nxi_fixedpts_extraporder1_paramset1);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder1_paramset1,xibdy0_fixedpts_extraporder1_paramset1,xpbdy0_fixedpts_extraporder1_paramset1,ypbdy0_fixedpts_extraporder1_paramset1,zpbdy0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1,chiextrap0_fixedpts_extraporder1_paramset1,xiextrap0_fixedpts_extraporder1_paramset1,&basebdy_Nchi_fixedpts_extraporder1_paramset1,&basebdy_Nxi_fixedpts_extraporder1_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder1_paramset1,quasiset_massdensity0_fixedpts_extraporder1_paramset1,xpbdy0_fixedpts_extraporder1_paramset1,ypbdy0_fixedpts_extraporder1_paramset1,zpbdy0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1,rhobdy0_fixedpts_extraporder1_paramset1,chibdy0_fixedpts_extraporder1_paramset1,xibdy0_fixedpts_extraporder1_paramset1,&basebdy_Nchi_fixedpts_extraporder1_paramset1,&basebdy_Nxi_fixedpts_extraporder1_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder1_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -12607,7 +12741,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder2_paramset1; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder2_paramset1[j],y_extrappt0_fixedpts_extraporder2_paramset1[j],z_extrappt0_fixedpts_extraporder2_paramset1[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder2_paramset1[j],ypbdy0_fixedpts_extraporder2_paramset1[j],zpbdy0_fixedpts_extraporder2_paramset1[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -12619,7 +12753,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder2_paramset1[j],y_extrappt0_fixedpts_extraporder2_paramset1[j],z_extrappt0_fixedpts_extraporder2_paramset1[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder2_paramset1[j],ypbdy0_fixedpts_extraporder2_paramset1[j],zpbdy0_fixedpts_extraporder2_paramset1[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -12811,8 +12945,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder2_paramset1=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder2_paramset1,xibdy0_fixedpts_extraporder2_paramset1,x_extrappt0_fixedpts_extraporder2_paramset1,y_extrappt0_fixedpts_extraporder2_paramset1,z_extrappt0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1,chiextrap0_fixedpts_extraporder2_paramset1,xiextrap0_fixedpts_extraporder2_paramset1,&basebdy_Nchi_fixedpts_extraporder2_paramset1,&basebdy_Nxi_fixedpts_extraporder2_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder2_paramset1,quasiset_massdensity0_fixedpts_extraporder2_paramset1,x_extrappt0_fixedpts_extraporder2_paramset1,y_extrappt0_fixedpts_extraporder2_paramset1,z_extrappt0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1,rhobdy0_fixedpts_extraporder2_paramset1,chibdy0_fixedpts_extraporder2_paramset1,xibdy0_fixedpts_extraporder2_paramset1,&basebdy_Nchi_fixedpts_extraporder2_paramset1,&basebdy_Nxi_fixedpts_extraporder2_paramset1);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder2_paramset1,xibdy0_fixedpts_extraporder2_paramset1,xpbdy0_fixedpts_extraporder2_paramset1,ypbdy0_fixedpts_extraporder2_paramset1,zpbdy0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1,chiextrap0_fixedpts_extraporder2_paramset1,xiextrap0_fixedpts_extraporder2_paramset1,&basebdy_Nchi_fixedpts_extraporder2_paramset1,&basebdy_Nxi_fixedpts_extraporder2_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder2_paramset1,quasiset_massdensity0_fixedpts_extraporder2_paramset1,xpbdy0_fixedpts_extraporder2_paramset1,ypbdy0_fixedpts_extraporder2_paramset1,zpbdy0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1,rhobdy0_fixedpts_extraporder2_paramset1,chibdy0_fixedpts_extraporder2_paramset1,xibdy0_fixedpts_extraporder2_paramset1,&basebdy_Nchi_fixedpts_extraporder2_paramset1,&basebdy_Nxi_fixedpts_extraporder2_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder2_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -12896,7 +13030,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder3_paramset1; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder3_paramset1[j],y_extrappt0_fixedpts_extraporder3_paramset1[j],z_extrappt0_fixedpts_extraporder3_paramset1[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder3_paramset1[j],ypbdy0_fixedpts_extraporder3_paramset1[j],zpbdy0_fixedpts_extraporder3_paramset1[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -12908,7 +13042,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder3_paramset1[j],y_extrappt0_fixedpts_extraporder3_paramset1[j],z_extrappt0_fixedpts_extraporder3_paramset1[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder3_paramset1[j],ypbdy0_fixedpts_extraporder3_paramset1[j],zpbdy0_fixedpts_extraporder3_paramset1[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -13100,8 +13234,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder3_paramset1=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder3_paramset1,xibdy0_fixedpts_extraporder3_paramset1,x_extrappt0_fixedpts_extraporder3_paramset1,y_extrappt0_fixedpts_extraporder3_paramset1,z_extrappt0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1,chiextrap0_fixedpts_extraporder3_paramset1,xiextrap0_fixedpts_extraporder3_paramset1,&basebdy_Nchi_fixedpts_extraporder3_paramset1,&basebdy_Nxi_fixedpts_extraporder3_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder3_paramset1,quasiset_massdensity0_fixedpts_extraporder3_paramset1,x_extrappt0_fixedpts_extraporder3_paramset1,y_extrappt0_fixedpts_extraporder3_paramset1,z_extrappt0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1,rhobdy0_fixedpts_extraporder3_paramset1,chibdy0_fixedpts_extraporder3_paramset1,xibdy0_fixedpts_extraporder3_paramset1,&basebdy_Nchi_fixedpts_extraporder3_paramset1,&basebdy_Nxi_fixedpts_extraporder3_paramset1);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder3_paramset1,xibdy0_fixedpts_extraporder3_paramset1,xpbdy0_fixedpts_extraporder3_paramset1,ypbdy0_fixedpts_extraporder3_paramset1,zpbdy0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1,chiextrap0_fixedpts_extraporder3_paramset1,xiextrap0_fixedpts_extraporder3_paramset1,&basebdy_Nchi_fixedpts_extraporder3_paramset1,&basebdy_Nxi_fixedpts_extraporder3_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder3_paramset1,quasiset_massdensity0_fixedpts_extraporder3_paramset1,xpbdy0_fixedpts_extraporder3_paramset1,ypbdy0_fixedpts_extraporder3_paramset1,zpbdy0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1,rhobdy0_fixedpts_extraporder3_paramset1,chibdy0_fixedpts_extraporder3_paramset1,xibdy0_fixedpts_extraporder3_paramset1,&basebdy_Nchi_fixedpts_extraporder3_paramset1,&basebdy_Nxi_fixedpts_extraporder3_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder3_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -13187,7 +13321,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder1_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder1_paramset2[j],y_extrappt0_fixedpts_extraporder1_paramset2[j],z_extrappt0_fixedpts_extraporder1_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder1_paramset2[j],ypbdy0_fixedpts_extraporder1_paramset2[j],zpbdy0_fixedpts_extraporder1_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -13199,7 +13333,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder1_paramset2[j],y_extrappt0_fixedpts_extraporder1_paramset2[j],z_extrappt0_fixedpts_extraporder1_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder1_paramset2[j],ypbdy0_fixedpts_extraporder1_paramset2[j],zpbdy0_fixedpts_extraporder1_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -13391,8 +13525,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder1_paramset2=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder1_paramset2,xibdy0_fixedpts_extraporder1_paramset2,x_extrappt0_fixedpts_extraporder1_paramset2,y_extrappt0_fixedpts_extraporder1_paramset2,z_extrappt0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2,chiextrap0_fixedpts_extraporder1_paramset2,xiextrap0_fixedpts_extraporder1_paramset2,&basebdy_Nchi_fixedpts_extraporder1_paramset2,&basebdy_Nxi_fixedpts_extraporder1_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder1_paramset2,quasiset_massdensity0_fixedpts_extraporder1_paramset2,x_extrappt0_fixedpts_extraporder1_paramset2,y_extrappt0_fixedpts_extraporder1_paramset2,z_extrappt0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2,rhobdy0_fixedpts_extraporder1_paramset2,chibdy0_fixedpts_extraporder1_paramset2,xibdy0_fixedpts_extraporder1_paramset2,&basebdy_Nchi_fixedpts_extraporder1_paramset2,&basebdy_Nxi_fixedpts_extraporder1_paramset2);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder1_paramset2,xibdy0_fixedpts_extraporder1_paramset2,xpbdy0_fixedpts_extraporder1_paramset2,ypbdy0_fixedpts_extraporder1_paramset2,zpbdy0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2,chiextrap0_fixedpts_extraporder1_paramset2,xiextrap0_fixedpts_extraporder1_paramset2,&basebdy_Nchi_fixedpts_extraporder1_paramset2,&basebdy_Nxi_fixedpts_extraporder1_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder1_paramset2,quasiset_massdensity0_fixedpts_extraporder1_paramset2,xpbdy0_fixedpts_extraporder1_paramset2,ypbdy0_fixedpts_extraporder1_paramset2,zpbdy0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2,rhobdy0_fixedpts_extraporder1_paramset2,chibdy0_fixedpts_extraporder1_paramset2,xibdy0_fixedpts_extraporder1_paramset2,&basebdy_Nchi_fixedpts_extraporder1_paramset2,&basebdy_Nxi_fixedpts_extraporder1_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder1_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -13476,7 +13610,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder2_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder2_paramset2[j],y_extrappt0_fixedpts_extraporder2_paramset2[j],z_extrappt0_fixedpts_extraporder2_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder2_paramset2[j],ypbdy0_fixedpts_extraporder2_paramset2[j],zpbdy0_fixedpts_extraporder2_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -13488,7 +13622,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder2_paramset2[j],y_extrappt0_fixedpts_extraporder2_paramset2[j],z_extrappt0_fixedpts_extraporder2_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder2_paramset2[j],ypbdy0_fixedpts_extraporder2_paramset2[j],zpbdy0_fixedpts_extraporder2_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -13680,8 +13814,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder2_paramset2=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder2_paramset2,xibdy0_fixedpts_extraporder2_paramset2,x_extrappt0_fixedpts_extraporder2_paramset2,y_extrappt0_fixedpts_extraporder2_paramset2,z_extrappt0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2,chiextrap0_fixedpts_extraporder2_paramset2,xiextrap0_fixedpts_extraporder2_paramset2,&basebdy_Nchi_fixedpts_extraporder2_paramset2,&basebdy_Nxi_fixedpts_extraporder2_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder2_paramset2,quasiset_massdensity0_fixedpts_extraporder2_paramset2,x_extrappt0_fixedpts_extraporder2_paramset2,y_extrappt0_fixedpts_extraporder2_paramset2,z_extrappt0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2,rhobdy0_fixedpts_extraporder2_paramset2,chibdy0_fixedpts_extraporder2_paramset2,xibdy0_fixedpts_extraporder2_paramset2,&basebdy_Nchi_fixedpts_extraporder2_paramset2,&basebdy_Nxi_fixedpts_extraporder2_paramset2);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder2_paramset2,xibdy0_fixedpts_extraporder2_paramset2,xpbdy0_fixedpts_extraporder2_paramset2,ypbdy0_fixedpts_extraporder2_paramset2,zpbdy0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2,chiextrap0_fixedpts_extraporder2_paramset2,xiextrap0_fixedpts_extraporder2_paramset2,&basebdy_Nchi_fixedpts_extraporder2_paramset2,&basebdy_Nxi_fixedpts_extraporder2_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder2_paramset2,quasiset_massdensity0_fixedpts_extraporder2_paramset2,xpbdy0_fixedpts_extraporder2_paramset2,ypbdy0_fixedpts_extraporder2_paramset2,zpbdy0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2,rhobdy0_fixedpts_extraporder2_paramset2,chibdy0_fixedpts_extraporder2_paramset2,xibdy0_fixedpts_extraporder2_paramset2,&basebdy_Nchi_fixedpts_extraporder2_paramset2,&basebdy_Nxi_fixedpts_extraporder2_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder2_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -13765,7 +13899,7 @@ void AdS4D_pre_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder3_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder3_paramset2[j],y_extrappt0_fixedpts_extraporder3_paramset2[j],z_extrappt0_fixedpts_extraporder3_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder3_paramset2[j],ypbdy0_fixedpts_extraporder3_paramset2[j],zpbdy0_fixedpts_extraporder3_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -13777,7 +13911,7 @@ void AdS4D_pre_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder3_paramset2[j],y_extrappt0_fixedpts_extraporder3_paramset2[j],z_extrappt0_fixedpts_extraporder3_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder3_paramset2[j],ypbdy0_fixedpts_extraporder3_paramset2[j],zpbdy0_fixedpts_extraporder3_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -13969,8 +14103,8 @@ void AdS4D_pre_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder3_paramset2=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder3_paramset2,xibdy0_fixedpts_extraporder3_paramset2,x_extrappt0_fixedpts_extraporder3_paramset2,y_extrappt0_fixedpts_extraporder3_paramset2,z_extrappt0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2,chiextrap0_fixedpts_extraporder3_paramset2,xiextrap0_fixedpts_extraporder3_paramset2,&basebdy_Nchi_fixedpts_extraporder3_paramset2,&basebdy_Nxi_fixedpts_extraporder3_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder3_paramset2,quasiset_massdensity0_fixedpts_extraporder3_paramset2,x_extrappt0_fixedpts_extraporder3_paramset2,y_extrappt0_fixedpts_extraporder3_paramset2,z_extrappt0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2,rhobdy0_fixedpts_extraporder3_paramset2,chibdy0_fixedpts_extraporder3_paramset2,xibdy0_fixedpts_extraporder3_paramset2,&basebdy_Nchi_fixedpts_extraporder3_paramset2,&basebdy_Nxi_fixedpts_extraporder3_paramset2);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder3_paramset2,xibdy0_fixedpts_extraporder3_paramset2,xpbdy0_fixedpts_extraporder3_paramset2,ypbdy0_fixedpts_extraporder3_paramset2,zpbdy0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2,chiextrap0_fixedpts_extraporder3_paramset2,xiextrap0_fixedpts_extraporder3_paramset2,&basebdy_Nchi_fixedpts_extraporder3_paramset2,&basebdy_Nxi_fixedpts_extraporder3_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder3_paramset2,quasiset_massdensity0_fixedpts_extraporder3_paramset2,xpbdy0_fixedpts_extraporder3_paramset2,ypbdy0_fixedpts_extraporder3_paramset2,zpbdy0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2,rhobdy0_fixedpts_extraporder3_paramset2,chibdy0_fixedpts_extraporder3_paramset2,xibdy0_fixedpts_extraporder3_paramset2,&basebdy_Nchi_fixedpts_extraporder3_paramset2,&basebdy_Nxi_fixedpts_extraporder3_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder3_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -14014,9 +14148,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder1_paramset1);
                         free(quasiset_angmomdensityz_freepts_extraporder1_paramset1);
                         free(bdyphi_freepts_extraporder1_paramset1);  
-                        free(x_extrappt_freepts_extraporder1_paramset1);
-                        free(y_extrappt_freepts_extraporder1_paramset1);
-                        free(z_extrappt_freepts_extraporder1_paramset1);   
+                        free(xpbdy_freepts_extraporder1_paramset1);
+                        free(ypbdy_freepts_extraporder1_paramset1);
+                        free(zpbdy_freepts_extraporder1_paramset1);   
                        	free(x_outermostpt_freepts_extraporder1_paramset1);
                        	free(y_outermostpt_freepts_extraporder1_paramset1);
                        	free(z_outermostpt_freepts_extraporder1_paramset1);   
@@ -14070,9 +14204,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder1_paramset1);
                         free(bdyphi0_freepts_extraporder1_paramset1);
                         free(AdS_mass0_freepts_extraporder1_paramset1);     
-                        free(x_extrappt0_freepts_extraporder1_paramset1);
-                        free(y_extrappt0_freepts_extraporder1_paramset1);
-                        free(z_extrappt0_freepts_extraporder1_paramset1);
+                        free(xpbdy0_freepts_extraporder1_paramset1);
+                        free(ypbdy0_freepts_extraporder1_paramset1);
+                        free(zpbdy0_freepts_extraporder1_paramset1);
                        	free(x_outermostpt0_freepts_extraporder1_paramset1);
                        	free(y_outermostpt0_freepts_extraporder1_paramset1);
                        	free(z_outermostpt0_freepts_extraporder1_paramset1);  
@@ -14106,9 +14240,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder2_paramset1);
                         free(quasiset_angmomdensityz_freepts_extraporder2_paramset1);
                         free(bdyphi_freepts_extraporder2_paramset1);  
-                        free(x_extrappt_freepts_extraporder2_paramset1);
-                        free(y_extrappt_freepts_extraporder2_paramset1);
-                        free(z_extrappt_freepts_extraporder2_paramset1);   
+                        free(xpbdy_freepts_extraporder2_paramset1);
+                        free(ypbdy_freepts_extraporder2_paramset1);
+                        free(zpbdy_freepts_extraporder2_paramset1);   
                         free(x_outermostpt_freepts_extraporder2_paramset1);
                         free(y_outermostpt_freepts_extraporder2_paramset1);
                         free(z_outermostpt_freepts_extraporder2_paramset1);   
@@ -14162,9 +14296,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder2_paramset1);
                         free(bdyphi0_freepts_extraporder2_paramset1);
                         free(AdS_mass0_freepts_extraporder2_paramset1);     
-                        free(x_extrappt0_freepts_extraporder2_paramset1);
-                        free(y_extrappt0_freepts_extraporder2_paramset1);
-                        free(z_extrappt0_freepts_extraporder2_paramset1);
+                        free(xpbdy0_freepts_extraporder2_paramset1);
+                        free(ypbdy0_freepts_extraporder2_paramset1);
+                        free(zpbdy0_freepts_extraporder2_paramset1);
                         free(x_outermostpt0_freepts_extraporder2_paramset1);
                         free(y_outermostpt0_freepts_extraporder2_paramset1);
                         free(z_outermostpt0_freepts_extraporder2_paramset1);  
@@ -14197,9 +14331,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder3_paramset1);
                         free(quasiset_angmomdensityz_freepts_extraporder3_paramset1);
                         free(bdyphi_freepts_extraporder3_paramset1);  
-                        free(x_extrappt_freepts_extraporder3_paramset1);
-                        free(y_extrappt_freepts_extraporder3_paramset1);
-                        free(z_extrappt_freepts_extraporder3_paramset1);   
+                        free(xpbdy_freepts_extraporder3_paramset1);
+                        free(ypbdy_freepts_extraporder3_paramset1);
+                        free(zpbdy_freepts_extraporder3_paramset1);   
                         free(x_outermostpt_freepts_extraporder3_paramset1);
                         free(y_outermostpt_freepts_extraporder3_paramset1);
                         free(z_outermostpt_freepts_extraporder3_paramset1);   
@@ -14253,9 +14387,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder3_paramset1);
                         free(bdyphi0_freepts_extraporder3_paramset1);
                         free(AdS_mass0_freepts_extraporder3_paramset1);     
-                        free(x_extrappt0_freepts_extraporder3_paramset1);
-                        free(y_extrappt0_freepts_extraporder3_paramset1);
-                        free(z_extrappt0_freepts_extraporder3_paramset1);
+                        free(xpbdy0_freepts_extraporder3_paramset1);
+                        free(ypbdy0_freepts_extraporder3_paramset1);
+                        free(zpbdy0_freepts_extraporder3_paramset1);
                         free(x_outermostpt0_freepts_extraporder3_paramset1);
                         free(y_outermostpt0_freepts_extraporder3_paramset1);
                         free(z_outermostpt0_freepts_extraporder3_paramset1);  
@@ -14290,9 +14424,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder1_paramset2);
                         free(quasiset_angmomdensityz_freepts_extraporder1_paramset2);
                         free(bdyphi_freepts_extraporder1_paramset2);  
-                        free(x_extrappt_freepts_extraporder1_paramset2);
-                        free(y_extrappt_freepts_extraporder1_paramset2);
-                        free(z_extrappt_freepts_extraporder1_paramset2);   
+                        free(xpbdy_freepts_extraporder1_paramset2);
+                        free(ypbdy_freepts_extraporder1_paramset2);
+                        free(zpbdy_freepts_extraporder1_paramset2);   
                         free(x_outermostpt_freepts_extraporder1_paramset2);
                         free(y_outermostpt_freepts_extraporder1_paramset2);
                         free(z_outermostpt_freepts_extraporder1_paramset2);   
@@ -14346,9 +14480,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder1_paramset2);
                         free(bdyphi0_freepts_extraporder1_paramset2);
                         free(AdS_mass0_freepts_extraporder1_paramset2);     
-                        free(x_extrappt0_freepts_extraporder1_paramset2);
-                        free(y_extrappt0_freepts_extraporder1_paramset2);
-                        free(z_extrappt0_freepts_extraporder1_paramset2);
+                        free(xpbdy0_freepts_extraporder1_paramset2);
+                        free(ypbdy0_freepts_extraporder1_paramset2);
+                        free(zpbdy0_freepts_extraporder1_paramset2);
                         free(x_outermostpt0_freepts_extraporder1_paramset2);
                         free(y_outermostpt0_freepts_extraporder1_paramset2);
                         free(z_outermostpt0_freepts_extraporder1_paramset2);  
@@ -14381,9 +14515,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder2_paramset2);
                         free(quasiset_angmomdensityz_freepts_extraporder2_paramset2);
                         free(bdyphi_freepts_extraporder2_paramset2);  
-                        free(x_extrappt_freepts_extraporder2_paramset2);
-                        free(y_extrappt_freepts_extraporder2_paramset2);
-                        free(z_extrappt_freepts_extraporder2_paramset2);   
+                        free(xpbdy_freepts_extraporder2_paramset2);
+                        free(ypbdy_freepts_extraporder2_paramset2);
+                        free(zpbdy_freepts_extraporder2_paramset2);   
                         free(x_outermostpt_freepts_extraporder2_paramset2);
                         free(y_outermostpt_freepts_extraporder2_paramset2);
                         free(z_outermostpt_freepts_extraporder2_paramset2);   
@@ -14437,9 +14571,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder2_paramset2);
                         free(bdyphi0_freepts_extraporder2_paramset2);
                         free(AdS_mass0_freepts_extraporder2_paramset2);     
-                        free(x_extrappt0_freepts_extraporder2_paramset2);
-                        free(y_extrappt0_freepts_extraporder2_paramset2);
-                        free(z_extrappt0_freepts_extraporder2_paramset2);
+                        free(xpbdy0_freepts_extraporder2_paramset2);
+                        free(ypbdy0_freepts_extraporder2_paramset2);
+                        free(zpbdy0_freepts_extraporder2_paramset2);
                         free(x_outermostpt0_freepts_extraporder2_paramset2);
                         free(y_outermostpt0_freepts_extraporder2_paramset2);
                         free(z_outermostpt0_freepts_extraporder2_paramset2);  
@@ -14473,9 +14607,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder3_paramset2);
                         free(quasiset_angmomdensityz_freepts_extraporder3_paramset2);
                         free(bdyphi_freepts_extraporder3_paramset2);  
-                        free(x_extrappt_freepts_extraporder3_paramset2);
-                        free(y_extrappt_freepts_extraporder3_paramset2);
-                        free(z_extrappt_freepts_extraporder3_paramset2);   
+                        free(xpbdy_freepts_extraporder3_paramset2);
+                        free(ypbdy_freepts_extraporder3_paramset2);
+                        free(zpbdy_freepts_extraporder3_paramset2);   
                         free(x_outermostpt_freepts_extraporder3_paramset2);
                         free(y_outermostpt_freepts_extraporder3_paramset2);
                         free(z_outermostpt_freepts_extraporder3_paramset2);   
@@ -14529,9 +14663,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder3_paramset2);
                         free(bdyphi0_freepts_extraporder3_paramset2);
                         free(AdS_mass0_freepts_extraporder3_paramset2);     
-                        free(x_extrappt0_freepts_extraporder3_paramset2);
-                        free(y_extrappt0_freepts_extraporder3_paramset2);
-                        free(z_extrappt0_freepts_extraporder3_paramset2);
+                        free(xpbdy0_freepts_extraporder3_paramset2);
+                        free(ypbdy0_freepts_extraporder3_paramset2);
+                        free(zpbdy0_freepts_extraporder3_paramset2);
                         free(x_outermostpt0_freepts_extraporder3_paramset2);
                         free(y_outermostpt0_freepts_extraporder3_paramset2);
                         free(z_outermostpt0_freepts_extraporder3_paramset2);  
@@ -14571,9 +14705,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder1_paramset1);
                         free(quasiset_angmomdensityz_fixedpts_extraporder1_paramset1);
                         free(bdyphi_fixedpts_extraporder1_paramset1);  
-                        free(x_extrappt_fixedpts_extraporder1_paramset1);
-                        free(y_extrappt_fixedpts_extraporder1_paramset1);
-                        free(z_extrappt_fixedpts_extraporder1_paramset1);   
+                        free(xpbdy_fixedpts_extraporder1_paramset1);
+                        free(ypbdy_fixedpts_extraporder1_paramset1);
+                        free(zpbdy_fixedpts_extraporder1_paramset1);   
                         free(x_outermostpt_fixedpts_extraporder1_paramset1);
                         free(y_outermostpt_fixedpts_extraporder1_paramset1);
                         free(z_outermostpt_fixedpts_extraporder1_paramset1);   
@@ -14627,9 +14761,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder1_paramset1);
                         free(bdyphi0_fixedpts_extraporder1_paramset1);
                         free(AdS_mass0_fixedpts_extraporder1_paramset1);     
-                        free(x_extrappt0_fixedpts_extraporder1_paramset1);
-                        free(y_extrappt0_fixedpts_extraporder1_paramset1);
-                        free(z_extrappt0_fixedpts_extraporder1_paramset1);
+                        free(xpbdy0_fixedpts_extraporder1_paramset1);
+                        free(ypbdy0_fixedpts_extraporder1_paramset1);
+                        free(zpbdy0_fixedpts_extraporder1_paramset1);
                         free(x_outermostpt0_fixedpts_extraporder1_paramset1);
                         free(y_outermostpt0_fixedpts_extraporder1_paramset1);
                         free(z_outermostpt0_fixedpts_extraporder1_paramset1);  
@@ -14662,9 +14796,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder2_paramset1);
                         free(quasiset_angmomdensityz_fixedpts_extraporder2_paramset1);
                         free(bdyphi_fixedpts_extraporder2_paramset1);  
-                        free(x_extrappt_fixedpts_extraporder2_paramset1);
-                        free(y_extrappt_fixedpts_extraporder2_paramset1);
-                        free(z_extrappt_fixedpts_extraporder2_paramset1);   
+                        free(xpbdy_fixedpts_extraporder2_paramset1);
+                        free(ypbdy_fixedpts_extraporder2_paramset1);
+                        free(zpbdy_fixedpts_extraporder2_paramset1);   
                         free(x_outermostpt_fixedpts_extraporder2_paramset1);
                         free(y_outermostpt_fixedpts_extraporder2_paramset1);
                         free(z_outermostpt_fixedpts_extraporder2_paramset1);   
@@ -14718,9 +14852,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder2_paramset1);
                         free(bdyphi0_fixedpts_extraporder2_paramset1);
                         free(AdS_mass0_fixedpts_extraporder2_paramset1);     
-                        free(x_extrappt0_fixedpts_extraporder2_paramset1);
-                        free(y_extrappt0_fixedpts_extraporder2_paramset1);
-                        free(z_extrappt0_fixedpts_extraporder2_paramset1);
+                        free(xpbdy0_fixedpts_extraporder2_paramset1);
+                        free(ypbdy0_fixedpts_extraporder2_paramset1);
+                        free(zpbdy0_fixedpts_extraporder2_paramset1);
                         free(x_outermostpt0_fixedpts_extraporder2_paramset1);
                         free(y_outermostpt0_fixedpts_extraporder2_paramset1);
                         free(z_outermostpt0_fixedpts_extraporder2_paramset1);  
@@ -14753,9 +14887,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder3_paramset1);
                         free(quasiset_angmomdensityz_fixedpts_extraporder3_paramset1);
                         free(bdyphi_fixedpts_extraporder3_paramset1);  
-                        free(x_extrappt_fixedpts_extraporder3_paramset1);
-                        free(y_extrappt_fixedpts_extraporder3_paramset1);
-                        free(z_extrappt_fixedpts_extraporder3_paramset1);   
+                        free(xpbdy_fixedpts_extraporder3_paramset1);
+                        free(ypbdy_fixedpts_extraporder3_paramset1);
+                        free(zpbdy_fixedpts_extraporder3_paramset1);   
                         free(x_outermostpt_fixedpts_extraporder3_paramset1);
                         free(y_outermostpt_fixedpts_extraporder3_paramset1);
                         free(z_outermostpt_fixedpts_extraporder3_paramset1);   
@@ -14809,9 +14943,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder3_paramset1);
                         free(bdyphi0_fixedpts_extraporder3_paramset1);
                         free(AdS_mass0_fixedpts_extraporder3_paramset1);     
-                        free(x_extrappt0_fixedpts_extraporder3_paramset1);
-                        free(y_extrappt0_fixedpts_extraporder3_paramset1);
-                        free(z_extrappt0_fixedpts_extraporder3_paramset1);
+                        free(xpbdy0_fixedpts_extraporder3_paramset1);
+                        free(ypbdy0_fixedpts_extraporder3_paramset1);
+                        free(zpbdy0_fixedpts_extraporder3_paramset1);
                         free(x_outermostpt0_fixedpts_extraporder3_paramset1);
                         free(y_outermostpt0_fixedpts_extraporder3_paramset1);
                         free(z_outermostpt0_fixedpts_extraporder3_paramset1);  
@@ -14846,9 +14980,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder1_paramset2);
                         free(quasiset_angmomdensityz_fixedpts_extraporder1_paramset2);
                         free(bdyphi_fixedpts_extraporder1_paramset2);  
-                        free(x_extrappt_fixedpts_extraporder1_paramset2);
-                        free(y_extrappt_fixedpts_extraporder1_paramset2);
-                        free(z_extrappt_fixedpts_extraporder1_paramset2);   
+                        free(xpbdy_fixedpts_extraporder1_paramset2);
+                        free(ypbdy_fixedpts_extraporder1_paramset2);
+                        free(zpbdy_fixedpts_extraporder1_paramset2);   
                         free(x_outermostpt_fixedpts_extraporder1_paramset2);
                         free(y_outermostpt_fixedpts_extraporder1_paramset2);
                         free(z_outermostpt_fixedpts_extraporder1_paramset2);   
@@ -14902,9 +15036,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder1_paramset2);
                         free(bdyphi0_fixedpts_extraporder1_paramset2);
                         free(AdS_mass0_fixedpts_extraporder1_paramset2);     
-                        free(x_extrappt0_fixedpts_extraporder1_paramset2);
-                        free(y_extrappt0_fixedpts_extraporder1_paramset2);
-                        free(z_extrappt0_fixedpts_extraporder1_paramset2);
+                        free(xpbdy0_fixedpts_extraporder1_paramset2);
+                        free(ypbdy0_fixedpts_extraporder1_paramset2);
+                        free(zpbdy0_fixedpts_extraporder1_paramset2);
                         free(x_outermostpt0_fixedpts_extraporder1_paramset2);
                         free(y_outermostpt0_fixedpts_extraporder1_paramset2);
                         free(z_outermostpt0_fixedpts_extraporder1_paramset2);  
@@ -14937,9 +15071,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder2_paramset2);
                         free(quasiset_angmomdensityz_fixedpts_extraporder2_paramset2);
                         free(bdyphi_fixedpts_extraporder2_paramset2);  
-                        free(x_extrappt_fixedpts_extraporder2_paramset2);
-                        free(y_extrappt_fixedpts_extraporder2_paramset2);
-                        free(z_extrappt_fixedpts_extraporder2_paramset2);   
+                        free(xpbdy_fixedpts_extraporder2_paramset2);
+                        free(ypbdy_fixedpts_extraporder2_paramset2);
+                        free(zpbdy_fixedpts_extraporder2_paramset2);   
                         free(x_outermostpt_fixedpts_extraporder2_paramset2);
                         free(y_outermostpt_fixedpts_extraporder2_paramset2);
                         free(z_outermostpt_fixedpts_extraporder2_paramset2);   
@@ -14993,9 +15127,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder2_paramset2);
                         free(bdyphi0_fixedpts_extraporder2_paramset2);
                         free(AdS_mass0_fixedpts_extraporder2_paramset2);     
-                        free(x_extrappt0_fixedpts_extraporder2_paramset2);
-                        free(y_extrappt0_fixedpts_extraporder2_paramset2);
-                        free(z_extrappt0_fixedpts_extraporder2_paramset2);
+                        free(xpbdy0_fixedpts_extraporder2_paramset2);
+                        free(ypbdy0_fixedpts_extraporder2_paramset2);
+                        free(zpbdy0_fixedpts_extraporder2_paramset2);
                         free(x_outermostpt0_fixedpts_extraporder2_paramset2);
                         free(y_outermostpt0_fixedpts_extraporder2_paramset2);
                         free(z_outermostpt0_fixedpts_extraporder2_paramset2);  
@@ -15028,9 +15162,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder3_paramset2);
                         free(quasiset_angmomdensityz_fixedpts_extraporder3_paramset2);
                         free(bdyphi_fixedpts_extraporder3_paramset2);  
-                        free(x_extrappt_fixedpts_extraporder3_paramset2);
-                        free(y_extrappt_fixedpts_extraporder3_paramset2);
-                        free(z_extrappt_fixedpts_extraporder3_paramset2);   
+                        free(xpbdy_fixedpts_extraporder3_paramset2);
+                        free(ypbdy_fixedpts_extraporder3_paramset2);
+                        free(zpbdy_fixedpts_extraporder3_paramset2);   
                         free(x_outermostpt_fixedpts_extraporder3_paramset2);
                         free(y_outermostpt_fixedpts_extraporder3_paramset2);
                         free(z_outermostpt_fixedpts_extraporder3_paramset2);   
@@ -15084,9 +15218,9 @@ void AdS4D_pre_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder3_paramset2);
                         free(bdyphi0_fixedpts_extraporder3_paramset2);
                         free(AdS_mass0_fixedpts_extraporder3_paramset2);     
-                        free(x_extrappt0_fixedpts_extraporder3_paramset2);
-                        free(y_extrappt0_fixedpts_extraporder3_paramset2);
-                        free(z_extrappt0_fixedpts_extraporder3_paramset2);
+                        free(xpbdy0_fixedpts_extraporder3_paramset2);
+                        free(ypbdy0_fixedpts_extraporder3_paramset2);
+                        free(zpbdy0_fixedpts_extraporder3_paramset2);
                         free(x_outermostpt0_fixedpts_extraporder3_paramset2);
                         free(y_outermostpt0_fixedpts_extraporder3_paramset2);
                         free(z_outermostpt0_fixedpts_extraporder3_paramset2);  
@@ -15530,7 +15664,15 @@ void AdS4D_post_tstep(int L)
                 		if (remove_repeated_bdypoints)
                 		{
                 			//routine that sets a mask for near bdy points. We will call these "nexttobdypoints". The number of nexttobdypoints is also the number of points at the boundary where we will extrapolate the stress-energy tensor in AdS4D_pre_tstep and AdS4D_post_tstep. We call this number numbdypoints.
-                			nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                			if (rad_extrap)
+                			{
+                				if (my_rank==0) printf("\nFirst order radial extrapolation of boundary quantities using paramset1 parameters (saved in freepts_extraporder1_paramset1*.txt files\n");
+                				nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                			}
+                			else
+                			{
+                				nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                			}
 		
                 			MPI_Comm_size(MPI_COMM_WORLD,&uniSize); 
                     		vecbdypoints_tmp = malloc(uniSize*sizeof(int));
@@ -15541,15 +15683,15 @@ void AdS4D_post_tstep(int L)
                     		//basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                     		MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
 		
-                    		x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                    		y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                    		z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                    		xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                    		ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                    		zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                     		x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                     		y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                     		z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                    		x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                    		y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                    		z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                    		xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                    		ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                    		zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                     		x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                     		y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                     		z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -15557,18 +15699,18 @@ void AdS4D_post_tstep(int L)
                     		//initialize
                     		for (i=0;i<numbdypoints_tmp;i++)
                     		{                        
-                        		x_extrappt_tmp               [i] = 0;
-                        		y_extrappt_tmp               [i] = 0;
-                        		z_extrappt_tmp               [i] = 0;
+                        		xpbdy_tmp               [i] = 0;
+                        		ypbdy_tmp               [i] = 0;
+                        		zpbdy_tmp               [i] = 0;
                         		x_outermostpt_tmp            [i] = 0;
                         		y_outermostpt_tmp            [i] = 0;
                         		z_outermostpt_tmp            [i] = 0;
                     		}   
                     		for (i=0;i<basenumbdypoints_tmp;i++)
                     		{
-                    			x_extrappt0_tmp              [i] = 0;
-                        		y_extrappt0_tmp              [i] = 0;
-                        		z_extrappt0_tmp              [i] = 0;  
+                    			xpbdy0_tmp              [i] = 0;
+                        		ypbdy0_tmp              [i] = 0;
+                        		zpbdy0_tmp              [i] = 0;  
                         		x_outermostpt0_tmp           [i] = 0;
                         		y_outermostpt0_tmp           [i] = 0;
                         		z_outermostpt0_tmp           [i] = 0;  
@@ -15603,16 +15745,25 @@ void AdS4D_post_tstep(int L)
                             		}
                         		}
                     		}   
-		
-                    		xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+							
+							if (rad_extrap)
+							{
+								xyz_bdy_out_radextrap_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                         				x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                         				chrbdy_freepts_extraporder1_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
+							}
+                    		else
+                    		{
+                    			xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
+                        				x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
+                        				chrbdy_freepts_extraporder1_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
+                    		}
 		
 		
-                    		//x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                    		MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                    		MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                    		MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                    		//x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                    		MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                    		MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                    		MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                     		MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                     		MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                     		MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -15622,17 +15773,17 @@ void AdS4D_post_tstep(int L)
                     		for (m=0;m<basenumbdypoints_tmp;m++)
                     		{
                     			//Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                        		xex1=x_extrappt0_tmp[m];
-                        		yex1=y_extrappt0_tmp[m];
-                        		zex1=z_extrappt0_tmp[m];
+                        		xex1=xpbdy0_tmp[m];
+                        		yex1=ypbdy0_tmp[m];
+                        		zex1=zpbdy0_tmp[m];
                         		xout1=x_outermostpt0_tmp[m];
                         		yout1=y_outermostpt0_tmp[m];
                         		zout1=z_outermostpt0_tmp[m];
                         		for (l=0;l<basenumbdypoints_tmp;l++)
                         		{
-                            		xex2=x_extrappt0_tmp[l];
-                            		yex2=y_extrappt0_tmp[l];
-                            		zex2=z_extrappt0_tmp[l];
+                            		xex2=xpbdy0_tmp[l];
+                            		yex2=ypbdy0_tmp[l];
+                            		zex2=zpbdy0_tmp[l];
                             		xout2=x_outermostpt0_tmp[l];
                             		yout2=y_outermostpt0_tmp[l];
                             		zout2=z_outermostpt0_tmp[l];
@@ -15750,22 +15901,32 @@ void AdS4D_post_tstep(int L)
 		
                     		free(vecbdypoints_tmp);
                     		free(dsplsbdypoints_tmp);
-                    		free(x_extrappt_tmp);
-                    		free(y_extrappt_tmp);
-                    		free(z_extrappt_tmp);
+                    		free(xpbdy_tmp);
+                    		free(ypbdy_tmp);
+                    		free(zpbdy_tmp);
                     		free(x_outermostpt_tmp);
                     		free(y_outermostpt_tmp);
                     		free(z_outermostpt_tmp);
-                    		free(x_extrappt0_tmp);
-                    		free(y_extrappt0_tmp);
-                    		free(z_extrappt0_tmp);
+                    		free(xpbdy0_tmp);
+                    		free(ypbdy0_tmp);
+                    		free(zpbdy0_tmp);
                     		free(x_outermostpt0_tmp);
                     		free(y_outermostpt0_tmp);
                     		free(z_outermostpt0_tmp);	
                 		} //closes condition on remove_repeated_bdypoints
                 		else
                 		{
-                			nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                			if (rad_extrap)
+	                		{
+    	            			if (my_rank==0) printf("\nFirst order radial extrapolation of boundary quantities using paramset1 parameters (saved in freepts_extraporder1_paramset1*.txt files\n");
+        	        			nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+        	        			MPI_Barrier(MPI_COMM_WORLD);
+								if (my_rank==0) {printf("nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset1\n"); fflush(stdout);}
+            	    		}
+                			else
+                			{
+                				nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                			}
                 		}
             		}   
 
@@ -15786,15 +15947,15 @@ void AdS4D_post_tstep(int L)
                         	//basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         	MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
 	    
-                        	x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        	y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        	z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        	xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        	ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        	zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         	x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         	y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         	z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        	x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        	y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        	z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        	xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        	ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        	zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         	x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         	y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         	z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -15802,18 +15963,18 @@ void AdS4D_post_tstep(int L)
                         	//initialize
                         	for (i=0;i<numbdypoints_tmp;i++)
                         	{                        
-                            	x_extrappt_tmp               [i] = 0;
-                            	y_extrappt_tmp               [i] = 0;
-                            	z_extrappt_tmp               [i] = 0;
+                            	xpbdy_tmp               [i] = 0;
+                            	ypbdy_tmp               [i] = 0;
+                            	zpbdy_tmp               [i] = 0;
                             	x_outermostpt_tmp            [i] = 0;
                             	y_outermostpt_tmp            [i] = 0;
                             	z_outermostpt_tmp            [i] = 0;
                         	}   
                         	for (i=0;i<basenumbdypoints_tmp;i++)
                         	{
-                            	x_extrappt0_tmp              [i] = 0;
-                            	y_extrappt0_tmp              [i] = 0;
-                            	z_extrappt0_tmp              [i] = 0;  
+                            	xpbdy0_tmp              [i] = 0;
+                            	ypbdy0_tmp              [i] = 0;
+                            	zpbdy0_tmp              [i] = 0;  
                             	x_outermostpt0_tmp           [i] = 0;
                             	y_outermostpt0_tmp           [i] = 0;
                             	z_outermostpt0_tmp           [i] = 0;  
@@ -15849,15 +16010,15 @@ void AdS4D_post_tstep(int L)
                             	}
                         	}   
 	    
-                        	xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        	xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     	x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     	chrbdy_freepts_extraporder2_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
 	    
 	    
-                        	//x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        	MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        	MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        	MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        	//x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        	MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        	MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        	MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         	MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         	MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         	MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -15867,17 +16028,17 @@ void AdS4D_post_tstep(int L)
                         	for (m=0;m<basenumbdypoints_tmp;m++)
                         	{
                             	//Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            	xex1=x_extrappt0_tmp[m];
-                            	yex1=y_extrappt0_tmp[m];
-                            	zex1=z_extrappt0_tmp[m];
+                            	xex1=xpbdy0_tmp[m];
+                            	yex1=ypbdy0_tmp[m];
+                            	zex1=zpbdy0_tmp[m];
                             	xout1=x_outermostpt0_tmp[m];
                             	yout1=y_outermostpt0_tmp[m];
                             	zout1=z_outermostpt0_tmp[m];
                             	for (l=0;l<basenumbdypoints_tmp;l++)
                             	{
-                                	xex2=x_extrappt0_tmp[l];
-                                	yex2=y_extrappt0_tmp[l];
-                                	zex2=z_extrappt0_tmp[l];
+                                	xex2=xpbdy0_tmp[l];
+                                	yex2=ypbdy0_tmp[l];
+                                	zex2=zpbdy0_tmp[l];
                                 	xout2=x_outermostpt0_tmp[l];
                                 	yout2=y_outermostpt0_tmp[l];
                                 	zout2=z_outermostpt0_tmp[l];
@@ -15995,15 +16156,15 @@ void AdS4D_post_tstep(int L)
 	    
                         	free(vecbdypoints_tmp);
                         	free(dsplsbdypoints_tmp);
-                        	free(x_extrappt_tmp);
-                        	free(y_extrappt_tmp);
-                        	free(z_extrappt_tmp);
+                        	free(xpbdy_tmp);
+                        	free(ypbdy_tmp);
+                        	free(zpbdy_tmp);
                         	free(x_outermostpt_tmp);
                         	free(y_outermostpt_tmp);
                         	free(z_outermostpt_tmp);
-                        	free(x_extrappt0_tmp);
-                        	free(y_extrappt0_tmp);
-                        	free(z_extrappt0_tmp);
+                        	free(xpbdy0_tmp);
+                        	free(ypbdy0_tmp);
+                        	free(zpbdy0_tmp);
                         	free(x_outermostpt0_tmp);
                         	free(y_outermostpt0_tmp);
                         	free(z_outermostpt0_tmp);
@@ -16031,15 +16192,15 @@ void AdS4D_post_tstep(int L)
                         	//basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         	MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
 	    
-                        	x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        	y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        	z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        	xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        	ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        	zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         	x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         	y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         	z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        	x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        	y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        	z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        	xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        	ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        	zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         	x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         	y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         	z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -16047,18 +16208,18 @@ void AdS4D_post_tstep(int L)
                         	//initialize
                         	for (i=0;i<numbdypoints_tmp;i++)
                         	{                        
-                            	x_extrappt_tmp               [i] = 0;
-                            	y_extrappt_tmp               [i] = 0;
-                            	z_extrappt_tmp               [i] = 0;
+                            	xpbdy_tmp               [i] = 0;
+                            	ypbdy_tmp               [i] = 0;
+                            	zpbdy_tmp               [i] = 0;
                             	x_outermostpt_tmp            [i] = 0;
                             	y_outermostpt_tmp            [i] = 0;
                             	z_outermostpt_tmp            [i] = 0;
                         	}   
                         	for (i=0;i<basenumbdypoints_tmp;i++)
                         	{
-                            	x_extrappt0_tmp              [i] = 0;
-                            	y_extrappt0_tmp              [i] = 0;
-                            	z_extrappt0_tmp              [i] = 0;  
+                            	xpbdy0_tmp              [i] = 0;
+                            	ypbdy0_tmp              [i] = 0;
+                            	zpbdy0_tmp              [i] = 0;  
                             	x_outermostpt0_tmp           [i] = 0;
                             	y_outermostpt0_tmp           [i] = 0;
                             	z_outermostpt0_tmp           [i] = 0;  
@@ -16094,15 +16255,15 @@ void AdS4D_post_tstep(int L)
                             	}
                         	}   
 	    
-                        	xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        	xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     	x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     	chrbdy_freepts_extraporder3_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
 	    
 	    
-                        	//x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        	MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        	MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        	MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        	//x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        	MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        	MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        	MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         	MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         	MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         	MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -16112,17 +16273,17 @@ void AdS4D_post_tstep(int L)
                         	for (m=0;m<basenumbdypoints_tmp;m++)
                         	{
                             	//Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            	xex1=x_extrappt0_tmp[m];
-                            	yex1=y_extrappt0_tmp[m];
-                            	zex1=z_extrappt0_tmp[m];
+                            	xex1=xpbdy0_tmp[m];
+                            	yex1=ypbdy0_tmp[m];
+                            	zex1=zpbdy0_tmp[m];
                             	xout1=x_outermostpt0_tmp[m];
                             	yout1=y_outermostpt0_tmp[m];
                             	zout1=z_outermostpt0_tmp[m];
                             	for (l=0;l<basenumbdypoints_tmp;l++)
                             	{
-                                	xex2=x_extrappt0_tmp[l];
-                                	yex2=y_extrappt0_tmp[l];
-                                	zex2=z_extrappt0_tmp[l];
+                                	xex2=xpbdy0_tmp[l];
+                                	yex2=ypbdy0_tmp[l];
+                                	zex2=zpbdy0_tmp[l];
                                 	xout2=x_outermostpt0_tmp[l];
                                 	yout2=y_outermostpt0_tmp[l];
                                 	zout2=z_outermostpt0_tmp[l];
@@ -16240,15 +16401,15 @@ void AdS4D_post_tstep(int L)
 	    
                         	free(vecbdypoints_tmp);
                         	free(dsplsbdypoints_tmp);
-                        	free(x_extrappt_tmp);
-                        	free(y_extrappt_tmp);
-                        	free(z_extrappt_tmp);
+                        	free(xpbdy_tmp);
+                        	free(ypbdy_tmp);
+                        	free(zpbdy_tmp);
                         	free(x_outermostpt_tmp);
                         	free(y_outermostpt_tmp);
                         	free(z_outermostpt_tmp);
-                        	free(x_extrappt0_tmp);
-                        	free(y_extrappt0_tmp);
-                        	free(z_extrappt0_tmp);
+                        	free(xpbdy0_tmp);
+                        	free(ypbdy0_tmp);
+                        	free(zpbdy0_tmp);
                         	free(x_outermostpt0_tmp);
                         	free(y_outermostpt0_tmp);
                         	free(z_outermostpt0_tmp);
@@ -16267,8 +16428,16 @@ void AdS4D_post_tstep(int L)
                         if (remove_repeated_bdypoints)
                         {
                             //routine that sets a mask for near bdy points. We will call these "nexttobdypoints". The number of nexttobdypoints is also the number of points at the boundary where we will extrapolate the stress-energy tensor in AdS4D_pre_tstep and AdS4D_post_tstep. We call this number numbdypoints.
-                            nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
-        
+                            if (rad_extrap)
+                			{
+                				if (my_rank==0) printf("\nFirst order radial extrapolation of boundary quantities using parameterset2 parameters (saved in freepts_extraporder1_paramset2*.txt files\n");
+                				nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                			}
+                			else
+                			{
+                            	nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+        					}
+
                             MPI_Comm_size(MPI_COMM_WORLD,&uniSize); 
                             vecbdypoints_tmp = malloc(uniSize*sizeof(int));
                             dsplsbdypoints_tmp = malloc(uniSize*sizeof(int));    
@@ -16278,15 +16447,15 @@ void AdS4D_post_tstep(int L)
                             //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                             MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
         
-                            x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                            xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                             x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                            x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                            xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                             x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -16294,18 +16463,18 @@ void AdS4D_post_tstep(int L)
                             //initialize
                             for (i=0;i<numbdypoints_tmp;i++)
                             {                        
-                                x_extrappt_tmp               [i] = 0;
-                                y_extrappt_tmp               [i] = 0;
-                                z_extrappt_tmp               [i] = 0;
+                                xpbdy_tmp               [i] = 0;
+                                ypbdy_tmp               [i] = 0;
+                                zpbdy_tmp               [i] = 0;
                                 x_outermostpt_tmp            [i] = 0;
                                 y_outermostpt_tmp            [i] = 0;
                                 z_outermostpt_tmp            [i] = 0;
                             }   
                             for (i=0;i<basenumbdypoints_tmp;i++)
                             {
-                                x_extrappt0_tmp              [i] = 0;
-                                y_extrappt0_tmp              [i] = 0;
-                                z_extrappt0_tmp              [i] = 0;  
+                                xpbdy0_tmp              [i] = 0;
+                                ypbdy0_tmp              [i] = 0;
+                                zpbdy0_tmp              [i] = 0;  
                                 x_outermostpt0_tmp           [i] = 0;
                                 y_outermostpt0_tmp           [i] = 0;
                                 z_outermostpt0_tmp           [i] = 0;  
@@ -16341,15 +16510,23 @@ void AdS4D_post_tstep(int L)
                                 }
                             }   
         
-                            xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+        					if (rad_extrap)
+                    		{
+                    			xyz_bdy_out_radextrap_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                         x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                         chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
+                    		}
+                    		else
+                    		{
+                            	xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
+                                        x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
+                                        chrbdy_freepts_extraporder1_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
+        					}
         
-        
-                            //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                            MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                            //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                            MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                             MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -16359,17 +16536,17 @@ void AdS4D_post_tstep(int L)
                             for (m=0;m<basenumbdypoints_tmp;m++)
                             {
                                 //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                                xex1=x_extrappt0_tmp[m];
-                                yex1=y_extrappt0_tmp[m];
-                                zex1=z_extrappt0_tmp[m];
+                                xex1=xpbdy0_tmp[m];
+                                yex1=ypbdy0_tmp[m];
+                                zex1=zpbdy0_tmp[m];
                                 xout1=x_outermostpt0_tmp[m];
                                 yout1=y_outermostpt0_tmp[m];
                                 zout1=z_outermostpt0_tmp[m];
                                 for (l=0;l<basenumbdypoints_tmp;l++)
                                 {
-                                    xex2=x_extrappt0_tmp[l];
-                                    yex2=y_extrappt0_tmp[l];
-                                    zex2=z_extrappt0_tmp[l];
+                                    xex2=xpbdy0_tmp[l];
+                                    yex2=ypbdy0_tmp[l];
+                                    zex2=zpbdy0_tmp[l];
                                     xout2=x_outermostpt0_tmp[l];
                                     yout2=y_outermostpt0_tmp[l];
                                     zout2=z_outermostpt0_tmp[l];
@@ -16487,22 +16664,32 @@ void AdS4D_post_tstep(int L)
         
                             free(vecbdypoints_tmp);
                             free(dsplsbdypoints_tmp);
-                            free(x_extrappt_tmp);
-                            free(y_extrappt_tmp);
-                            free(z_extrappt_tmp);
+                            free(xpbdy_tmp);
+                            free(ypbdy_tmp);
+                            free(zpbdy_tmp);
                             free(x_outermostpt_tmp);
                             free(y_outermostpt_tmp);
                             free(z_outermostpt_tmp);
-                            free(x_extrappt0_tmp);
-                            free(y_extrappt0_tmp);
-                            free(z_extrappt0_tmp);
+                            free(xpbdy0_tmp);
+                            free(ypbdy0_tmp);
+                            free(zpbdy0_tmp);
                             free(x_outermostpt0_tmp);
                             free(y_outermostpt0_tmp);
                             free(z_outermostpt0_tmp);   
                         } //closes condition on remove_repeated_bdypoints
                         else
                         {
-                            nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                        	if (rad_extrap)
+                			{
+                				if (my_rank==0) printf("\nFirst order radial extrapolation of boundary quantities using parameterset2 parameters (saved in freepts_extraporder1_paramset2*.txt files\n");
+                				nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                				MPI_Barrier(MPI_COMM_WORLD);
+								if (my_rank==0) {printf("nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset2\n"); fflush(stdout);}
+                			}
+                			else
+                			{
+                            	nexttobdypoints_freepts_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                            }
                         }
                     }   
 
@@ -16523,15 +16710,15 @@ void AdS4D_post_tstep(int L)
                             //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                             MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
         
-                            x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                            xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                             x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                            x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                            xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                             x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -16539,18 +16726,18 @@ void AdS4D_post_tstep(int L)
                             //initialize
                             for (i=0;i<numbdypoints_tmp;i++)
                             {                        
-                                x_extrappt_tmp               [i] = 0;
-                                y_extrappt_tmp               [i] = 0;
-                                z_extrappt_tmp               [i] = 0;
+                                xpbdy_tmp               [i] = 0;
+                                ypbdy_tmp               [i] = 0;
+                                zpbdy_tmp               [i] = 0;
                                 x_outermostpt_tmp            [i] = 0;
                                 y_outermostpt_tmp            [i] = 0;
                                 z_outermostpt_tmp            [i] = 0;
                             }   
                             for (i=0;i<basenumbdypoints_tmp;i++)
                             {
-                                x_extrappt0_tmp              [i] = 0;
-                                y_extrappt0_tmp              [i] = 0;
-                                z_extrappt0_tmp              [i] = 0;  
+                                xpbdy0_tmp              [i] = 0;
+                                ypbdy0_tmp              [i] = 0;
+                                zpbdy0_tmp              [i] = 0;  
                                 x_outermostpt0_tmp           [i] = 0;
                                 y_outermostpt0_tmp           [i] = 0;
                                 z_outermostpt0_tmp           [i] = 0;  
@@ -16586,15 +16773,15 @@ void AdS4D_post_tstep(int L)
                                 }
                             }   
         
-                            xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                            xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                         x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                         chrbdy_freepts_extraporder2_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
         
         
-                            //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                            MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                            //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                            MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                             MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -16604,17 +16791,17 @@ void AdS4D_post_tstep(int L)
                             for (m=0;m<basenumbdypoints_tmp;m++)
                             {
                                 //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                                xex1=x_extrappt0_tmp[m];
-                                yex1=y_extrappt0_tmp[m];
-                                zex1=z_extrappt0_tmp[m];
+                                xex1=xpbdy0_tmp[m];
+                                yex1=ypbdy0_tmp[m];
+                                zex1=zpbdy0_tmp[m];
                                 xout1=x_outermostpt0_tmp[m];
                                 yout1=y_outermostpt0_tmp[m];
                                 zout1=z_outermostpt0_tmp[m];
                                 for (l=0;l<basenumbdypoints_tmp;l++)
                                 {
-                                    xex2=x_extrappt0_tmp[l];
-                                    yex2=y_extrappt0_tmp[l];
-                                    zex2=z_extrappt0_tmp[l];
+                                    xex2=xpbdy0_tmp[l];
+                                    yex2=ypbdy0_tmp[l];
+                                    zex2=zpbdy0_tmp[l];
                                     xout2=x_outermostpt0_tmp[l];
                                     yout2=y_outermostpt0_tmp[l];
                                     zout2=z_outermostpt0_tmp[l];
@@ -16732,15 +16919,15 @@ void AdS4D_post_tstep(int L)
         
                             free(vecbdypoints_tmp);
                             free(dsplsbdypoints_tmp);
-                            free(x_extrappt_tmp);
-                            free(y_extrappt_tmp);
-                            free(z_extrappt_tmp);
+                            free(xpbdy_tmp);
+                            free(ypbdy_tmp);
+                            free(zpbdy_tmp);
                             free(x_outermostpt_tmp);
                             free(y_outermostpt_tmp);
                             free(z_outermostpt_tmp);
-                            free(x_extrappt0_tmp);
-                            free(y_extrappt0_tmp);
-                            free(z_extrappt0_tmp);
+                            free(xpbdy0_tmp);
+                            free(ypbdy0_tmp);
+                            free(zpbdy0_tmp);
                             free(x_outermostpt0_tmp);
                             free(y_outermostpt0_tmp);
                             free(z_outermostpt0_tmp);
@@ -16768,15 +16955,15 @@ void AdS4D_post_tstep(int L)
                             //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                             MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
         
-                            x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                            xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                             x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                            x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                            xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                             x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -16784,18 +16971,18 @@ void AdS4D_post_tstep(int L)
                             //initialize
                             for (i=0;i<numbdypoints_tmp;i++)
                             {                        
-                                x_extrappt_tmp               [i] = 0;
-                                y_extrappt_tmp               [i] = 0;
-                                z_extrappt_tmp               [i] = 0;
+                                xpbdy_tmp               [i] = 0;
+                                ypbdy_tmp               [i] = 0;
+                                zpbdy_tmp               [i] = 0;
                                 x_outermostpt_tmp            [i] = 0;
                                 y_outermostpt_tmp            [i] = 0;
                                 z_outermostpt_tmp            [i] = 0;
                             }   
                             for (i=0;i<basenumbdypoints_tmp;i++)
                             {
-                                x_extrappt0_tmp              [i] = 0;
-                                y_extrappt0_tmp              [i] = 0;
-                                z_extrappt0_tmp              [i] = 0;  
+                                xpbdy0_tmp              [i] = 0;
+                                ypbdy0_tmp              [i] = 0;
+                                zpbdy0_tmp              [i] = 0;  
                                 x_outermostpt0_tmp           [i] = 0;
                                 y_outermostpt0_tmp           [i] = 0;
                                 z_outermostpt0_tmp           [i] = 0;  
@@ -16831,15 +17018,15 @@ void AdS4D_post_tstep(int L)
                                 }
                             }   
         
-                            xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                            xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                         x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                         chrbdy_freepts_extraporder3_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
         
         
-                            //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                            MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                            //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                            MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                             MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -16849,17 +17036,17 @@ void AdS4D_post_tstep(int L)
                             for (m=0;m<basenumbdypoints_tmp;m++)
                             {
                                 //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                                xex1=x_extrappt0_tmp[m];
-                                yex1=y_extrappt0_tmp[m];
-                                zex1=z_extrappt0_tmp[m];
+                                xex1=xpbdy0_tmp[m];
+                                yex1=ypbdy0_tmp[m];
+                                zex1=zpbdy0_tmp[m];
                                 xout1=x_outermostpt0_tmp[m];
                                 yout1=y_outermostpt0_tmp[m];
                                 zout1=z_outermostpt0_tmp[m];
                                 for (l=0;l<basenumbdypoints_tmp;l++)
                                 {
-                                    xex2=x_extrappt0_tmp[l];
-                                    yex2=y_extrappt0_tmp[l];
-                                    zex2=z_extrappt0_tmp[l];
+                                    xex2=xpbdy0_tmp[l];
+                                    yex2=ypbdy0_tmp[l];
+                                    zex2=zpbdy0_tmp[l];
                                     xout2=x_outermostpt0_tmp[l];
                                     yout2=y_outermostpt0_tmp[l];
                                     zout2=z_outermostpt0_tmp[l];
@@ -16977,15 +17164,15 @@ void AdS4D_post_tstep(int L)
         
                             free(vecbdypoints_tmp);
                             free(dsplsbdypoints_tmp);
-                            free(x_extrappt_tmp);
-                            free(y_extrappt_tmp);
-                            free(z_extrappt_tmp);
+                            free(xpbdy_tmp);
+                            free(ypbdy_tmp);
+                            free(zpbdy_tmp);
                             free(x_outermostpt_tmp);
                             free(y_outermostpt_tmp);
                             free(z_outermostpt_tmp);
-                            free(x_extrappt0_tmp);
-                            free(y_extrappt0_tmp);
-                            free(z_extrappt0_tmp);
+                            free(xpbdy0_tmp);
+                            free(ypbdy0_tmp);
+                            free(zpbdy0_tmp);
                             free(x_outermostpt0_tmp);
                             free(y_outermostpt0_tmp);
                             free(z_outermostpt0_tmp);
@@ -17026,15 +17213,15 @@ void AdS4D_post_tstep(int L)
                         	//basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         	MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
 	    
-                        	x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        	y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        	z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        	xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        	ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        	zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         	x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         	y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         	z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        	x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        	y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        	z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        	xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        	ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        	zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         	x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         	y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         	z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -17042,18 +17229,18 @@ void AdS4D_post_tstep(int L)
                         	//initialize
                         	for (i=0;i<numbdypoints_tmp;i++)
                         	{                        
-                            	x_extrappt_tmp               [i] = 0;
-                            	y_extrappt_tmp               [i] = 0;
-                            	z_extrappt_tmp               [i] = 0;
+                            	xpbdy_tmp               [i] = 0;
+                            	ypbdy_tmp               [i] = 0;
+                            	zpbdy_tmp               [i] = 0;
                             	x_outermostpt_tmp            [i] = 0;
                             	y_outermostpt_tmp            [i] = 0;
                             	z_outermostpt_tmp            [i] = 0;
                         	}   
                         	for (i=0;i<basenumbdypoints_tmp;i++)
                         	{
-                            	x_extrappt0_tmp              [i] = 0;
-                            	y_extrappt0_tmp              [i] = 0;
-                            	z_extrappt0_tmp              [i] = 0;  
+                            	xpbdy0_tmp              [i] = 0;
+                            	ypbdy0_tmp              [i] = 0;
+                            	zpbdy0_tmp              [i] = 0;  
                             	x_outermostpt0_tmp           [i] = 0;
                             	y_outermostpt0_tmp           [i] = 0;
                             	z_outermostpt0_tmp           [i] = 0;  
@@ -17088,16 +17275,16 @@ void AdS4D_post_tstep(int L)
                                 	}
                             	}
                         	}   
+
+                       		xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
+                                   	x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
+                                   	chrbdy_fixedpts_extraporder1_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
+
 	    
-                        	xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
-                                    	x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
-                                    	chrbdy_fixedpts_extraporder1_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
-	    
-	    
-                        	//x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        	MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        	MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        	MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        	//x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        	MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        	MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        	MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         	MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         	MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         	MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -17107,17 +17294,17 @@ void AdS4D_post_tstep(int L)
                         	for (m=0;m<basenumbdypoints_tmp;m++)
                         	{
                             	//Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            	xex1=x_extrappt0_tmp[m];
-                            	yex1=y_extrappt0_tmp[m];
-                            	zex1=z_extrappt0_tmp[m];
+                            	xex1=xpbdy0_tmp[m];
+                            	yex1=ypbdy0_tmp[m];
+                            	zex1=zpbdy0_tmp[m];
                             	xout1=x_outermostpt0_tmp[m];
                             	yout1=y_outermostpt0_tmp[m];
                             	zout1=z_outermostpt0_tmp[m];
                             	for (l=0;l<basenumbdypoints_tmp;l++)
                             	{
-                                	xex2=x_extrappt0_tmp[l];
-                                	yex2=y_extrappt0_tmp[l];
-                                	zex2=z_extrappt0_tmp[l];
+                                	xex2=xpbdy0_tmp[l];
+                                	yex2=ypbdy0_tmp[l];
+                                	zex2=zpbdy0_tmp[l];
                                 	xout2=x_outermostpt0_tmp[l];
                                 	yout2=y_outermostpt0_tmp[l];
                                 	zout2=z_outermostpt0_tmp[l];
@@ -17235,15 +17422,15 @@ void AdS4D_post_tstep(int L)
 	    
                         	free(vecbdypoints_tmp);
                         	free(dsplsbdypoints_tmp);
-                        	free(x_extrappt_tmp);
-                        	free(y_extrappt_tmp);
-                        	free(z_extrappt_tmp);
+                        	free(xpbdy_tmp);
+                        	free(ypbdy_tmp);
+                        	free(zpbdy_tmp);
                         	free(x_outermostpt_tmp);
                         	free(y_outermostpt_tmp);
                         	free(z_outermostpt_tmp);
-                        	free(x_extrappt0_tmp);
-                        	free(y_extrappt0_tmp);
-                        	free(z_extrappt0_tmp);
+                        	free(xpbdy0_tmp);
+                        	free(ypbdy0_tmp);
+                        	free(zpbdy0_tmp);
                         	free(x_outermostpt0_tmp);
                         	free(y_outermostpt0_tmp);
                         	free(z_outermostpt0_tmp);
@@ -17270,15 +17457,15 @@ void AdS4D_post_tstep(int L)
                         	//basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         	MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
 	    
-                        	x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        	y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        	z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        	xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        	ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        	zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         	x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         	y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         	z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        	x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        	y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        	z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        	xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        	ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        	zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         	x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         	y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         	z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -17286,18 +17473,18 @@ void AdS4D_post_tstep(int L)
                         	//initialize
                         	for (i=0;i<numbdypoints_tmp;i++)
                         	{                        
-                            	x_extrappt_tmp               [i] = 0;
-                            	y_extrappt_tmp               [i] = 0;
-                            	z_extrappt_tmp               [i] = 0;
+                            	xpbdy_tmp               [i] = 0;
+                            	ypbdy_tmp               [i] = 0;
+                            	zpbdy_tmp               [i] = 0;
                             	x_outermostpt_tmp            [i] = 0;
                             	y_outermostpt_tmp            [i] = 0;
                             	z_outermostpt_tmp            [i] = 0;
                         	}   
                         	for (i=0;i<basenumbdypoints_tmp;i++)
                         	{
-                            	x_extrappt0_tmp              [i] = 0;
-                            	y_extrappt0_tmp              [i] = 0;
-                            	z_extrappt0_tmp              [i] = 0;  
+                            	xpbdy0_tmp              [i] = 0;
+                            	ypbdy0_tmp              [i] = 0;
+                            	zpbdy0_tmp              [i] = 0;  
                             	x_outermostpt0_tmp           [i] = 0;
                             	y_outermostpt0_tmp           [i] = 0;
                             	z_outermostpt0_tmp           [i] = 0;  
@@ -17333,15 +17520,15 @@ void AdS4D_post_tstep(int L)
                             	}
                         	}   
 	    
-                        	xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        	xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     	x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     	chrbdy_fixedpts_extraporder2_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
 	    
 	    
-                        	//x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        	MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        	MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        	MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        	//x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        	MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        	MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        	MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         	MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         	MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         	MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -17351,17 +17538,17 @@ void AdS4D_post_tstep(int L)
                         	for (m=0;m<basenumbdypoints_tmp;m++)
                         	{
                             	//Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            	xex1=x_extrappt0_tmp[m];
-                            	yex1=y_extrappt0_tmp[m];
-                            	zex1=z_extrappt0_tmp[m];
+                            	xex1=xpbdy0_tmp[m];
+                            	yex1=ypbdy0_tmp[m];
+                            	zex1=zpbdy0_tmp[m];
                             	xout1=x_outermostpt0_tmp[m];
                             	yout1=y_outermostpt0_tmp[m];
                             	zout1=z_outermostpt0_tmp[m];
                             	for (l=0;l<basenumbdypoints_tmp;l++)
                             	{
-                                	xex2=x_extrappt0_tmp[l];
-                                	yex2=y_extrappt0_tmp[l];
-                                	zex2=z_extrappt0_tmp[l];
+                                	xex2=xpbdy0_tmp[l];
+                                	yex2=ypbdy0_tmp[l];
+                                	zex2=zpbdy0_tmp[l];
                                 	xout2=x_outermostpt0_tmp[l];
                                 	yout2=y_outermostpt0_tmp[l];
                                 	zout2=z_outermostpt0_tmp[l];
@@ -17479,15 +17666,15 @@ void AdS4D_post_tstep(int L)
 	    
                         	free(vecbdypoints_tmp);
                         	free(dsplsbdypoints_tmp);
-                        	free(x_extrappt_tmp);
-                        	free(y_extrappt_tmp);
-                        	free(z_extrappt_tmp);
+                        	free(xpbdy_tmp);
+                        	free(ypbdy_tmp);
+                        	free(zpbdy_tmp);
                         	free(x_outermostpt_tmp);
                         	free(y_outermostpt_tmp);
                         	free(z_outermostpt_tmp);
-                        	free(x_extrappt0_tmp);
-                        	free(y_extrappt0_tmp);
-                        	free(z_extrappt0_tmp);
+                        	free(xpbdy0_tmp);
+                        	free(ypbdy0_tmp);
+                        	free(zpbdy0_tmp);
                         	free(x_outermostpt0_tmp);
                         	free(y_outermostpt0_tmp);
                         	free(z_outermostpt0_tmp);
@@ -17514,15 +17701,15 @@ void AdS4D_post_tstep(int L)
                         	//basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                         	MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
 	    
-                        	x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        	y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                        	z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                        	xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        	ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                        	zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                         	x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         	y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                         	z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                        	x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        	y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                        	z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                        	xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        	ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                        	zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                         	x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         	y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                         	z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -17530,18 +17717,18 @@ void AdS4D_post_tstep(int L)
                         	//initialize
                         	for (i=0;i<numbdypoints_tmp;i++)
                         	{                        
-                            	x_extrappt_tmp               [i] = 0;
-                            	y_extrappt_tmp               [i] = 0;
-                            	z_extrappt_tmp               [i] = 0;
+                            	xpbdy_tmp               [i] = 0;
+                            	ypbdy_tmp               [i] = 0;
+                            	zpbdy_tmp               [i] = 0;
                             	x_outermostpt_tmp            [i] = 0;
                             	y_outermostpt_tmp            [i] = 0;
                             	z_outermostpt_tmp            [i] = 0;
                         	}   
                         	for (i=0;i<basenumbdypoints_tmp;i++)
                         	{
-                            	x_extrappt0_tmp              [i] = 0;
-                            	y_extrappt0_tmp              [i] = 0;
-                            	z_extrappt0_tmp              [i] = 0;  
+                            	xpbdy0_tmp              [i] = 0;
+                            	ypbdy0_tmp              [i] = 0;
+                            	zpbdy0_tmp              [i] = 0;  
                             	x_outermostpt0_tmp           [i] = 0;
                             	y_outermostpt0_tmp           [i] = 0;
                             	z_outermostpt0_tmp           [i] = 0;  
@@ -17577,15 +17764,15 @@ void AdS4D_post_tstep(int L)
                             	}
                         	}   
 	    
-                        	xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                        	xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                     	x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                     	chrbdy_fixedpts_extraporder3_paramset1,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
 	    
 	    
-                        	//x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        	MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        	MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                        	MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        	//x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        	MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        	MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                        	MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                         	MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         	MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                         	MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -17595,17 +17782,17 @@ void AdS4D_post_tstep(int L)
                         	for (m=0;m<basenumbdypoints_tmp;m++)
                         	{
                             	//Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                            	xex1=x_extrappt0_tmp[m];
-                            	yex1=y_extrappt0_tmp[m];
-                            	zex1=z_extrappt0_tmp[m];
+                            	xex1=xpbdy0_tmp[m];
+                            	yex1=ypbdy0_tmp[m];
+                            	zex1=zpbdy0_tmp[m];
                             	xout1=x_outermostpt0_tmp[m];
                             	yout1=y_outermostpt0_tmp[m];
                             	zout1=z_outermostpt0_tmp[m];
                             	for (l=0;l<basenumbdypoints_tmp;l++)
                             	{
-                                	xex2=x_extrappt0_tmp[l];
-                                	yex2=y_extrappt0_tmp[l];
-                                	zex2=z_extrappt0_tmp[l];
+                                	xex2=xpbdy0_tmp[l];
+                                	yex2=ypbdy0_tmp[l];
+                                	zex2=zpbdy0_tmp[l];
                                 	xout2=x_outermostpt0_tmp[l];
                                 	yout2=y_outermostpt0_tmp[l];
                                 	zout2=z_outermostpt0_tmp[l];
@@ -17723,15 +17910,15 @@ void AdS4D_post_tstep(int L)
 	    
                         	free(vecbdypoints_tmp);
                         	free(dsplsbdypoints_tmp);
-                        	free(x_extrappt_tmp);
-                        	free(y_extrappt_tmp);
-                        	free(z_extrappt_tmp);
+                        	free(xpbdy_tmp);
+                        	free(ypbdy_tmp);
+                        	free(zpbdy_tmp);
                         	free(x_outermostpt_tmp);
                         	free(y_outermostpt_tmp);
                         	free(z_outermostpt_tmp);
-                        	free(x_extrappt0_tmp);
-                        	free(y_extrappt0_tmp);
-                        	free(z_extrappt0_tmp);
+                        	free(xpbdy0_tmp);
+                        	free(ypbdy0_tmp);
+                        	free(zpbdy0_tmp);
                         	free(x_outermostpt0_tmp);
                         	free(y_outermostpt0_tmp);
                         	free(z_outermostpt0_tmp);
@@ -17759,15 +17946,15 @@ void AdS4D_post_tstep(int L)
                             //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                             MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
         
-                            x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                            xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                             x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                            x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                            xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                             x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -17775,18 +17962,18 @@ void AdS4D_post_tstep(int L)
                             //initialize
                             for (i=0;i<numbdypoints_tmp;i++)
                             {                        
-                                x_extrappt_tmp               [i] = 0;
-                                y_extrappt_tmp               [i] = 0;
-                                z_extrappt_tmp               [i] = 0;
+                                xpbdy_tmp               [i] = 0;
+                                ypbdy_tmp               [i] = 0;
+                                zpbdy_tmp               [i] = 0;
                                 x_outermostpt_tmp            [i] = 0;
                                 y_outermostpt_tmp            [i] = 0;
                                 z_outermostpt_tmp            [i] = 0;
                             }   
                             for (i=0;i<basenumbdypoints_tmp;i++)
                             {
-                                x_extrappt0_tmp              [i] = 0;
-                                y_extrappt0_tmp              [i] = 0;
-                                z_extrappt0_tmp              [i] = 0;  
+                                xpbdy0_tmp              [i] = 0;
+                                ypbdy0_tmp              [i] = 0;
+                                zpbdy0_tmp              [i] = 0;  
                                 x_outermostpt0_tmp           [i] = 0;
                                 y_outermostpt0_tmp           [i] = 0;
                                 z_outermostpt0_tmp           [i] = 0;  
@@ -17820,17 +18007,16 @@ void AdS4D_post_tstep(int L)
                                         dsplsbdypoints_tmp[i]=dsplsbdypoints_tmp[i]+vecbdypoints_tmp[j];
                                     }
                                 }
-                            }   
+                            }  
+
+                           	xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
+                                    x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
+                                    chrbdy_fixedpts_extraporder1_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);
         
-                            xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
-                                        x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
-                                        chrbdy_fixedpts_extraporder1_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
-        
-        
-                            //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                            MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                            //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                            MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                             MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -17840,17 +18026,17 @@ void AdS4D_post_tstep(int L)
                             for (m=0;m<basenumbdypoints_tmp;m++)
                             {
                                 //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                                xex1=x_extrappt0_tmp[m];
-                                yex1=y_extrappt0_tmp[m];
-                                zex1=z_extrappt0_tmp[m];
+                                xex1=xpbdy0_tmp[m];
+                                yex1=ypbdy0_tmp[m];
+                                zex1=zpbdy0_tmp[m];
                                 xout1=x_outermostpt0_tmp[m];
                                 yout1=y_outermostpt0_tmp[m];
                                 zout1=z_outermostpt0_tmp[m];
                                 for (l=0;l<basenumbdypoints_tmp;l++)
                                 {
-                                    xex2=x_extrappt0_tmp[l];
-                                    yex2=y_extrappt0_tmp[l];
-                                    zex2=z_extrappt0_tmp[l];
+                                    xex2=xpbdy0_tmp[l];
+                                    yex2=ypbdy0_tmp[l];
+                                    zex2=zpbdy0_tmp[l];
                                     xout2=x_outermostpt0_tmp[l];
                                     yout2=y_outermostpt0_tmp[l];
                                     zout2=z_outermostpt0_tmp[l];
@@ -17968,15 +18154,15 @@ void AdS4D_post_tstep(int L)
         
                             free(vecbdypoints_tmp);
                             free(dsplsbdypoints_tmp);
-                            free(x_extrappt_tmp);
-                            free(y_extrappt_tmp);
-                            free(z_extrappt_tmp);
+                            free(xpbdy_tmp);
+                            free(ypbdy_tmp);
+                            free(zpbdy_tmp);
                             free(x_outermostpt_tmp);
                             free(y_outermostpt_tmp);
                             free(z_outermostpt_tmp);
-                            free(x_extrappt0_tmp);
-                            free(y_extrappt0_tmp);
-                            free(z_extrappt0_tmp);
+                            free(xpbdy0_tmp);
+                            free(ypbdy0_tmp);
+                            free(zpbdy0_tmp);
                             free(x_outermostpt0_tmp);
                             free(y_outermostpt0_tmp);
                             free(z_outermostpt0_tmp);
@@ -18003,15 +18189,15 @@ void AdS4D_post_tstep(int L)
                             //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                             MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
         
-                            x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                            xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                             x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                            x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                            xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                             x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -18019,18 +18205,18 @@ void AdS4D_post_tstep(int L)
                             //initialize
                             for (i=0;i<numbdypoints_tmp;i++)
                             {                        
-                                x_extrappt_tmp               [i] = 0;
-                                y_extrappt_tmp               [i] = 0;
-                                z_extrappt_tmp               [i] = 0;
+                                xpbdy_tmp               [i] = 0;
+                                ypbdy_tmp               [i] = 0;
+                                zpbdy_tmp               [i] = 0;
                                 x_outermostpt_tmp            [i] = 0;
                                 y_outermostpt_tmp            [i] = 0;
                                 z_outermostpt_tmp            [i] = 0;
                             }   
                             for (i=0;i<basenumbdypoints_tmp;i++)
                             {
-                                x_extrappt0_tmp              [i] = 0;
-                                y_extrappt0_tmp              [i] = 0;
-                                z_extrappt0_tmp              [i] = 0;  
+                                xpbdy0_tmp              [i] = 0;
+                                ypbdy0_tmp              [i] = 0;
+                                zpbdy0_tmp              [i] = 0;  
                                 x_outermostpt0_tmp           [i] = 0;
                                 y_outermostpt0_tmp           [i] = 0;
                                 z_outermostpt0_tmp           [i] = 0;  
@@ -18066,15 +18252,15 @@ void AdS4D_post_tstep(int L)
                                 }
                             }   
         
-                            xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                            xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                         x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                         chrbdy_fixedpts_extraporder2_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
         
         
-                            //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                            MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                            //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                            MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                             MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -18084,17 +18270,17 @@ void AdS4D_post_tstep(int L)
                             for (m=0;m<basenumbdypoints_tmp;m++)
                             {
                                 //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                                xex1=x_extrappt0_tmp[m];
-                                yex1=y_extrappt0_tmp[m];
-                                zex1=z_extrappt0_tmp[m];
+                                xex1=xpbdy0_tmp[m];
+                                yex1=ypbdy0_tmp[m];
+                                zex1=zpbdy0_tmp[m];
                                 xout1=x_outermostpt0_tmp[m];
                                 yout1=y_outermostpt0_tmp[m];
                                 zout1=z_outermostpt0_tmp[m];
                                 for (l=0;l<basenumbdypoints_tmp;l++)
                                 {
-                                    xex2=x_extrappt0_tmp[l];
-                                    yex2=y_extrappt0_tmp[l];
-                                    zex2=z_extrappt0_tmp[l];
+                                    xex2=xpbdy0_tmp[l];
+                                    yex2=ypbdy0_tmp[l];
+                                    zex2=zpbdy0_tmp[l];
                                     xout2=x_outermostpt0_tmp[l];
                                     yout2=y_outermostpt0_tmp[l];
                                     zout2=z_outermostpt0_tmp[l];
@@ -18212,15 +18398,15 @@ void AdS4D_post_tstep(int L)
         
                             free(vecbdypoints_tmp);
                             free(dsplsbdypoints_tmp);
-                            free(x_extrappt_tmp);
-                            free(y_extrappt_tmp);
-                            free(z_extrappt_tmp);
+                            free(xpbdy_tmp);
+                            free(ypbdy_tmp);
+                            free(zpbdy_tmp);
                             free(x_outermostpt_tmp);
                             free(y_outermostpt_tmp);
                             free(z_outermostpt_tmp);
-                            free(x_extrappt0_tmp);
-                            free(y_extrappt0_tmp);
-                            free(z_extrappt0_tmp);
+                            free(xpbdy0_tmp);
+                            free(ypbdy0_tmp);
+                            free(zpbdy0_tmp);
                             free(x_outermostpt0_tmp);
                             free(y_outermostpt0_tmp);
                             free(z_outermostpt0_tmp);
@@ -18247,15 +18433,15 @@ void AdS4D_post_tstep(int L)
                             //basenumbdypoints contains the sum of the number of nexttobdypoints from all processes, i.e. the total number of nexttobdypoints, hence the total number of points at the boundary where we extrapolate the stress-energy tensor
                             MPI_Allreduce(&numbdypoints_tmp,&basenumbdypoints_tmp,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);  
         
-                            x_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            y_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
-                            z_extrappt_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
+                            xpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            ypbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));
+                            zpbdy_tmp               = malloc((numbdypoints_tmp)*sizeof(real));  
                             x_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             y_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real));
                             z_outermostpt_tmp            = malloc((numbdypoints_tmp)*sizeof(real)); 
-                            x_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            y_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
-                            z_extrappt0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
+                            xpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            ypbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));
+                            zpbdy0_tmp              = malloc((basenumbdypoints_tmp)*sizeof(real));   
                             x_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             y_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));
                             z_outermostpt0_tmp           = malloc((basenumbdypoints_tmp)*sizeof(real));   
@@ -18263,18 +18449,18 @@ void AdS4D_post_tstep(int L)
                             //initialize
                             for (i=0;i<numbdypoints_tmp;i++)
                             {                        
-                                x_extrappt_tmp               [i] = 0;
-                                y_extrappt_tmp               [i] = 0;
-                                z_extrappt_tmp               [i] = 0;
+                                xpbdy_tmp               [i] = 0;
+                                ypbdy_tmp               [i] = 0;
+                                zpbdy_tmp               [i] = 0;
                                 x_outermostpt_tmp            [i] = 0;
                                 y_outermostpt_tmp            [i] = 0;
                                 z_outermostpt_tmp            [i] = 0;
                             }   
                             for (i=0;i<basenumbdypoints_tmp;i++)
                             {
-                                x_extrappt0_tmp              [i] = 0;
-                                y_extrappt0_tmp              [i] = 0;
-                                z_extrappt0_tmp              [i] = 0;  
+                                xpbdy0_tmp              [i] = 0;
+                                ypbdy0_tmp              [i] = 0;
+                                zpbdy0_tmp              [i] = 0;  
                                 x_outermostpt0_tmp           [i] = 0;
                                 y_outermostpt0_tmp           [i] = 0;
                                 z_outermostpt0_tmp           [i] = 0;  
@@ -18310,15 +18496,15 @@ void AdS4D_post_tstep(int L)
                                 }
                             }   
         
-                            xyz_extrap_outermost_(x_extrappt_tmp,y_extrappt_tmp,z_extrappt_tmp,
+                            xyz_extrap_outermost_(xpbdy_tmp,ypbdy_tmp,zpbdy_tmp,
                                         x_outermostpt_tmp,y_outermostpt_tmp,z_outermostpt_tmp,
                                         chrbdy_fixedpts_extraporder3_paramset2,&numbdypoints_tmp,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
         
         
-                            //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                            MPI_Allgatherv(x_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(y_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
-                            MPI_Allgatherv(z_extrappt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_extrappt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
+                            //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                            MPI_Allgatherv(xpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,xpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(ypbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,ypbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
+                            MPI_Allgatherv(zpbdy_tmp,numbdypoints_tmp,MPI_DOUBLE,zpbdy0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);  
                             MPI_Allgatherv(x_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,x_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(y_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,y_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);
                             MPI_Allgatherv(z_outermostpt_tmp,numbdypoints_tmp,MPI_DOUBLE,z_outermostpt0_tmp,vecbdypoints_tmp,dsplsbdypoints_tmp,MPI_DOUBLE,MPI_COMM_WORLD);                       
@@ -18328,17 +18514,17 @@ void AdS4D_post_tstep(int L)
                             for (m=0;m<basenumbdypoints_tmp;m++)
                             {
                                 //Strategy: consider point m and check if there is another point l with the same coordinates but different outermost point 
-                                xex1=x_extrappt0_tmp[m];
-                                yex1=y_extrappt0_tmp[m];
-                                zex1=z_extrappt0_tmp[m];
+                                xex1=xpbdy0_tmp[m];
+                                yex1=ypbdy0_tmp[m];
+                                zex1=zpbdy0_tmp[m];
                                 xout1=x_outermostpt0_tmp[m];
                                 yout1=y_outermostpt0_tmp[m];
                                 zout1=z_outermostpt0_tmp[m];
                                 for (l=0;l<basenumbdypoints_tmp;l++)
                                 {
-                                    xex2=x_extrappt0_tmp[l];
-                                    yex2=y_extrappt0_tmp[l];
-                                    zex2=z_extrappt0_tmp[l];
+                                    xex2=xpbdy0_tmp[l];
+                                    yex2=ypbdy0_tmp[l];
+                                    zex2=zpbdy0_tmp[l];
                                     xout2=x_outermostpt0_tmp[l];
                                     yout2=y_outermostpt0_tmp[l];
                                     zout2=z_outermostpt0_tmp[l];
@@ -18456,15 +18642,15 @@ void AdS4D_post_tstep(int L)
         
                             free(vecbdypoints_tmp);
                             free(dsplsbdypoints_tmp);
-                            free(x_extrappt_tmp);
-                            free(y_extrappt_tmp);
-                            free(z_extrappt_tmp);
+                            free(xpbdy_tmp);
+                            free(ypbdy_tmp);
+                            free(zpbdy_tmp);
                             free(x_outermostpt_tmp);
                             free(y_outermostpt_tmp);
                             free(z_outermostpt_tmp);
-                            free(x_extrappt0_tmp);
-                            free(y_extrappt0_tmp);
-                            free(z_extrappt0_tmp);
+                            free(xpbdy0_tmp);
+                            free(ypbdy0_tmp);
+                            free(zpbdy0_tmp);
                             free(x_outermostpt0_tmp);
                             free(y_outermostpt0_tmp);
                             free(z_outermostpt0_tmp);
@@ -18511,9 +18697,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder1_paramset1  = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder1_paramset1  = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                         bdyphi_freepts_extraporder1_paramset1                   = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));   
-                        x_extrappt_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
-                        y_extrappt_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
-                        z_extrappt_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));  
+                        xpbdy_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
+                        ypbdy_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
+                        zpbdy_freepts_extraporder1_paramset1               = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));  
                        	x_outermostpt_freepts_extraporder1_paramset1            = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                        	y_outermostpt_freepts_extraporder1_paramset1            = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                        	z_outermostpt_freepts_extraporder1_paramset1            = malloc((numbdypoints_freepts_extraporder1_paramset1)*sizeof(real)); 
@@ -18567,9 +18753,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder1_paramset1 = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                         AdS_mass0_freepts_extraporder1_paramset1                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder1_paramset1                  = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
-                        y_extrappt0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
-                        z_extrappt0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));   
+                        xpbdy0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
+                        ypbdy0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
+                        zpbdy0_freepts_extraporder1_paramset1              = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));   
                        	x_outermostpt0_freepts_extraporder1_paramset1           = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                        	y_outermostpt0_freepts_extraporder1_paramset1           = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                        	z_outermostpt0_freepts_extraporder1_paramset1           = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));   
@@ -18590,9 +18776,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder1_paramset1  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder1_paramset1  [i] = 0;
                             bdyphi_freepts_extraporder1_paramset1                   [i] = 0;   
-                            x_extrappt_freepts_extraporder1_paramset1               [i] = 0;
-                            y_extrappt_freepts_extraporder1_paramset1               [i] = 0;
-                            z_extrappt_freepts_extraporder1_paramset1               [i] = 0;
+                            xpbdy_freepts_extraporder1_paramset1               [i] = 0;
+                            ypbdy_freepts_extraporder1_paramset1               [i] = 0;
+                            zpbdy_freepts_extraporder1_paramset1               [i] = 0;
                            	x_outermostpt_freepts_extraporder1_paramset1            [i] = 0;
                            	y_outermostpt_freepts_extraporder1_paramset1            [i] = 0;
                            	z_outermostpt_freepts_extraporder1_paramset1            [i] = 0;
@@ -18648,9 +18834,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder1_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder1_paramset1 [i] = 0;
                             bdyphi0_freepts_extraporder1_paramset1                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder1_paramset1              [i] = 0;
-                            y_extrappt0_freepts_extraporder1_paramset1              [i] = 0;
-                            z_extrappt0_freepts_extraporder1_paramset1              [i] = 0;
+                            xpbdy0_freepts_extraporder1_paramset1              [i] = 0;
+                            ypbdy0_freepts_extraporder1_paramset1              [i] = 0;
+                            zpbdy0_freepts_extraporder1_paramset1              [i] = 0;
                            	x_outermostpt0_freepts_extraporder1_paramset1           [i] = 0;
                            	y_outermostpt0_freepts_extraporder1_paramset1           [i] = 0;
                            	z_outermostpt0_freepts_extraporder1_paramset1           [i] = 0;
@@ -18688,14 +18874,25 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder1_paramset1,y_extrappt_freepts_extraporder1_paramset1,z_extrappt_freepts_extraporder1_paramset1,
+                        if (rad_extrap)
+						{
+							xyz_bdy_out_radextrap_(xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
                         						x_outermostpt_freepts_extraporder1_paramset1,y_outermostpt_freepts_extraporder1_paramset1,z_outermostpt_freepts_extraporder1_paramset1,
                         						chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
-                        
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,x_extrappt0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,y_extrappt0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,z_extrappt0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+							MPI_Barrier(MPI_COMM_WORLD);
+							if (my_rank==0) {printf("xyz_bdy_out_radextrap_(xpbdy_freepts_extraporder1_paramset1\n"); fflush(stdout);}
+						}
+                    	else
+                    	{
+                        	xyz_extrap_outermost_(xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
+                        						x_outermostpt_freepts_extraporder1_paramset1,y_outermostpt_freepts_extraporder1_paramset1,z_outermostpt_freepts_extraporder1_paramset1,
+                        						chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
+                        }
+
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,xpbdy0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,ypbdy0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,zpbdy0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                         	MPI_Allgatherv(x_outermostpt_freepts_extraporder1_paramset1,numbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,x_outermostpt0_freepts_extraporder1_paramset1,vecbdypoints_freepts_extraporder1_paramset1,dsplsbdypoints_freepts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -18720,7 +18917,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_freepts_extraporder1_paramset1 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder1_paramset1 = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real));
                                 xiextrap0_freepts_extraporder1_paramset1  = malloc((basenumbdypoints_freepts_extraporder1_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder1_paramset1,chiextrap0_freepts_extraporder1_paramset1,xiextrap0_freepts_extraporder1_paramset1,x_extrappt0_freepts_extraporder1_paramset1,y_extrappt0_freepts_extraporder1_paramset1,z_extrappt0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder1_paramset1,chiextrap0_freepts_extraporder1_paramset1,xiextrap0_freepts_extraporder1_paramset1,xpbdy0_freepts_extraporder1_paramset1,ypbdy0_freepts_extraporder1_paramset1,zpbdy0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1);  
                                 basebdy_Nchi_freepts_extraporder1_paramset1=0;//initialize
                                 basebdy_Nxi_freepts_extraporder1_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder1_paramset1,&basebdy_Nxi_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1,chiextrap0_freepts_extraporder1_paramset1,xiextrap0_freepts_extraporder1_paramset1);  
@@ -18730,14 +18927,16 @@ void AdS4D_post_tstep(int L)
                             }
                         }
 
-   
-                        extrap_bdyphi_freepts_(bdyphi_freepts_extraporder1_paramset1,
+						if (rad_extrap)
+                		{
+                			
+                			bdyphi_radextrap_(bdyphi_freepts_extraporder1_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder1_paramset1,y_extrappt_freepts_extraporder1_paramset1,z_extrappt_freepts_extraporder1_paramset1,
+                                        xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
                                         chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
-                        extrap_quasiset_freepts_(quasiset_tt_freepts_extraporder1_paramset1,quasiset_tchi_freepts_extraporder1_paramset1,quasiset_txi_freepts_extraporder1_paramset1,
+                        	quasiset_radextrap_(quasiset_tt_freepts_extraporder1_paramset1,quasiset_tchi_freepts_extraporder1_paramset1,quasiset_txi_freepts_extraporder1_paramset1,
                                 quasiset_chichi_freepts_extraporder1_paramset1,quasiset_chixi_freepts_extraporder1_paramset1,
                                 quasiset_xixi_freepts_extraporder1_paramset1,
                                 quasiset_trace_freepts_extraporder1_paramset1,
@@ -18753,10 +18952,42 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder1_paramset1,y_extrappt_freepts_extraporder1_paramset1,z_extrappt_freepts_extraporder1_paramset1,
+                                xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
                                 chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,
                                 &bdy_extrap_order,
-                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
+                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);  
+                        	MPI_Barrier(MPI_COMM_WORLD);
+							if (my_rank==0) {printf("bdyphi_radextrap_(bdyphi_freepts_extraporder1_paramset1,quasiset_radextrap_(quasiset_tt_freepts_extraporder1_paramset1\n"); fflush(stdout);}
+                		}
+                		else
+                		{   
+                        	extrap_bdyphi_freepts_(bdyphi_freepts_extraporder1_paramset1,
+                                        leadordcoeff_phi1,
+                                        xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
+                                        chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,
+                                        &bdy_extrap_order,
+                                        x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
+                        	extrap_quasiset_freepts_(quasiset_tt_freepts_extraporder1_paramset1,quasiset_tchi_freepts_extraporder1_paramset1,quasiset_txi_freepts_extraporder1_paramset1,
+                                quasiset_chichi_freepts_extraporder1_paramset1,quasiset_chixi_freepts_extraporder1_paramset1,
+                                quasiset_xixi_freepts_extraporder1_paramset1,
+                                quasiset_trace_freepts_extraporder1_paramset1,
+                                quasiset_massdensity_freepts_extraporder1_paramset1,
+                                quasiset_angmomdensityx_freepts_extraporder1_paramset1,
+                                quasiset_angmomdensityy_freepts_extraporder1_paramset1,
+                                quasiset_angmomdensityz_freepts_extraporder1_paramset1,
+                                quasiset_tt_ll,quasiset_tchi_ll,quasiset_txi_ll,
+                                quasiset_chichi_ll,quasiset_chixi_ll,
+                                quasiset_xixi_ll,
+                                quasiset_tracell,
+                                quasiset_massdensityll,
+                                quasiset_angmomdensityxll,
+                                quasiset_angmomdensityyll,
+                                quasiset_angmomdensityzll,
+                                xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
+                                chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,
+                                &bdy_extrap_order,
+                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                        } 
                         //distributing the values of the quasiset components of each process over an array lquasiset_ll0 defined globally. This array will be different for each process, in fact it will be zero everywhere except for a certain position (next to the one for the previous processor) containing the values of quasiset_ll of a specific process. This is repeated after each step of the evolution. 
                         for (i=is_bdy_freepts_extraporder1_paramset1; i<ie_bdy_freepts_extraporder1_paramset1; i++)
                         {
@@ -18801,9 +19032,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder2_paramset1  = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder2_paramset1  = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         bdyphi_freepts_extraporder2_paramset1                   = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));   
-                        x_extrappt_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
-                        y_extrappt_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
-                        z_extrappt_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));  
+                        xpbdy_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
+                        ypbdy_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
+                        zpbdy_freepts_extraporder2_paramset1               = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));  
                         x_outermostpt_freepts_extraporder2_paramset1            = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         y_outermostpt_freepts_extraporder2_paramset1            = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         z_outermostpt_freepts_extraporder2_paramset1            = malloc((numbdypoints_freepts_extraporder2_paramset1)*sizeof(real)); 
@@ -18857,9 +19088,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder2_paramset1 = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         AdS_mass0_freepts_extraporder2_paramset1                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder2_paramset1                  = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
-                        y_extrappt0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
-                        z_extrappt0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));   
+                        xpbdy0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
+                        ypbdy0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
+                        zpbdy0_freepts_extraporder2_paramset1              = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));   
                         x_outermostpt0_freepts_extraporder2_paramset1           = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         y_outermostpt0_freepts_extraporder2_paramset1           = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                         z_outermostpt0_freepts_extraporder2_paramset1           = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));   
@@ -18880,9 +19111,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder2_paramset1  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder2_paramset1  [i] = 0;
                             bdyphi_freepts_extraporder2_paramset1                   [i] = 0;   
-                            x_extrappt_freepts_extraporder2_paramset1               [i] = 0;
-                            y_extrappt_freepts_extraporder2_paramset1               [i] = 0;
-                            z_extrappt_freepts_extraporder2_paramset1               [i] = 0;
+                            xpbdy_freepts_extraporder2_paramset1               [i] = 0;
+                            ypbdy_freepts_extraporder2_paramset1               [i] = 0;
+                            zpbdy_freepts_extraporder2_paramset1               [i] = 0;
                                 x_outermostpt_freepts_extraporder2_paramset1            [i] = 0;
                                 y_outermostpt_freepts_extraporder2_paramset1            [i] = 0;
                                 z_outermostpt_freepts_extraporder2_paramset1            [i] = 0;
@@ -18938,9 +19169,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder2_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder2_paramset1 [i] = 0;
                             bdyphi0_freepts_extraporder2_paramset1                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder2_paramset1              [i] = 0;
-                            y_extrappt0_freepts_extraporder2_paramset1              [i] = 0;
-                            z_extrappt0_freepts_extraporder2_paramset1              [i] = 0;
+                            xpbdy0_freepts_extraporder2_paramset1              [i] = 0;
+                            ypbdy0_freepts_extraporder2_paramset1              [i] = 0;
+                            zpbdy0_freepts_extraporder2_paramset1              [i] = 0;
                                 x_outermostpt0_freepts_extraporder2_paramset1           [i] = 0;
                                 y_outermostpt0_freepts_extraporder2_paramset1           [i] = 0;
                                 z_outermostpt0_freepts_extraporder2_paramset1           [i] = 0;
@@ -18978,14 +19209,14 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder2_paramset1,y_extrappt_freepts_extraporder2_paramset1,z_extrappt_freepts_extraporder2_paramset1,
+                        xyz_extrap_outermost_(xpbdy_freepts_extraporder2_paramset1,ypbdy_freepts_extraporder2_paramset1,zpbdy_freepts_extraporder2_paramset1,
                                                                         x_outermostpt_freepts_extraporder2_paramset1,y_outermostpt_freepts_extraporder2_paramset1,z_outermostpt_freepts_extraporder2_paramset1,
                                                                         chrbdy_freepts_extraporder2_paramset1,&numbdypoints_freepts_extraporder2_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,x_extrappt0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,y_extrappt0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,z_extrappt0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,xpbdy0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,ypbdy0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,zpbdy0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_freepts_extraporder2_paramset1,numbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,x_outermostpt0_freepts_extraporder2_paramset1,vecbdypoints_freepts_extraporder2_paramset1,dsplsbdypoints_freepts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -19010,7 +19241,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_freepts_extraporder2_paramset1 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder2_paramset1 = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real));
                                 xiextrap0_freepts_extraporder2_paramset1  = malloc((basenumbdypoints_freepts_extraporder2_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder2_paramset1,chiextrap0_freepts_extraporder2_paramset1,xiextrap0_freepts_extraporder2_paramset1,x_extrappt0_freepts_extraporder2_paramset1,y_extrappt0_freepts_extraporder2_paramset1,z_extrappt0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder2_paramset1,chiextrap0_freepts_extraporder2_paramset1,xiextrap0_freepts_extraporder2_paramset1,xpbdy0_freepts_extraporder2_paramset1,ypbdy0_freepts_extraporder2_paramset1,zpbdy0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1);  
                                 basebdy_Nchi_freepts_extraporder2_paramset1=0;//initialize
                                 basebdy_Nxi_freepts_extraporder2_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder2_paramset1,&basebdy_Nxi_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1,chiextrap0_freepts_extraporder2_paramset1,xiextrap0_freepts_extraporder2_paramset1);  
@@ -19023,7 +19254,7 @@ void AdS4D_post_tstep(int L)
    
                         extrap_bdyphi_freepts_(bdyphi_freepts_extraporder2_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder2_paramset1,y_extrappt_freepts_extraporder2_paramset1,z_extrappt_freepts_extraporder2_paramset1,
+                                        xpbdy_freepts_extraporder2_paramset1,ypbdy_freepts_extraporder2_paramset1,zpbdy_freepts_extraporder2_paramset1,
                                         chrbdy_freepts_extraporder2_paramset1,&numbdypoints_freepts_extraporder2_paramset1,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -19043,7 +19274,7 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder2_paramset1,y_extrappt_freepts_extraporder2_paramset1,z_extrappt_freepts_extraporder2_paramset1,
+                                xpbdy_freepts_extraporder2_paramset1,ypbdy_freepts_extraporder2_paramset1,zpbdy_freepts_extraporder2_paramset1,
                                 chrbdy_freepts_extraporder2_paramset1,&numbdypoints_freepts_extraporder2_paramset1,
                                 &bdy_extrap_order,
                                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -19090,9 +19321,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder3_paramset1  = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder3_paramset1  = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         bdyphi_freepts_extraporder3_paramset1                   = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));   
-                        x_extrappt_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
-                        y_extrappt_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
-                        z_extrappt_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));  
+                        xpbdy_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
+                        ypbdy_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
+                        zpbdy_freepts_extraporder3_paramset1               = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));  
                         x_outermostpt_freepts_extraporder3_paramset1            = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         y_outermostpt_freepts_extraporder3_paramset1            = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         z_outermostpt_freepts_extraporder3_paramset1            = malloc((numbdypoints_freepts_extraporder3_paramset1)*sizeof(real)); 
@@ -19146,9 +19377,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder3_paramset1 = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         AdS_mass0_freepts_extraporder3_paramset1                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder3_paramset1                  = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
-                        y_extrappt0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
-                        z_extrappt0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));   
+                        xpbdy0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
+                        ypbdy0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
+                        zpbdy0_freepts_extraporder3_paramset1              = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));   
                         x_outermostpt0_freepts_extraporder3_paramset1           = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         y_outermostpt0_freepts_extraporder3_paramset1           = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                         z_outermostpt0_freepts_extraporder3_paramset1           = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));   
@@ -19169,9 +19400,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder3_paramset1  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder3_paramset1  [i] = 0;
                             bdyphi_freepts_extraporder3_paramset1                   [i] = 0;   
-                            x_extrappt_freepts_extraporder3_paramset1               [i] = 0;
-                            y_extrappt_freepts_extraporder3_paramset1               [i] = 0;
-                            z_extrappt_freepts_extraporder3_paramset1               [i] = 0;
+                            xpbdy_freepts_extraporder3_paramset1               [i] = 0;
+                            ypbdy_freepts_extraporder3_paramset1               [i] = 0;
+                            zpbdy_freepts_extraporder3_paramset1               [i] = 0;
                                 x_outermostpt_freepts_extraporder3_paramset1            [i] = 0;
                                 y_outermostpt_freepts_extraporder3_paramset1            [i] = 0;
                                 z_outermostpt_freepts_extraporder3_paramset1            [i] = 0;
@@ -19227,9 +19458,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder3_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder3_paramset1 [i] = 0;
                             bdyphi0_freepts_extraporder3_paramset1                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder3_paramset1              [i] = 0;
-                            y_extrappt0_freepts_extraporder3_paramset1              [i] = 0;
-                            z_extrappt0_freepts_extraporder3_paramset1              [i] = 0;
+                            xpbdy0_freepts_extraporder3_paramset1              [i] = 0;
+                            ypbdy0_freepts_extraporder3_paramset1              [i] = 0;
+                            zpbdy0_freepts_extraporder3_paramset1              [i] = 0;
                                 x_outermostpt0_freepts_extraporder3_paramset1           [i] = 0;
                                 y_outermostpt0_freepts_extraporder3_paramset1           [i] = 0;
                                 z_outermostpt0_freepts_extraporder3_paramset1           [i] = 0;
@@ -19267,14 +19498,14 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder3_paramset1,y_extrappt_freepts_extraporder3_paramset1,z_extrappt_freepts_extraporder3_paramset1,
+                        xyz_extrap_outermost_(xpbdy_freepts_extraporder3_paramset1,ypbdy_freepts_extraporder3_paramset1,zpbdy_freepts_extraporder3_paramset1,
                                                                         x_outermostpt_freepts_extraporder3_paramset1,y_outermostpt_freepts_extraporder3_paramset1,z_outermostpt_freepts_extraporder3_paramset1,
                                                                         chrbdy_freepts_extraporder3_paramset1,&numbdypoints_freepts_extraporder3_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,x_extrappt0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,y_extrappt0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,z_extrappt0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,xpbdy0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,ypbdy0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,zpbdy0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_freepts_extraporder3_paramset1,numbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,x_outermostpt0_freepts_extraporder3_paramset1,vecbdypoints_freepts_extraporder3_paramset1,dsplsbdypoints_freepts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -19299,7 +19530,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_freepts_extraporder3_paramset1 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder3_paramset1 = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real));
                                 xiextrap0_freepts_extraporder3_paramset1  = malloc((basenumbdypoints_freepts_extraporder3_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder3_paramset1,chiextrap0_freepts_extraporder3_paramset1,xiextrap0_freepts_extraporder3_paramset1,x_extrappt0_freepts_extraporder3_paramset1,y_extrappt0_freepts_extraporder3_paramset1,z_extrappt0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder3_paramset1,chiextrap0_freepts_extraporder3_paramset1,xiextrap0_freepts_extraporder3_paramset1,xpbdy0_freepts_extraporder3_paramset1,ypbdy0_freepts_extraporder3_paramset1,zpbdy0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1);  
                                 basebdy_Nchi_freepts_extraporder3_paramset1=0;//initialize
                                 basebdy_Nxi_freepts_extraporder3_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder3_paramset1,&basebdy_Nxi_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1,chiextrap0_freepts_extraporder3_paramset1,xiextrap0_freepts_extraporder3_paramset1);  
@@ -19312,7 +19543,7 @@ void AdS4D_post_tstep(int L)
    
                         extrap_bdyphi_freepts_(bdyphi_freepts_extraporder3_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder3_paramset1,y_extrappt_freepts_extraporder3_paramset1,z_extrappt_freepts_extraporder3_paramset1,
+                                        xpbdy_freepts_extraporder3_paramset1,ypbdy_freepts_extraporder3_paramset1,zpbdy_freepts_extraporder3_paramset1,
                                         chrbdy_freepts_extraporder3_paramset1,&numbdypoints_freepts_extraporder3_paramset1,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -19332,7 +19563,7 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder3_paramset1,y_extrappt_freepts_extraporder3_paramset1,z_extrappt_freepts_extraporder3_paramset1,
+                                xpbdy_freepts_extraporder3_paramset1,ypbdy_freepts_extraporder3_paramset1,zpbdy_freepts_extraporder3_paramset1,
                                 chrbdy_freepts_extraporder3_paramset1,&numbdypoints_freepts_extraporder3_paramset1,
                                 &bdy_extrap_order,
                                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -19381,9 +19612,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder1_paramset2  = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder1_paramset2  = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         bdyphi_freepts_extraporder1_paramset2                   = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));   
-                        x_extrappt_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
-                        y_extrappt_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
-                        z_extrappt_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));  
+                        xpbdy_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
+                        ypbdy_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
+                        zpbdy_freepts_extraporder1_paramset2               = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));  
                         x_outermostpt_freepts_extraporder1_paramset2            = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         y_outermostpt_freepts_extraporder1_paramset2            = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         z_outermostpt_freepts_extraporder1_paramset2            = malloc((numbdypoints_freepts_extraporder1_paramset2)*sizeof(real)); 
@@ -19437,9 +19668,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder1_paramset2 = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         AdS_mass0_freepts_extraporder1_paramset2                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder1_paramset2                  = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
-                        y_extrappt0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
-                        z_extrappt0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));   
+                        xpbdy0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
+                        ypbdy0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
+                        zpbdy0_freepts_extraporder1_paramset2              = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));   
                         x_outermostpt0_freepts_extraporder1_paramset2           = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         y_outermostpt0_freepts_extraporder1_paramset2           = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                         z_outermostpt0_freepts_extraporder1_paramset2           = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));   
@@ -19460,9 +19691,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder1_paramset2  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder1_paramset2  [i] = 0;
                             bdyphi_freepts_extraporder1_paramset2                   [i] = 0;   
-                            x_extrappt_freepts_extraporder1_paramset2               [i] = 0;
-                            y_extrappt_freepts_extraporder1_paramset2               [i] = 0;
-                            z_extrappt_freepts_extraporder1_paramset2               [i] = 0;
+                            xpbdy_freepts_extraporder1_paramset2               [i] = 0;
+                            ypbdy_freepts_extraporder1_paramset2               [i] = 0;
+                            zpbdy_freepts_extraporder1_paramset2               [i] = 0;
                                 x_outermostpt_freepts_extraporder1_paramset2            [i] = 0;
                                 y_outermostpt_freepts_extraporder1_paramset2            [i] = 0;
                                 z_outermostpt_freepts_extraporder1_paramset2            [i] = 0;
@@ -19518,9 +19749,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder1_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder1_paramset2 [i] = 0;
                             bdyphi0_freepts_extraporder1_paramset2                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder1_paramset2              [i] = 0;
-                            y_extrappt0_freepts_extraporder1_paramset2              [i] = 0;
-                            z_extrappt0_freepts_extraporder1_paramset2              [i] = 0;
+                            xpbdy0_freepts_extraporder1_paramset2              [i] = 0;
+                            ypbdy0_freepts_extraporder1_paramset2              [i] = 0;
+                            zpbdy0_freepts_extraporder1_paramset2              [i] = 0;
                                 x_outermostpt0_freepts_extraporder1_paramset2           [i] = 0;
                                 y_outermostpt0_freepts_extraporder1_paramset2           [i] = 0;
                                 z_outermostpt0_freepts_extraporder1_paramset2           [i] = 0;
@@ -19558,14 +19789,23 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder1_paramset2,y_extrappt_freepts_extraporder1_paramset2,z_extrappt_freepts_extraporder1_paramset2,
-                                                                        x_outermostpt_freepts_extraporder1_paramset2,y_outermostpt_freepts_extraporder1_paramset2,z_outermostpt_freepts_extraporder1_paramset2,
-                                                                        chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
+                        if (rad_extrap)
+						{
+							xyz_bdy_out_radextrap_(xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
+                                                x_outermostpt_freepts_extraporder1_paramset2,y_outermostpt_freepts_extraporder1_paramset2,z_outermostpt_freepts_extraporder1_paramset2,
+                                                chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);
+						}
+                    	else
+                    	{
+                        	xyz_extrap_outermost_(xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
+                                                x_outermostpt_freepts_extraporder1_paramset2,y_outermostpt_freepts_extraporder1_paramset2,z_outermostpt_freepts_extraporder1_paramset2,
+                                                chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);
+                        }
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,x_extrappt0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,y_extrappt0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,z_extrappt0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,xpbdy0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,ypbdy0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,zpbdy0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_freepts_extraporder1_paramset2,numbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,x_outermostpt0_freepts_extraporder1_paramset2,vecbdypoints_freepts_extraporder1_paramset2,dsplsbdypoints_freepts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -19590,7 +19830,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_freepts_extraporder1_paramset2 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder1_paramset2 = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real));
                                 xiextrap0_freepts_extraporder1_paramset2  = malloc((basenumbdypoints_freepts_extraporder1_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder1_paramset2,chiextrap0_freepts_extraporder1_paramset2,xiextrap0_freepts_extraporder1_paramset2,x_extrappt0_freepts_extraporder1_paramset2,y_extrappt0_freepts_extraporder1_paramset2,z_extrappt0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder1_paramset2,chiextrap0_freepts_extraporder1_paramset2,xiextrap0_freepts_extraporder1_paramset2,xpbdy0_freepts_extraporder1_paramset2,ypbdy0_freepts_extraporder1_paramset2,zpbdy0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2);  
                                 basebdy_Nchi_freepts_extraporder1_paramset2=0;//initialize
                                 basebdy_Nxi_freepts_extraporder1_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder1_paramset2,&basebdy_Nxi_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2,chiextrap0_freepts_extraporder1_paramset2,xiextrap0_freepts_extraporder1_paramset2);  
@@ -19600,14 +19840,16 @@ void AdS4D_post_tstep(int L)
                             }
                         }
 
-   
-                        extrap_bdyphi_freepts_(bdyphi_freepts_extraporder1_paramset2,
+						if (rad_extrap)
+                		{
+                			
+                			bdyphi_radextrap_(bdyphi_freepts_extraporder1_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder1_paramset2,y_extrappt_freepts_extraporder1_paramset2,z_extrappt_freepts_extraporder1_paramset2,
+                                        xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
                                         chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
-                        extrap_quasiset_freepts_(quasiset_tt_freepts_extraporder1_paramset2,quasiset_tchi_freepts_extraporder1_paramset2,quasiset_txi_freepts_extraporder1_paramset2,
+                        	quasiset_radextrap_(quasiset_tt_freepts_extraporder1_paramset2,quasiset_tchi_freepts_extraporder1_paramset2,quasiset_txi_freepts_extraporder1_paramset2,
                                 quasiset_chichi_freepts_extraporder1_paramset2,quasiset_chixi_freepts_extraporder1_paramset2,
                                 quasiset_xixi_freepts_extraporder1_paramset2,
                                 quasiset_trace_freepts_extraporder1_paramset2,
@@ -19623,10 +19865,40 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder1_paramset2,y_extrappt_freepts_extraporder1_paramset2,z_extrappt_freepts_extraporder1_paramset2,
+                                xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
+                                chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,
+                                &bdy_extrap_order,
+                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
+                		}
+                		else
+                		{   
+                        	extrap_bdyphi_freepts_(bdyphi_freepts_extraporder1_paramset2,
+                                        leadordcoeff_phi1,
+                                        xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
+                                        chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,
+                                        &bdy_extrap_order,
+                                        x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
+                        	extrap_quasiset_freepts_(quasiset_tt_freepts_extraporder1_paramset2,quasiset_tchi_freepts_extraporder1_paramset2,quasiset_txi_freepts_extraporder1_paramset2,
+                                quasiset_chichi_freepts_extraporder1_paramset2,quasiset_chixi_freepts_extraporder1_paramset2,
+                                quasiset_xixi_freepts_extraporder1_paramset2,
+                                quasiset_trace_freepts_extraporder1_paramset2,
+                                quasiset_massdensity_freepts_extraporder1_paramset2,
+                                quasiset_angmomdensityx_freepts_extraporder1_paramset2,
+                                quasiset_angmomdensityy_freepts_extraporder1_paramset2,
+                                quasiset_angmomdensityz_freepts_extraporder1_paramset2,
+                                quasiset_tt_ll,quasiset_tchi_ll,quasiset_txi_ll,
+                                quasiset_chichi_ll,quasiset_chixi_ll,
+                                quasiset_xixi_ll,
+                                quasiset_tracell,
+                                quasiset_massdensityll,
+                                quasiset_angmomdensityxll,
+                                quasiset_angmomdensityyll,
+                                quasiset_angmomdensityzll,
+                                xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
                                 chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,
                                 &bdy_extrap_order,
                                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
+                        }
                         //distributing the values of the quasiset components of each process over an array lquasiset_ll0 defined globally. This array will be different for each process, in fact it will be zero everywhere except for a certain position (next to the one for the previous processor) containing the values of quasiset_ll of a specific process. This is repeated after each step of the evolution. 
                         for (i=is_bdy_freepts_extraporder1_paramset2; i<ie_bdy_freepts_extraporder1_paramset2; i++)
                         {
@@ -19671,9 +19943,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder2_paramset2  = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder2_paramset2  = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         bdyphi_freepts_extraporder2_paramset2                   = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));   
-                        x_extrappt_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
-                        y_extrappt_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
-                        z_extrappt_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));  
+                        xpbdy_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
+                        ypbdy_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
+                        zpbdy_freepts_extraporder2_paramset2               = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));  
                         x_outermostpt_freepts_extraporder2_paramset2            = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         y_outermostpt_freepts_extraporder2_paramset2            = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         z_outermostpt_freepts_extraporder2_paramset2            = malloc((numbdypoints_freepts_extraporder2_paramset2)*sizeof(real)); 
@@ -19727,9 +19999,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder2_paramset2 = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         AdS_mass0_freepts_extraporder2_paramset2                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder2_paramset2                  = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
-                        y_extrappt0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
-                        z_extrappt0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));   
+                        xpbdy0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
+                        ypbdy0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
+                        zpbdy0_freepts_extraporder2_paramset2              = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));   
                         x_outermostpt0_freepts_extraporder2_paramset2           = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         y_outermostpt0_freepts_extraporder2_paramset2           = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                         z_outermostpt0_freepts_extraporder2_paramset2           = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));   
@@ -19750,9 +20022,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder2_paramset2  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder2_paramset2  [i] = 0;
                             bdyphi_freepts_extraporder2_paramset2                   [i] = 0;   
-                            x_extrappt_freepts_extraporder2_paramset2               [i] = 0;
-                            y_extrappt_freepts_extraporder2_paramset2               [i] = 0;
-                            z_extrappt_freepts_extraporder2_paramset2               [i] = 0;
+                            xpbdy_freepts_extraporder2_paramset2               [i] = 0;
+                            ypbdy_freepts_extraporder2_paramset2               [i] = 0;
+                            zpbdy_freepts_extraporder2_paramset2               [i] = 0;
                                 x_outermostpt_freepts_extraporder2_paramset2            [i] = 0;
                                 y_outermostpt_freepts_extraporder2_paramset2            [i] = 0;
                                 z_outermostpt_freepts_extraporder2_paramset2            [i] = 0;
@@ -19808,9 +20080,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder2_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder2_paramset2 [i] = 0;
                             bdyphi0_freepts_extraporder2_paramset2                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder2_paramset2              [i] = 0;
-                            y_extrappt0_freepts_extraporder2_paramset2              [i] = 0;
-                            z_extrappt0_freepts_extraporder2_paramset2              [i] = 0;
+                            xpbdy0_freepts_extraporder2_paramset2              [i] = 0;
+                            ypbdy0_freepts_extraporder2_paramset2              [i] = 0;
+                            zpbdy0_freepts_extraporder2_paramset2              [i] = 0;
                                 x_outermostpt0_freepts_extraporder2_paramset2           [i] = 0;
                                 y_outermostpt0_freepts_extraporder2_paramset2           [i] = 0;
                                 z_outermostpt0_freepts_extraporder2_paramset2           [i] = 0;
@@ -19848,14 +20120,14 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder2_paramset2,y_extrappt_freepts_extraporder2_paramset2,z_extrappt_freepts_extraporder2_paramset2,
+                        xyz_extrap_outermost_(xpbdy_freepts_extraporder2_paramset2,ypbdy_freepts_extraporder2_paramset2,zpbdy_freepts_extraporder2_paramset2,
                                                                         x_outermostpt_freepts_extraporder2_paramset2,y_outermostpt_freepts_extraporder2_paramset2,z_outermostpt_freepts_extraporder2_paramset2,
                                                                         chrbdy_freepts_extraporder2_paramset2,&numbdypoints_freepts_extraporder2_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,x_extrappt0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,y_extrappt0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,z_extrappt0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,xpbdy0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,ypbdy0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,zpbdy0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_freepts_extraporder2_paramset2,numbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,x_outermostpt0_freepts_extraporder2_paramset2,vecbdypoints_freepts_extraporder2_paramset2,dsplsbdypoints_freepts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -19880,7 +20152,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_freepts_extraporder2_paramset2 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder2_paramset2 = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real));
                                 xiextrap0_freepts_extraporder2_paramset2  = malloc((basenumbdypoints_freepts_extraporder2_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder2_paramset2,chiextrap0_freepts_extraporder2_paramset2,xiextrap0_freepts_extraporder2_paramset2,x_extrappt0_freepts_extraporder2_paramset2,y_extrappt0_freepts_extraporder2_paramset2,z_extrappt0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder2_paramset2,chiextrap0_freepts_extraporder2_paramset2,xiextrap0_freepts_extraporder2_paramset2,xpbdy0_freepts_extraporder2_paramset2,ypbdy0_freepts_extraporder2_paramset2,zpbdy0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2);  
                                 basebdy_Nchi_freepts_extraporder2_paramset2=0;//initialize
                                 basebdy_Nxi_freepts_extraporder2_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder2_paramset2,&basebdy_Nxi_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2,chiextrap0_freepts_extraporder2_paramset2,xiextrap0_freepts_extraporder2_paramset2);  
@@ -19893,7 +20165,7 @@ void AdS4D_post_tstep(int L)
    
                         extrap_bdyphi_freepts_(bdyphi_freepts_extraporder2_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder2_paramset2,y_extrappt_freepts_extraporder2_paramset2,z_extrappt_freepts_extraporder2_paramset2,
+                                        xpbdy_freepts_extraporder2_paramset2,ypbdy_freepts_extraporder2_paramset2,zpbdy_freepts_extraporder2_paramset2,
                                         chrbdy_freepts_extraporder2_paramset2,&numbdypoints_freepts_extraporder2_paramset2,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -19913,7 +20185,7 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder2_paramset2,y_extrappt_freepts_extraporder2_paramset2,z_extrappt_freepts_extraporder2_paramset2,
+                                xpbdy_freepts_extraporder2_paramset2,ypbdy_freepts_extraporder2_paramset2,zpbdy_freepts_extraporder2_paramset2,
                                 chrbdy_freepts_extraporder2_paramset2,&numbdypoints_freepts_extraporder2_paramset2,
                                 &bdy_extrap_order,
                                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -19960,9 +20232,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_freepts_extraporder3_paramset2  = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_freepts_extraporder3_paramset2  = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         bdyphi_freepts_extraporder3_paramset2                   = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));   
-                        x_extrappt_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
-                        y_extrappt_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
-                        z_extrappt_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));  
+                        xpbdy_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
+                        ypbdy_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
+                        zpbdy_freepts_extraporder3_paramset2               = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));  
                         x_outermostpt_freepts_extraporder3_paramset2            = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         y_outermostpt_freepts_extraporder3_paramset2            = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         z_outermostpt_freepts_extraporder3_paramset2            = malloc((numbdypoints_freepts_extraporder3_paramset2)*sizeof(real)); 
@@ -20016,9 +20288,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_freepts_extraporder3_paramset2 = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         AdS_mass0_freepts_extraporder3_paramset2                = malloc(sizeof(real));
                         bdyphi0_freepts_extraporder3_paramset2                  = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));    
-                        x_extrappt0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
-                        y_extrappt0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
-                        z_extrappt0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));   
+                        xpbdy0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
+                        ypbdy0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
+                        zpbdy0_freepts_extraporder3_paramset2              = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));   
                         x_outermostpt0_freepts_extraporder3_paramset2           = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         y_outermostpt0_freepts_extraporder3_paramset2           = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                         z_outermostpt0_freepts_extraporder3_paramset2           = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));   
@@ -20039,9 +20311,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_freepts_extraporder3_paramset2  [i] = 0;
                             quasiset_angmomdensityz_freepts_extraporder3_paramset2  [i] = 0;
                             bdyphi_freepts_extraporder3_paramset2                   [i] = 0;   
-                            x_extrappt_freepts_extraporder3_paramset2               [i] = 0;
-                            y_extrappt_freepts_extraporder3_paramset2               [i] = 0;
-                            z_extrappt_freepts_extraporder3_paramset2               [i] = 0;
+                            xpbdy_freepts_extraporder3_paramset2               [i] = 0;
+                            ypbdy_freepts_extraporder3_paramset2               [i] = 0;
+                            zpbdy_freepts_extraporder3_paramset2               [i] = 0;
                                 x_outermostpt_freepts_extraporder3_paramset2            [i] = 0;
                                 y_outermostpt_freepts_extraporder3_paramset2            [i] = 0;
                                 z_outermostpt_freepts_extraporder3_paramset2            [i] = 0;
@@ -20097,9 +20369,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_freepts_extraporder3_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_freepts_extraporder3_paramset2 [i] = 0;
                             bdyphi0_freepts_extraporder3_paramset2                  [i] = 0;   
-                            x_extrappt0_freepts_extraporder3_paramset2              [i] = 0;
-                            y_extrappt0_freepts_extraporder3_paramset2              [i] = 0;
-                            z_extrappt0_freepts_extraporder3_paramset2              [i] = 0;
+                            xpbdy0_freepts_extraporder3_paramset2              [i] = 0;
+                            ypbdy0_freepts_extraporder3_paramset2              [i] = 0;
+                            zpbdy0_freepts_extraporder3_paramset2              [i] = 0;
                                 x_outermostpt0_freepts_extraporder3_paramset2           [i] = 0;
                                 y_outermostpt0_freepts_extraporder3_paramset2           [i] = 0;
                                 z_outermostpt0_freepts_extraporder3_paramset2           [i] = 0;
@@ -20137,14 +20409,14 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_freepts_extraporder3_paramset2,y_extrappt_freepts_extraporder3_paramset2,z_extrappt_freepts_extraporder3_paramset2,
+                        xyz_extrap_outermost_(xpbdy_freepts_extraporder3_paramset2,ypbdy_freepts_extraporder3_paramset2,zpbdy_freepts_extraporder3_paramset2,
                                                                         x_outermostpt_freepts_extraporder3_paramset2,y_outermostpt_freepts_extraporder3_paramset2,z_outermostpt_freepts_extraporder3_paramset2,
                                                                         chrbdy_freepts_extraporder3_paramset2,&numbdypoints_freepts_extraporder3_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,x_extrappt0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,y_extrappt0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,z_extrappt0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,xpbdy0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,ypbdy0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,zpbdy0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_freepts_extraporder3_paramset2,numbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,x_outermostpt0_freepts_extraporder3_paramset2,vecbdypoints_freepts_extraporder3_paramset2,dsplsbdypoints_freepts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -20169,7 +20441,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_freepts_extraporder3_paramset2 = malloc(sizeof(real));
                                 chiextrap0_freepts_extraporder3_paramset2 = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real));
                                 xiextrap0_freepts_extraporder3_paramset2  = malloc((basenumbdypoints_freepts_extraporder3_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_freepts_extraporder3_paramset2,chiextrap0_freepts_extraporder3_paramset2,xiextrap0_freepts_extraporder3_paramset2,x_extrappt0_freepts_extraporder3_paramset2,y_extrappt0_freepts_extraporder3_paramset2,z_extrappt0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2);  
+                                chixiextrap_(rhoextrap0_freepts_extraporder3_paramset2,chiextrap0_freepts_extraporder3_paramset2,xiextrap0_freepts_extraporder3_paramset2,xpbdy0_freepts_extraporder3_paramset2,ypbdy0_freepts_extraporder3_paramset2,zpbdy0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2);  
                                 basebdy_Nchi_freepts_extraporder3_paramset2=0;//initialize
                                 basebdy_Nxi_freepts_extraporder3_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_freepts_extraporder3_paramset2,&basebdy_Nxi_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2,chiextrap0_freepts_extraporder3_paramset2,xiextrap0_freepts_extraporder3_paramset2);  
@@ -20182,7 +20454,7 @@ void AdS4D_post_tstep(int L)
    
                         extrap_bdyphi_freepts_(bdyphi_freepts_extraporder3_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_freepts_extraporder3_paramset2,y_extrappt_freepts_extraporder3_paramset2,z_extrappt_freepts_extraporder3_paramset2,
+                                        xpbdy_freepts_extraporder3_paramset2,ypbdy_freepts_extraporder3_paramset2,zpbdy_freepts_extraporder3_paramset2,
                                         chrbdy_freepts_extraporder3_paramset2,&numbdypoints_freepts_extraporder3_paramset2,
                                         &bdy_extrap_order,
                                         x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -20202,7 +20474,7 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_freepts_extraporder3_paramset2,y_extrappt_freepts_extraporder3_paramset2,z_extrappt_freepts_extraporder3_paramset2,
+                                xpbdy_freepts_extraporder3_paramset2,ypbdy_freepts_extraporder3_paramset2,zpbdy_freepts_extraporder3_paramset2,
                                 chrbdy_freepts_extraporder3_paramset2,&numbdypoints_freepts_extraporder3_paramset2,
                                 &bdy_extrap_order,
                                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);    
@@ -20256,9 +20528,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder1_paramset1  = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder1_paramset1  = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                         bdyphi_fixedpts_extraporder1_paramset1                   = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
+                        ypbdy_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
+                        zpbdy_fixedpts_extraporder1_paramset1               = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));  
                        	x_outermostpt_fixedpts_extraporder1_paramset1            = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                        	y_outermostpt_fixedpts_extraporder1_paramset1            = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                        	z_outermostpt_fixedpts_extraporder1_paramset1            = malloc((numbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real)); 
@@ -20312,9 +20584,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder1_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder1_paramset1                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder1_paramset1                  = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder1_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));   
                        	x_outermostpt0_fixedpts_extraporder1_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                        	y_outermostpt0_fixedpts_extraporder1_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                        	z_outermostpt0_fixedpts_extraporder1_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));   
@@ -20335,9 +20607,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder1_paramset1  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder1_paramset1  [i] = 0;
                             bdyphi_fixedpts_extraporder1_paramset1                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder1_paramset1               [i] = 0;
-                            y_extrappt_fixedpts_extraporder1_paramset1               [i] = 0;
-                            z_extrappt_fixedpts_extraporder1_paramset1               [i] = 0;
+                            xpbdy_fixedpts_extraporder1_paramset1               [i] = 0;
+                            ypbdy_fixedpts_extraporder1_paramset1               [i] = 0;
+                            zpbdy_fixedpts_extraporder1_paramset1               [i] = 0;
                            	x_outermostpt_fixedpts_extraporder1_paramset1            [i] = 0;
                            	y_outermostpt_fixedpts_extraporder1_paramset1            [i] = 0;
                            	z_outermostpt_fixedpts_extraporder1_paramset1            [i] = 0;
@@ -20393,9 +20665,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder1_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder1_paramset1 [i] = 0;
                             bdyphi0_fixedpts_extraporder1_paramset1                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder1_paramset1              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder1_paramset1              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder1_paramset1              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder1_paramset1              [i] = 0;
+                            ypbdy0_fixedpts_extraporder1_paramset1              [i] = 0;
+                            zpbdy0_fixedpts_extraporder1_paramset1              [i] = 0;  
                            	x_outermostpt0_fixedpts_extraporder1_paramset1           [i] = 0;
                            	y_outermostpt0_fixedpts_extraporder1_paramset1           [i] = 0;
                            	z_outermostpt0_fixedpts_extraporder1_paramset1           [i] = 0;
@@ -20433,14 +20705,14 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder1_paramset1,y_extrappt_fixedpts_extraporder1_paramset1,z_extrappt_fixedpts_extraporder1_paramset1,
-                        						x_outermostpt_fixedpts_extraporder1_paramset1,y_outermostpt_fixedpts_extraporder1_paramset1,z_outermostpt_fixedpts_extraporder1_paramset1,
-                        						chrbdy_fixedpts_extraporder1_paramset1,&numbdypoints_fixedpts_extraporder1_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
-                        
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder1_paramset1,ypbdy_fixedpts_extraporder1_paramset1,zpbdy_fixedpts_extraporder1_paramset1,
+                        					x_outermostpt_fixedpts_extraporder1_paramset1,y_outermostpt_fixedpts_extraporder1_paramset1,z_outermostpt_fixedpts_extraporder1_paramset1,
+                        					chrbdy_fixedpts_extraporder1_paramset1,&numbdypoints_fixedpts_extraporder1_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);
+
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,xpbdy0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,ypbdy0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,zpbdy0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                         	MPI_Allgatherv(x_outermostpt_fixedpts_extraporder1_paramset1,numbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder1_paramset1,vecbdypoints_fixedpts_extraporder1_paramset1,dsplsbdypoints_fixedpts_extraporder1_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -20465,7 +20737,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder1_paramset1 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder1_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder1_paramset1  = malloc((basenumbdypoints_fixedpts_extraporder1_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder1_paramset1,chiextrap0_fixedpts_extraporder1_paramset1,xiextrap0_fixedpts_extraporder1_paramset1,x_extrappt0_fixedpts_extraporder1_paramset1,y_extrappt0_fixedpts_extraporder1_paramset1,z_extrappt0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder1_paramset1,chiextrap0_fixedpts_extraporder1_paramset1,xiextrap0_fixedpts_extraporder1_paramset1,xpbdy0_fixedpts_extraporder1_paramset1,ypbdy0_fixedpts_extraporder1_paramset1,zpbdy0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1);  
                                 basebdy_Nchi_fixedpts_extraporder1_paramset1=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder1_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder1_paramset1,&basebdy_Nxi_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1,chiextrap0_fixedpts_extraporder1_paramset1,xiextrap0_fixedpts_extraporder1_paramset1);  
@@ -20478,7 +20750,7 @@ void AdS4D_post_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder1_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder1_paramset1,y_extrappt_fixedpts_extraporder1_paramset1,z_extrappt_fixedpts_extraporder1_paramset1,
+                                        xpbdy_fixedpts_extraporder1_paramset1,ypbdy_fixedpts_extraporder1_paramset1,zpbdy_fixedpts_extraporder1_paramset1,
                                         chrbdy_fixedpts_extraporder1_paramset1,&numbdypoints_fixedpts_extraporder1_paramset1,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -20499,7 +20771,7 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder1_paramset1,y_extrappt_fixedpts_extraporder1_paramset1,z_extrappt_fixedpts_extraporder1_paramset1,
+                                xpbdy_fixedpts_extraporder1_paramset1,ypbdy_fixedpts_extraporder1_paramset1,zpbdy_fixedpts_extraporder1_paramset1,
                                 chrbdy_fixedpts_extraporder1_paramset1,&numbdypoints_fixedpts_extraporder1_paramset1,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -20547,9 +20819,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder2_paramset1  = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder2_paramset1  = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         bdyphi_fixedpts_extraporder2_paramset1                   = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
+                        ypbdy_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
+                        zpbdy_fixedpts_extraporder2_paramset1               = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));  
                         x_outermostpt_fixedpts_extraporder2_paramset1            = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         y_outermostpt_fixedpts_extraporder2_paramset1            = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         z_outermostpt_fixedpts_extraporder2_paramset1            = malloc((numbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real)); 
@@ -20603,9 +20875,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder2_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder2_paramset1                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder2_paramset1                  = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder2_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));   
                         x_outermostpt0_fixedpts_extraporder2_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         y_outermostpt0_fixedpts_extraporder2_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                         z_outermostpt0_fixedpts_extraporder2_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));   
@@ -20626,9 +20898,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder2_paramset1  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder2_paramset1  [i] = 0;
                             bdyphi_fixedpts_extraporder2_paramset1                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder2_paramset1               [i] = 0;
-                            y_extrappt_fixedpts_extraporder2_paramset1               [i] = 0;
-                            z_extrappt_fixedpts_extraporder2_paramset1               [i] = 0;
+                            xpbdy_fixedpts_extraporder2_paramset1               [i] = 0;
+                            ypbdy_fixedpts_extraporder2_paramset1               [i] = 0;
+                            zpbdy_fixedpts_extraporder2_paramset1               [i] = 0;
                                 x_outermostpt_fixedpts_extraporder2_paramset1            [i] = 0;
                                 y_outermostpt_fixedpts_extraporder2_paramset1            [i] = 0;
                                 z_outermostpt_fixedpts_extraporder2_paramset1            [i] = 0;
@@ -20684,9 +20956,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder2_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder2_paramset1 [i] = 0;
                             bdyphi0_fixedpts_extraporder2_paramset1                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder2_paramset1              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder2_paramset1              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder2_paramset1              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder2_paramset1              [i] = 0;
+                            ypbdy0_fixedpts_extraporder2_paramset1              [i] = 0;
+                            zpbdy0_fixedpts_extraporder2_paramset1              [i] = 0;  
                                 x_outermostpt0_fixedpts_extraporder2_paramset1           [i] = 0;
                                 y_outermostpt0_fixedpts_extraporder2_paramset1           [i] = 0;
                                 z_outermostpt0_fixedpts_extraporder2_paramset1           [i] = 0;
@@ -20724,14 +20996,14 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder2_paramset1,y_extrappt_fixedpts_extraporder2_paramset1,z_extrappt_fixedpts_extraporder2_paramset1,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder2_paramset1,ypbdy_fixedpts_extraporder2_paramset1,zpbdy_fixedpts_extraporder2_paramset1,
                                                                         x_outermostpt_fixedpts_extraporder2_paramset1,y_outermostpt_fixedpts_extraporder2_paramset1,z_outermostpt_fixedpts_extraporder2_paramset1,
                                                                         chrbdy_fixedpts_extraporder2_paramset1,&numbdypoints_fixedpts_extraporder2_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,xpbdy0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,ypbdy0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,zpbdy0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_fixedpts_extraporder2_paramset1,numbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder2_paramset1,vecbdypoints_fixedpts_extraporder2_paramset1,dsplsbdypoints_fixedpts_extraporder2_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -20756,7 +21028,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder2_paramset1 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder2_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder2_paramset1  = malloc((basenumbdypoints_fixedpts_extraporder2_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder2_paramset1,chiextrap0_fixedpts_extraporder2_paramset1,xiextrap0_fixedpts_extraporder2_paramset1,x_extrappt0_fixedpts_extraporder2_paramset1,y_extrappt0_fixedpts_extraporder2_paramset1,z_extrappt0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder2_paramset1,chiextrap0_fixedpts_extraporder2_paramset1,xiextrap0_fixedpts_extraporder2_paramset1,xpbdy0_fixedpts_extraporder2_paramset1,ypbdy0_fixedpts_extraporder2_paramset1,zpbdy0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1);  
                                 basebdy_Nchi_fixedpts_extraporder2_paramset1=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder2_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder2_paramset1,&basebdy_Nxi_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1,chiextrap0_fixedpts_extraporder2_paramset1,xiextrap0_fixedpts_extraporder2_paramset1);  
@@ -20769,7 +21041,7 @@ void AdS4D_post_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder2_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder2_paramset1,y_extrappt_fixedpts_extraporder2_paramset1,z_extrappt_fixedpts_extraporder2_paramset1,
+                                        xpbdy_fixedpts_extraporder2_paramset1,ypbdy_fixedpts_extraporder2_paramset1,zpbdy_fixedpts_extraporder2_paramset1,
                                         chrbdy_fixedpts_extraporder2_paramset1,&numbdypoints_fixedpts_extraporder2_paramset1,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -20790,7 +21062,7 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder2_paramset1,y_extrappt_fixedpts_extraporder2_paramset1,z_extrappt_fixedpts_extraporder2_paramset1,
+                                xpbdy_fixedpts_extraporder2_paramset1,ypbdy_fixedpts_extraporder2_paramset1,zpbdy_fixedpts_extraporder2_paramset1,
                                 chrbdy_fixedpts_extraporder2_paramset1,&numbdypoints_fixedpts_extraporder2_paramset1,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -20838,9 +21110,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder3_paramset1  = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder3_paramset1  = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         bdyphi_fixedpts_extraporder3_paramset1                   = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
+                        ypbdy_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
+                        zpbdy_fixedpts_extraporder3_paramset1               = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));  
                         x_outermostpt_fixedpts_extraporder3_paramset1            = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         y_outermostpt_fixedpts_extraporder3_paramset1            = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         z_outermostpt_fixedpts_extraporder3_paramset1            = malloc((numbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real)); 
@@ -20894,9 +21166,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder3_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder3_paramset1                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder3_paramset1                  = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder3_paramset1              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));   
                         x_outermostpt0_fixedpts_extraporder3_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         y_outermostpt0_fixedpts_extraporder3_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                         z_outermostpt0_fixedpts_extraporder3_paramset1           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));   
@@ -20917,9 +21189,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder3_paramset1  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder3_paramset1  [i] = 0;
                             bdyphi_fixedpts_extraporder3_paramset1                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder3_paramset1               [i] = 0;
-                            y_extrappt_fixedpts_extraporder3_paramset1               [i] = 0;
-                            z_extrappt_fixedpts_extraporder3_paramset1               [i] = 0;
+                            xpbdy_fixedpts_extraporder3_paramset1               [i] = 0;
+                            ypbdy_fixedpts_extraporder3_paramset1               [i] = 0;
+                            zpbdy_fixedpts_extraporder3_paramset1               [i] = 0;
                                 x_outermostpt_fixedpts_extraporder3_paramset1            [i] = 0;
                                 y_outermostpt_fixedpts_extraporder3_paramset1            [i] = 0;
                                 z_outermostpt_fixedpts_extraporder3_paramset1            [i] = 0;
@@ -20975,9 +21247,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder3_paramset1 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder3_paramset1 [i] = 0;
                             bdyphi0_fixedpts_extraporder3_paramset1                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder3_paramset1              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder3_paramset1              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder3_paramset1              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder3_paramset1              [i] = 0;
+                            ypbdy0_fixedpts_extraporder3_paramset1              [i] = 0;
+                            zpbdy0_fixedpts_extraporder3_paramset1              [i] = 0;  
                                 x_outermostpt0_fixedpts_extraporder3_paramset1           [i] = 0;
                                 y_outermostpt0_fixedpts_extraporder3_paramset1           [i] = 0;
                                 z_outermostpt0_fixedpts_extraporder3_paramset1           [i] = 0;
@@ -21015,14 +21287,14 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder3_paramset1,y_extrappt_fixedpts_extraporder3_paramset1,z_extrappt_fixedpts_extraporder3_paramset1,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder3_paramset1,ypbdy_fixedpts_extraporder3_paramset1,zpbdy_fixedpts_extraporder3_paramset1,
                                                                         x_outermostpt_fixedpts_extraporder3_paramset1,y_outermostpt_fixedpts_extraporder3_paramset1,z_outermostpt_fixedpts_extraporder3_paramset1,
                                                                         chrbdy_fixedpts_extraporder3_paramset1,&numbdypoints_fixedpts_extraporder3_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,xpbdy0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,ypbdy0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,zpbdy0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_fixedpts_extraporder3_paramset1,numbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder3_paramset1,vecbdypoints_fixedpts_extraporder3_paramset1,dsplsbdypoints_fixedpts_extraporder3_paramset1,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -21047,7 +21319,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder3_paramset1 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder3_paramset1 = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder3_paramset1  = malloc((basenumbdypoints_fixedpts_extraporder3_paramset1)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder3_paramset1,chiextrap0_fixedpts_extraporder3_paramset1,xiextrap0_fixedpts_extraporder3_paramset1,x_extrappt0_fixedpts_extraporder3_paramset1,y_extrappt0_fixedpts_extraporder3_paramset1,z_extrappt0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder3_paramset1,chiextrap0_fixedpts_extraporder3_paramset1,xiextrap0_fixedpts_extraporder3_paramset1,xpbdy0_fixedpts_extraporder3_paramset1,ypbdy0_fixedpts_extraporder3_paramset1,zpbdy0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1);  
                                 basebdy_Nchi_fixedpts_extraporder3_paramset1=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder3_paramset1=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder3_paramset1,&basebdy_Nxi_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1,chiextrap0_fixedpts_extraporder3_paramset1,xiextrap0_fixedpts_extraporder3_paramset1);  
@@ -21060,7 +21332,7 @@ void AdS4D_post_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder3_paramset1,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder3_paramset1,y_extrappt_fixedpts_extraporder3_paramset1,z_extrappt_fixedpts_extraporder3_paramset1,
+                                        xpbdy_fixedpts_extraporder3_paramset1,ypbdy_fixedpts_extraporder3_paramset1,zpbdy_fixedpts_extraporder3_paramset1,
                                         chrbdy_fixedpts_extraporder3_paramset1,&numbdypoints_fixedpts_extraporder3_paramset1,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -21081,7 +21353,7 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder3_paramset1,y_extrappt_fixedpts_extraporder3_paramset1,z_extrappt_fixedpts_extraporder3_paramset1,
+                                xpbdy_fixedpts_extraporder3_paramset1,ypbdy_fixedpts_extraporder3_paramset1,zpbdy_fixedpts_extraporder3_paramset1,
                                 chrbdy_fixedpts_extraporder3_paramset1,&numbdypoints_fixedpts_extraporder3_paramset1,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -21131,9 +21403,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder1_paramset2  = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder1_paramset2  = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         bdyphi_fixedpts_extraporder1_paramset2                   = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
+                        ypbdy_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
+                        zpbdy_fixedpts_extraporder1_paramset2               = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));  
                         x_outermostpt_fixedpts_extraporder1_paramset2            = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         y_outermostpt_fixedpts_extraporder1_paramset2            = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         z_outermostpt_fixedpts_extraporder1_paramset2            = malloc((numbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real)); 
@@ -21187,9 +21459,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder1_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder1_paramset2                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder1_paramset2                  = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder1_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));   
                         x_outermostpt0_fixedpts_extraporder1_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         y_outermostpt0_fixedpts_extraporder1_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                         z_outermostpt0_fixedpts_extraporder1_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));   
@@ -21210,9 +21482,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder1_paramset2  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder1_paramset2  [i] = 0;
                             bdyphi_fixedpts_extraporder1_paramset2                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder1_paramset2               [i] = 0;
-                            y_extrappt_fixedpts_extraporder1_paramset2               [i] = 0;
-                            z_extrappt_fixedpts_extraporder1_paramset2               [i] = 0;
+                            xpbdy_fixedpts_extraporder1_paramset2               [i] = 0;
+                            ypbdy_fixedpts_extraporder1_paramset2               [i] = 0;
+                            zpbdy_fixedpts_extraporder1_paramset2               [i] = 0;
                                 x_outermostpt_fixedpts_extraporder1_paramset2            [i] = 0;
                                 y_outermostpt_fixedpts_extraporder1_paramset2            [i] = 0;
                                 z_outermostpt_fixedpts_extraporder1_paramset2            [i] = 0;
@@ -21268,9 +21540,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder1_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder1_paramset2 [i] = 0;
                             bdyphi0_fixedpts_extraporder1_paramset2                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder1_paramset2              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder1_paramset2              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder1_paramset2              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder1_paramset2              [i] = 0;
+                            ypbdy0_fixedpts_extraporder1_paramset2              [i] = 0;
+                            zpbdy0_fixedpts_extraporder1_paramset2              [i] = 0;  
                                 x_outermostpt0_fixedpts_extraporder1_paramset2           [i] = 0;
                                 y_outermostpt0_fixedpts_extraporder1_paramset2           [i] = 0;
                                 z_outermostpt0_fixedpts_extraporder1_paramset2           [i] = 0;
@@ -21308,14 +21580,14 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder1_paramset2,y_extrappt_fixedpts_extraporder1_paramset2,z_extrappt_fixedpts_extraporder1_paramset2,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder1_paramset2,ypbdy_fixedpts_extraporder1_paramset2,zpbdy_fixedpts_extraporder1_paramset2,
                                                                         x_outermostpt_fixedpts_extraporder1_paramset2,y_outermostpt_fixedpts_extraporder1_paramset2,z_outermostpt_fixedpts_extraporder1_paramset2,
                                                                         chrbdy_fixedpts_extraporder1_paramset2,&numbdypoints_fixedpts_extraporder1_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,xpbdy0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,ypbdy0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,zpbdy0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_fixedpts_extraporder1_paramset2,numbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder1_paramset2,vecbdypoints_fixedpts_extraporder1_paramset2,dsplsbdypoints_fixedpts_extraporder1_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -21340,7 +21612,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder1_paramset2 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder1_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder1_paramset2  = malloc((basenumbdypoints_fixedpts_extraporder1_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder1_paramset2,chiextrap0_fixedpts_extraporder1_paramset2,xiextrap0_fixedpts_extraporder1_paramset2,x_extrappt0_fixedpts_extraporder1_paramset2,y_extrappt0_fixedpts_extraporder1_paramset2,z_extrappt0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder1_paramset2,chiextrap0_fixedpts_extraporder1_paramset2,xiextrap0_fixedpts_extraporder1_paramset2,xpbdy0_fixedpts_extraporder1_paramset2,ypbdy0_fixedpts_extraporder1_paramset2,zpbdy0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2);  
                                 basebdy_Nchi_fixedpts_extraporder1_paramset2=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder1_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder1_paramset2,&basebdy_Nxi_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2,chiextrap0_fixedpts_extraporder1_paramset2,xiextrap0_fixedpts_extraporder1_paramset2);  
@@ -21353,7 +21625,7 @@ void AdS4D_post_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder1_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder1_paramset2,y_extrappt_fixedpts_extraporder1_paramset2,z_extrappt_fixedpts_extraporder1_paramset2,
+                                        xpbdy_fixedpts_extraporder1_paramset2,ypbdy_fixedpts_extraporder1_paramset2,zpbdy_fixedpts_extraporder1_paramset2,
                                         chrbdy_fixedpts_extraporder1_paramset2,&numbdypoints_fixedpts_extraporder1_paramset2,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -21374,7 +21646,7 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder1_paramset2,y_extrappt_fixedpts_extraporder1_paramset2,z_extrappt_fixedpts_extraporder1_paramset2,
+                                xpbdy_fixedpts_extraporder1_paramset2,ypbdy_fixedpts_extraporder1_paramset2,zpbdy_fixedpts_extraporder1_paramset2,
                                 chrbdy_fixedpts_extraporder1_paramset2,&numbdypoints_fixedpts_extraporder1_paramset2,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -21422,9 +21694,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder2_paramset2  = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder2_paramset2  = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         bdyphi_fixedpts_extraporder2_paramset2                   = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
+                        ypbdy_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
+                        zpbdy_fixedpts_extraporder2_paramset2               = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));  
                         x_outermostpt_fixedpts_extraporder2_paramset2            = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         y_outermostpt_fixedpts_extraporder2_paramset2            = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         z_outermostpt_fixedpts_extraporder2_paramset2            = malloc((numbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real)); 
@@ -21478,9 +21750,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder2_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder2_paramset2                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder2_paramset2                  = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder2_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));   
                         x_outermostpt0_fixedpts_extraporder2_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         y_outermostpt0_fixedpts_extraporder2_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                         z_outermostpt0_fixedpts_extraporder2_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));   
@@ -21501,9 +21773,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder2_paramset2  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder2_paramset2  [i] = 0;
                             bdyphi_fixedpts_extraporder2_paramset2                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder2_paramset2               [i] = 0;
-                            y_extrappt_fixedpts_extraporder2_paramset2               [i] = 0;
-                            z_extrappt_fixedpts_extraporder2_paramset2               [i] = 0;
+                            xpbdy_fixedpts_extraporder2_paramset2               [i] = 0;
+                            ypbdy_fixedpts_extraporder2_paramset2               [i] = 0;
+                            zpbdy_fixedpts_extraporder2_paramset2               [i] = 0;
                                 x_outermostpt_fixedpts_extraporder2_paramset2            [i] = 0;
                                 y_outermostpt_fixedpts_extraporder2_paramset2            [i] = 0;
                                 z_outermostpt_fixedpts_extraporder2_paramset2            [i] = 0;
@@ -21559,9 +21831,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder2_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder2_paramset2 [i] = 0;
                             bdyphi0_fixedpts_extraporder2_paramset2                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder2_paramset2              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder2_paramset2              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder2_paramset2              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder2_paramset2              [i] = 0;
+                            ypbdy0_fixedpts_extraporder2_paramset2              [i] = 0;
+                            zpbdy0_fixedpts_extraporder2_paramset2              [i] = 0;  
                                 x_outermostpt0_fixedpts_extraporder2_paramset2           [i] = 0;
                                 y_outermostpt0_fixedpts_extraporder2_paramset2           [i] = 0;
                                 z_outermostpt0_fixedpts_extraporder2_paramset2           [i] = 0;
@@ -21599,14 +21871,14 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder2_paramset2,y_extrappt_fixedpts_extraporder2_paramset2,z_extrappt_fixedpts_extraporder2_paramset2,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder2_paramset2,ypbdy_fixedpts_extraporder2_paramset2,zpbdy_fixedpts_extraporder2_paramset2,
                                                                         x_outermostpt_fixedpts_extraporder2_paramset2,y_outermostpt_fixedpts_extraporder2_paramset2,z_outermostpt_fixedpts_extraporder2_paramset2,
                                                                         chrbdy_fixedpts_extraporder2_paramset2,&numbdypoints_fixedpts_extraporder2_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,xpbdy0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,ypbdy0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,zpbdy0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_fixedpts_extraporder2_paramset2,numbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder2_paramset2,vecbdypoints_fixedpts_extraporder2_paramset2,dsplsbdypoints_fixedpts_extraporder2_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -21631,7 +21903,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder2_paramset2 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder2_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder2_paramset2  = malloc((basenumbdypoints_fixedpts_extraporder2_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder2_paramset2,chiextrap0_fixedpts_extraporder2_paramset2,xiextrap0_fixedpts_extraporder2_paramset2,x_extrappt0_fixedpts_extraporder2_paramset2,y_extrappt0_fixedpts_extraporder2_paramset2,z_extrappt0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder2_paramset2,chiextrap0_fixedpts_extraporder2_paramset2,xiextrap0_fixedpts_extraporder2_paramset2,xpbdy0_fixedpts_extraporder2_paramset2,ypbdy0_fixedpts_extraporder2_paramset2,zpbdy0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2);  
                                 basebdy_Nchi_fixedpts_extraporder2_paramset2=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder2_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder2_paramset2,&basebdy_Nxi_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2,chiextrap0_fixedpts_extraporder2_paramset2,xiextrap0_fixedpts_extraporder2_paramset2);  
@@ -21644,7 +21916,7 @@ void AdS4D_post_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder2_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder2_paramset2,y_extrappt_fixedpts_extraporder2_paramset2,z_extrappt_fixedpts_extraporder2_paramset2,
+                                        xpbdy_fixedpts_extraporder2_paramset2,ypbdy_fixedpts_extraporder2_paramset2,zpbdy_fixedpts_extraporder2_paramset2,
                                         chrbdy_fixedpts_extraporder2_paramset2,&numbdypoints_fixedpts_extraporder2_paramset2,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -21665,7 +21937,7 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder2_paramset2,y_extrappt_fixedpts_extraporder2_paramset2,z_extrappt_fixedpts_extraporder2_paramset2,
+                                xpbdy_fixedpts_extraporder2_paramset2,ypbdy_fixedpts_extraporder2_paramset2,zpbdy_fixedpts_extraporder2_paramset2,
                                 chrbdy_fixedpts_extraporder2_paramset2,&numbdypoints_fixedpts_extraporder2_paramset2,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -21713,9 +21985,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityy_fixedpts_extraporder3_paramset2  = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         quasiset_angmomdensityz_fixedpts_extraporder3_paramset2  = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         bdyphi_fixedpts_extraporder3_paramset2                   = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));   
-                        x_extrappt_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
-                        y_extrappt_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
-                        z_extrappt_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));  
+                        xpbdy_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
+                        ypbdy_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
+                        zpbdy_fixedpts_extraporder3_paramset2               = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));  
                         x_outermostpt_fixedpts_extraporder3_paramset2            = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         y_outermostpt_fixedpts_extraporder3_paramset2            = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         z_outermostpt_fixedpts_extraporder3_paramset2            = malloc((numbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real)); 
@@ -21769,9 +22041,9 @@ void AdS4D_post_tstep(int L)
                         quasiset_angmomdensityz0_fixedpts_extraporder3_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         AdS_mass0_fixedpts_extraporder3_paramset2                = malloc(sizeof(real));
                         bdyphi0_fixedpts_extraporder3_paramset2                  = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));    
-                        x_extrappt0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
-                        y_extrappt0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
-                        z_extrappt0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));   
+                        xpbdy0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
+                        ypbdy0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
+                        zpbdy0_fixedpts_extraporder3_paramset2              = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));   
                         x_outermostpt0_fixedpts_extraporder3_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         y_outermostpt0_fixedpts_extraporder3_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                         z_outermostpt0_fixedpts_extraporder3_paramset2           = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));   
@@ -21792,9 +22064,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy_fixedpts_extraporder3_paramset2  [i] = 0;
                             quasiset_angmomdensityz_fixedpts_extraporder3_paramset2  [i] = 0;
                             bdyphi_fixedpts_extraporder3_paramset2                   [i] = 0;   
-                            x_extrappt_fixedpts_extraporder3_paramset2               [i] = 0;
-                            y_extrappt_fixedpts_extraporder3_paramset2               [i] = 0;
-                            z_extrappt_fixedpts_extraporder3_paramset2               [i] = 0;
+                            xpbdy_fixedpts_extraporder3_paramset2               [i] = 0;
+                            ypbdy_fixedpts_extraporder3_paramset2               [i] = 0;
+                            zpbdy_fixedpts_extraporder3_paramset2               [i] = 0;
                                 x_outermostpt_fixedpts_extraporder3_paramset2            [i] = 0;
                                 y_outermostpt_fixedpts_extraporder3_paramset2            [i] = 0;
                                 z_outermostpt_fixedpts_extraporder3_paramset2            [i] = 0;
@@ -21850,9 +22122,9 @@ void AdS4D_post_tstep(int L)
                             quasiset_angmomdensityy0_fixedpts_extraporder3_paramset2 [i] = 0;
                             quasiset_angmomdensityz0_fixedpts_extraporder3_paramset2 [i] = 0;
                             bdyphi0_fixedpts_extraporder3_paramset2                  [i] = 0;   
-                            x_extrappt0_fixedpts_extraporder3_paramset2              [i] = 0;
-                            y_extrappt0_fixedpts_extraporder3_paramset2              [i] = 0;
-                            z_extrappt0_fixedpts_extraporder3_paramset2              [i] = 0;  
+                            xpbdy0_fixedpts_extraporder3_paramset2              [i] = 0;
+                            ypbdy0_fixedpts_extraporder3_paramset2              [i] = 0;
+                            zpbdy0_fixedpts_extraporder3_paramset2              [i] = 0;  
                                 x_outermostpt0_fixedpts_extraporder3_paramset2           [i] = 0;
                                 y_outermostpt0_fixedpts_extraporder3_paramset2           [i] = 0;
                                 z_outermostpt0_fixedpts_extraporder3_paramset2           [i] = 0;
@@ -21890,14 +22162,14 @@ void AdS4D_post_tstep(int L)
                             }
                         }   
                         
-                        xyz_extrap_outermost_(x_extrappt_fixedpts_extraporder3_paramset2,y_extrappt_fixedpts_extraporder3_paramset2,z_extrappt_fixedpts_extraporder3_paramset2,
+                        xyz_extrap_outermost_(xpbdy_fixedpts_extraporder3_paramset2,ypbdy_fixedpts_extraporder3_paramset2,zpbdy_fixedpts_extraporder3_paramset2,
                                                                         x_outermostpt_fixedpts_extraporder3_paramset2,y_outermostpt_fixedpts_extraporder3_paramset2,z_outermostpt_fixedpts_extraporder3_paramset2,
                                                                         chrbdy_fixedpts_extraporder3_paramset2,&numbdypoints_fixedpts_extraporder3_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
                         
-                        //x/y/z_extrappt0 are arrays with x_extrappt,y_extrappt,z_extrappt from all the processors one after the other
-                        MPI_Allgatherv(x_extrappt_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,x_extrappt0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(y_extrappt_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,y_extrappt0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
-                        MPI_Allgatherv(z_extrappt_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,z_extrappt0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
+                        //x/y/zpbdy0 are arrays with xpbdy,ypbdy,zpbdy from all the processors one after the other
+                        MPI_Allgatherv(xpbdy_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,xpbdy0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(ypbdy_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,ypbdy0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
+                        MPI_Allgatherv(zpbdy_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,zpbdy0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);  
                         if(output_outermostpts)
                         {
                                 MPI_Allgatherv(x_outermostpt_fixedpts_extraporder3_paramset2,numbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,x_outermostpt0_fixedpts_extraporder3_paramset2,vecbdypoints_fixedpts_extraporder3_paramset2,dsplsbdypoints_fixedpts_extraporder3_paramset2,MPI_DOUBLE,MPI_COMM_WORLD);
@@ -21922,7 +22194,7 @@ void AdS4D_post_tstep(int L)
                                 rhoextrap0_fixedpts_extraporder3_paramset2 = malloc(sizeof(real));
                                 chiextrap0_fixedpts_extraporder3_paramset2 = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real));
                                 xiextrap0_fixedpts_extraporder3_paramset2  = malloc((basenumbdypoints_fixedpts_extraporder3_paramset2)*sizeof(real)); 
-                                chixiextrap_(rhoextrap0_fixedpts_extraporder3_paramset2,chiextrap0_fixedpts_extraporder3_paramset2,xiextrap0_fixedpts_extraporder3_paramset2,x_extrappt0_fixedpts_extraporder3_paramset2,y_extrappt0_fixedpts_extraporder3_paramset2,z_extrappt0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2);  
+                                chixiextrap_(rhoextrap0_fixedpts_extraporder3_paramset2,chiextrap0_fixedpts_extraporder3_paramset2,xiextrap0_fixedpts_extraporder3_paramset2,xpbdy0_fixedpts_extraporder3_paramset2,ypbdy0_fixedpts_extraporder3_paramset2,zpbdy0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2);  
                                 basebdy_Nchi_fixedpts_extraporder3_paramset2=0;//initialize
                                 basebdy_Nxi_fixedpts_extraporder3_paramset2=0; //initialize
                                 bdyn_(&basebdy_Nchi_fixedpts_extraporder3_paramset2,&basebdy_Nxi_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2,chiextrap0_fixedpts_extraporder3_paramset2,xiextrap0_fixedpts_extraporder3_paramset2);  
@@ -21935,7 +22207,7 @@ void AdS4D_post_tstep(int L)
    
                         extrap_bdyphi_fixedpts_(bdyphi_fixedpts_extraporder3_paramset2,
                                         leadordcoeff_phi1,
-                                        x_extrappt_fixedpts_extraporder3_paramset2,y_extrappt_fixedpts_extraporder3_paramset2,z_extrappt_fixedpts_extraporder3_paramset2,
+                                        xpbdy_fixedpts_extraporder3_paramset2,ypbdy_fixedpts_extraporder3_paramset2,zpbdy_fixedpts_extraporder3_paramset2,
                                         chrbdy_fixedpts_extraporder3_paramset2,&numbdypoints_fixedpts_extraporder3_paramset2,
                                         &bdy_extrap_order,
                                         &ind_distance_fixedpts,
@@ -21956,7 +22228,7 @@ void AdS4D_post_tstep(int L)
                                 quasiset_angmomdensityxll,
                                 quasiset_angmomdensityyll,
                                 quasiset_angmomdensityzll,
-                                x_extrappt_fixedpts_extraporder3_paramset2,y_extrappt_fixedpts_extraporder3_paramset2,z_extrappt_fixedpts_extraporder3_paramset2,
+                                xpbdy_fixedpts_extraporder3_paramset2,ypbdy_fixedpts_extraporder3_paramset2,zpbdy_fixedpts_extraporder3_paramset2,
                                 chrbdy_fixedpts_extraporder3_paramset2,&numbdypoints_fixedpts_extraporder3_paramset2,
                                 &bdy_extrap_order,
                                 &ind_distance_fixedpts,
@@ -22093,7 +22365,7 @@ void AdS4D_post_tstep(int L)
 	                                    fp = fopen(name, "w+");
 	                                    for( j = 0; j < basenumbdypoints_freepts_extraporder1_paramset1; j++ )
 	                                    {
-	                                        fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder1_paramset1[j],y_extrappt0_freepts_extraporder1_paramset1[j],z_extrappt0_freepts_extraporder1_paramset1[j],j);
+	                                        fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder1_paramset1[j],ypbdy0_freepts_extraporder1_paramset1[j],zpbdy0_freepts_extraporder1_paramset1[j],j);
 	                                    }
 	                                    fclose(fp);   
 	                                if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -22105,7 +22377,7 @@ void AdS4D_post_tstep(int L)
 	                                    {
 	                                        if ((j%reduction_factor_ascii)==0)
 	                                        {
-	                                            fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder1_paramset1[j],y_extrappt0_freepts_extraporder1_paramset1[j],z_extrappt0_freepts_extraporder1_paramset1[j],j_red);
+	                                            fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder1_paramset1[j],ypbdy0_freepts_extraporder1_paramset1[j],zpbdy0_freepts_extraporder1_paramset1[j],j_red);
 	                                            j_red=j_red+1;
 	                                        }
 	                                    }
@@ -22297,8 +22569,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder1_paramset1=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder1_paramset1,xibdy0_freepts_extraporder1_paramset1,x_extrappt0_freepts_extraporder1_paramset1,y_extrappt0_freepts_extraporder1_paramset1,z_extrappt0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1,chiextrap0_freepts_extraporder1_paramset1,xiextrap0_freepts_extraporder1_paramset1,&basebdy_Nchi_freepts_extraporder1_paramset1,&basebdy_Nxi_freepts_extraporder1_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder1_paramset1,quasiset_massdensity0_freepts_extraporder1_paramset1,x_extrappt0_freepts_extraporder1_paramset1,y_extrappt0_freepts_extraporder1_paramset1,z_extrappt0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1,rhobdy0_freepts_extraporder1_paramset1,chibdy0_freepts_extraporder1_paramset1,xibdy0_freepts_extraporder1_paramset1,&basebdy_Nchi_freepts_extraporder1_paramset1,&basebdy_Nxi_freepts_extraporder1_paramset1);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder1_paramset1,xibdy0_freepts_extraporder1_paramset1,xpbdy0_freepts_extraporder1_paramset1,ypbdy0_freepts_extraporder1_paramset1,zpbdy0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1,chiextrap0_freepts_extraporder1_paramset1,xiextrap0_freepts_extraporder1_paramset1,&basebdy_Nchi_freepts_extraporder1_paramset1,&basebdy_Nxi_freepts_extraporder1_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder1_paramset1,quasiset_massdensity0_freepts_extraporder1_paramset1,xpbdy0_freepts_extraporder1_paramset1,ypbdy0_freepts_extraporder1_paramset1,zpbdy0_freepts_extraporder1_paramset1,&basenumbdypoints_freepts_extraporder1_paramset1,rhobdy0_freepts_extraporder1_paramset1,chibdy0_freepts_extraporder1_paramset1,xibdy0_freepts_extraporder1_paramset1,&basebdy_Nchi_freepts_extraporder1_paramset1,&basebdy_Nxi_freepts_extraporder1_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder1_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -22382,7 +22654,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_freepts_extraporder2_paramset1; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder2_paramset1[j],y_extrappt0_freepts_extraporder2_paramset1[j],z_extrappt0_freepts_extraporder2_paramset1[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder2_paramset1[j],ypbdy0_freepts_extraporder2_paramset1[j],zpbdy0_freepts_extraporder2_paramset1[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -22394,7 +22666,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder2_paramset1[j],y_extrappt0_freepts_extraporder2_paramset1[j],z_extrappt0_freepts_extraporder2_paramset1[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder2_paramset1[j],ypbdy0_freepts_extraporder2_paramset1[j],zpbdy0_freepts_extraporder2_paramset1[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -22586,8 +22858,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder2_paramset1=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder2_paramset1,xibdy0_freepts_extraporder2_paramset1,x_extrappt0_freepts_extraporder2_paramset1,y_extrappt0_freepts_extraporder2_paramset1,z_extrappt0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1,chiextrap0_freepts_extraporder2_paramset1,xiextrap0_freepts_extraporder2_paramset1,&basebdy_Nchi_freepts_extraporder2_paramset1,&basebdy_Nxi_freepts_extraporder2_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder2_paramset1,quasiset_massdensity0_freepts_extraporder2_paramset1,x_extrappt0_freepts_extraporder2_paramset1,y_extrappt0_freepts_extraporder2_paramset1,z_extrappt0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1,rhobdy0_freepts_extraporder2_paramset1,chibdy0_freepts_extraporder2_paramset1,xibdy0_freepts_extraporder2_paramset1,&basebdy_Nchi_freepts_extraporder2_paramset1,&basebdy_Nxi_freepts_extraporder2_paramset1);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder2_paramset1,xibdy0_freepts_extraporder2_paramset1,xpbdy0_freepts_extraporder2_paramset1,ypbdy0_freepts_extraporder2_paramset1,zpbdy0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1,chiextrap0_freepts_extraporder2_paramset1,xiextrap0_freepts_extraporder2_paramset1,&basebdy_Nchi_freepts_extraporder2_paramset1,&basebdy_Nxi_freepts_extraporder2_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder2_paramset1,quasiset_massdensity0_freepts_extraporder2_paramset1,xpbdy0_freepts_extraporder2_paramset1,ypbdy0_freepts_extraporder2_paramset1,zpbdy0_freepts_extraporder2_paramset1,&basenumbdypoints_freepts_extraporder2_paramset1,rhobdy0_freepts_extraporder2_paramset1,chibdy0_freepts_extraporder2_paramset1,xibdy0_freepts_extraporder2_paramset1,&basebdy_Nchi_freepts_extraporder2_paramset1,&basebdy_Nxi_freepts_extraporder2_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder2_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -22671,7 +22943,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_freepts_extraporder3_paramset1; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder3_paramset1[j],y_extrappt0_freepts_extraporder3_paramset1[j],z_extrappt0_freepts_extraporder3_paramset1[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder3_paramset1[j],ypbdy0_freepts_extraporder3_paramset1[j],zpbdy0_freepts_extraporder3_paramset1[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -22683,7 +22955,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder3_paramset1[j],y_extrappt0_freepts_extraporder3_paramset1[j],z_extrappt0_freepts_extraporder3_paramset1[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder3_paramset1[j],ypbdy0_freepts_extraporder3_paramset1[j],zpbdy0_freepts_extraporder3_paramset1[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -22875,8 +23147,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder3_paramset1=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder3_paramset1,xibdy0_freepts_extraporder3_paramset1,x_extrappt0_freepts_extraporder3_paramset1,y_extrappt0_freepts_extraporder3_paramset1,z_extrappt0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1,chiextrap0_freepts_extraporder3_paramset1,xiextrap0_freepts_extraporder3_paramset1,&basebdy_Nchi_freepts_extraporder3_paramset1,&basebdy_Nxi_freepts_extraporder3_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder3_paramset1,quasiset_massdensity0_freepts_extraporder3_paramset1,x_extrappt0_freepts_extraporder3_paramset1,y_extrappt0_freepts_extraporder3_paramset1,z_extrappt0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1,rhobdy0_freepts_extraporder3_paramset1,chibdy0_freepts_extraporder3_paramset1,xibdy0_freepts_extraporder3_paramset1,&basebdy_Nchi_freepts_extraporder3_paramset1,&basebdy_Nxi_freepts_extraporder3_paramset1);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder3_paramset1,xibdy0_freepts_extraporder3_paramset1,xpbdy0_freepts_extraporder3_paramset1,ypbdy0_freepts_extraporder3_paramset1,zpbdy0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1,chiextrap0_freepts_extraporder3_paramset1,xiextrap0_freepts_extraporder3_paramset1,&basebdy_Nchi_freepts_extraporder3_paramset1,&basebdy_Nxi_freepts_extraporder3_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder3_paramset1,quasiset_massdensity0_freepts_extraporder3_paramset1,xpbdy0_freepts_extraporder3_paramset1,ypbdy0_freepts_extraporder3_paramset1,zpbdy0_freepts_extraporder3_paramset1,&basenumbdypoints_freepts_extraporder3_paramset1,rhobdy0_freepts_extraporder3_paramset1,chibdy0_freepts_extraporder3_paramset1,xibdy0_freepts_extraporder3_paramset1,&basebdy_Nchi_freepts_extraporder3_paramset1,&basebdy_Nxi_freepts_extraporder3_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder3_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -22962,7 +23234,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_freepts_extraporder1_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder1_paramset2[j],y_extrappt0_freepts_extraporder1_paramset2[j],z_extrappt0_freepts_extraporder1_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder1_paramset2[j],ypbdy0_freepts_extraporder1_paramset2[j],zpbdy0_freepts_extraporder1_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -22974,7 +23246,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder1_paramset2[j],y_extrappt0_freepts_extraporder1_paramset2[j],z_extrappt0_freepts_extraporder1_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder1_paramset2[j],ypbdy0_freepts_extraporder1_paramset2[j],zpbdy0_freepts_extraporder1_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -23166,8 +23438,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder1_paramset2=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder1_paramset2,xibdy0_freepts_extraporder1_paramset2,x_extrappt0_freepts_extraporder1_paramset2,y_extrappt0_freepts_extraporder1_paramset2,z_extrappt0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2,chiextrap0_freepts_extraporder1_paramset2,xiextrap0_freepts_extraporder1_paramset2,&basebdy_Nchi_freepts_extraporder1_paramset2,&basebdy_Nxi_freepts_extraporder1_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder1_paramset2,quasiset_massdensity0_freepts_extraporder1_paramset2,x_extrappt0_freepts_extraporder1_paramset2,y_extrappt0_freepts_extraporder1_paramset2,z_extrappt0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2,rhobdy0_freepts_extraporder1_paramset2,chibdy0_freepts_extraporder1_paramset2,xibdy0_freepts_extraporder1_paramset2,&basebdy_Nchi_freepts_extraporder1_paramset2,&basebdy_Nxi_freepts_extraporder1_paramset2);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder1_paramset2,xibdy0_freepts_extraporder1_paramset2,xpbdy0_freepts_extraporder1_paramset2,ypbdy0_freepts_extraporder1_paramset2,zpbdy0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2,chiextrap0_freepts_extraporder1_paramset2,xiextrap0_freepts_extraporder1_paramset2,&basebdy_Nchi_freepts_extraporder1_paramset2,&basebdy_Nxi_freepts_extraporder1_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder1_paramset2,quasiset_massdensity0_freepts_extraporder1_paramset2,xpbdy0_freepts_extraporder1_paramset2,ypbdy0_freepts_extraporder1_paramset2,zpbdy0_freepts_extraporder1_paramset2,&basenumbdypoints_freepts_extraporder1_paramset2,rhobdy0_freepts_extraporder1_paramset2,chibdy0_freepts_extraporder1_paramset2,xibdy0_freepts_extraporder1_paramset2,&basebdy_Nchi_freepts_extraporder1_paramset2,&basebdy_Nxi_freepts_extraporder1_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder1_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -23251,7 +23523,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_freepts_extraporder2_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder2_paramset2[j],y_extrappt0_freepts_extraporder2_paramset2[j],z_extrappt0_freepts_extraporder2_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder2_paramset2[j],ypbdy0_freepts_extraporder2_paramset2[j],zpbdy0_freepts_extraporder2_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -23263,7 +23535,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder2_paramset2[j],y_extrappt0_freepts_extraporder2_paramset2[j],z_extrappt0_freepts_extraporder2_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder2_paramset2[j],ypbdy0_freepts_extraporder2_paramset2[j],zpbdy0_freepts_extraporder2_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -23455,8 +23727,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder2_paramset2=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder2_paramset2,xibdy0_freepts_extraporder2_paramset2,x_extrappt0_freepts_extraporder2_paramset2,y_extrappt0_freepts_extraporder2_paramset2,z_extrappt0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2,chiextrap0_freepts_extraporder2_paramset2,xiextrap0_freepts_extraporder2_paramset2,&basebdy_Nchi_freepts_extraporder2_paramset2,&basebdy_Nxi_freepts_extraporder2_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder2_paramset2,quasiset_massdensity0_freepts_extraporder2_paramset2,x_extrappt0_freepts_extraporder2_paramset2,y_extrappt0_freepts_extraporder2_paramset2,z_extrappt0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2,rhobdy0_freepts_extraporder2_paramset2,chibdy0_freepts_extraporder2_paramset2,xibdy0_freepts_extraporder2_paramset2,&basebdy_Nchi_freepts_extraporder2_paramset2,&basebdy_Nxi_freepts_extraporder2_paramset2);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder2_paramset2,xibdy0_freepts_extraporder2_paramset2,xpbdy0_freepts_extraporder2_paramset2,ypbdy0_freepts_extraporder2_paramset2,zpbdy0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2,chiextrap0_freepts_extraporder2_paramset2,xiextrap0_freepts_extraporder2_paramset2,&basebdy_Nchi_freepts_extraporder2_paramset2,&basebdy_Nxi_freepts_extraporder2_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder2_paramset2,quasiset_massdensity0_freepts_extraporder2_paramset2,xpbdy0_freepts_extraporder2_paramset2,ypbdy0_freepts_extraporder2_paramset2,zpbdy0_freepts_extraporder2_paramset2,&basenumbdypoints_freepts_extraporder2_paramset2,rhobdy0_freepts_extraporder2_paramset2,chibdy0_freepts_extraporder2_paramset2,xibdy0_freepts_extraporder2_paramset2,&basebdy_Nchi_freepts_extraporder2_paramset2,&basebdy_Nxi_freepts_extraporder2_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder2_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -23540,7 +23812,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_freepts_extraporder3_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder3_paramset2[j],y_extrappt0_freepts_extraporder3_paramset2[j],z_extrappt0_freepts_extraporder3_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder3_paramset2[j],ypbdy0_freepts_extraporder3_paramset2[j],zpbdy0_freepts_extraporder3_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -23552,7 +23824,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_freepts_extraporder3_paramset2[j],y_extrappt0_freepts_extraporder3_paramset2[j],z_extrappt0_freepts_extraporder3_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_freepts_extraporder3_paramset2[j],ypbdy0_freepts_extraporder3_paramset2[j],zpbdy0_freepts_extraporder3_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -23744,8 +24016,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FREE POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_freepts_extraporder3_paramset2=1;
-                                chibdy_xibdy_(chibdy0_freepts_extraporder3_paramset2,xibdy0_freepts_extraporder3_paramset2,x_extrappt0_freepts_extraporder3_paramset2,y_extrappt0_freepts_extraporder3_paramset2,z_extrappt0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2,chiextrap0_freepts_extraporder3_paramset2,xiextrap0_freepts_extraporder3_paramset2,&basebdy_Nchi_freepts_extraporder3_paramset2,&basebdy_Nxi_freepts_extraporder3_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder3_paramset2,quasiset_massdensity0_freepts_extraporder3_paramset2,x_extrappt0_freepts_extraporder3_paramset2,y_extrappt0_freepts_extraporder3_paramset2,z_extrappt0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2,rhobdy0_freepts_extraporder3_paramset2,chibdy0_freepts_extraporder3_paramset2,xibdy0_freepts_extraporder3_paramset2,&basebdy_Nchi_freepts_extraporder3_paramset2,&basebdy_Nxi_freepts_extraporder3_paramset2);          
+                                chibdy_xibdy_(chibdy0_freepts_extraporder3_paramset2,xibdy0_freepts_extraporder3_paramset2,xpbdy0_freepts_extraporder3_paramset2,ypbdy0_freepts_extraporder3_paramset2,zpbdy0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2,chiextrap0_freepts_extraporder3_paramset2,xiextrap0_freepts_extraporder3_paramset2,&basebdy_Nchi_freepts_extraporder3_paramset2,&basebdy_Nxi_freepts_extraporder3_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_freepts_extraporder3_paramset2,quasiset_massdensity0_freepts_extraporder3_paramset2,xpbdy0_freepts_extraporder3_paramset2,ypbdy0_freepts_extraporder3_paramset2,zpbdy0_freepts_extraporder3_paramset2,&basenumbdypoints_freepts_extraporder3_paramset2,rhobdy0_freepts_extraporder3_paramset2,chibdy0_freepts_extraporder3_paramset2,xibdy0_freepts_extraporder3_paramset2,&basebdy_Nchi_freepts_extraporder3_paramset2,&basebdy_Nxi_freepts_extraporder3_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_freepts_extraporder3_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -23836,7 +24108,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder1_paramset1; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder1_paramset1[j],y_extrappt0_fixedpts_extraporder1_paramset1[j],z_extrappt0_fixedpts_extraporder1_paramset1[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder1_paramset1[j],ypbdy0_fixedpts_extraporder1_paramset1[j],zpbdy0_fixedpts_extraporder1_paramset1[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -23848,7 +24120,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder1_paramset1[j],y_extrappt0_fixedpts_extraporder1_paramset1[j],z_extrappt0_fixedpts_extraporder1_paramset1[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder1_paramset1[j],ypbdy0_fixedpts_extraporder1_paramset1[j],zpbdy0_fixedpts_extraporder1_paramset1[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -24040,8 +24312,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder1_paramset1=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder1_paramset1,xibdy0_fixedpts_extraporder1_paramset1,x_extrappt0_fixedpts_extraporder1_paramset1,y_extrappt0_fixedpts_extraporder1_paramset1,z_extrappt0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1,chiextrap0_fixedpts_extraporder1_paramset1,xiextrap0_fixedpts_extraporder1_paramset1,&basebdy_Nchi_fixedpts_extraporder1_paramset1,&basebdy_Nxi_fixedpts_extraporder1_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder1_paramset1,quasiset_massdensity0_fixedpts_extraporder1_paramset1,x_extrappt0_fixedpts_extraporder1_paramset1,y_extrappt0_fixedpts_extraporder1_paramset1,z_extrappt0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1,rhobdy0_fixedpts_extraporder1_paramset1,chibdy0_fixedpts_extraporder1_paramset1,xibdy0_fixedpts_extraporder1_paramset1,&basebdy_Nchi_fixedpts_extraporder1_paramset1,&basebdy_Nxi_fixedpts_extraporder1_paramset1);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder1_paramset1,xibdy0_fixedpts_extraporder1_paramset1,xpbdy0_fixedpts_extraporder1_paramset1,ypbdy0_fixedpts_extraporder1_paramset1,zpbdy0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1,chiextrap0_fixedpts_extraporder1_paramset1,xiextrap0_fixedpts_extraporder1_paramset1,&basebdy_Nchi_fixedpts_extraporder1_paramset1,&basebdy_Nxi_fixedpts_extraporder1_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder1_paramset1,quasiset_massdensity0_fixedpts_extraporder1_paramset1,xpbdy0_fixedpts_extraporder1_paramset1,ypbdy0_fixedpts_extraporder1_paramset1,zpbdy0_fixedpts_extraporder1_paramset1,&basenumbdypoints_fixedpts_extraporder1_paramset1,rhobdy0_fixedpts_extraporder1_paramset1,chibdy0_fixedpts_extraporder1_paramset1,xibdy0_fixedpts_extraporder1_paramset1,&basebdy_Nchi_fixedpts_extraporder1_paramset1,&basebdy_Nxi_fixedpts_extraporder1_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder1_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -24125,7 +24397,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder2_paramset1; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder2_paramset1[j],y_extrappt0_fixedpts_extraporder2_paramset1[j],z_extrappt0_fixedpts_extraporder2_paramset1[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder2_paramset1[j],ypbdy0_fixedpts_extraporder2_paramset1[j],zpbdy0_fixedpts_extraporder2_paramset1[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -24137,7 +24409,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder2_paramset1[j],y_extrappt0_fixedpts_extraporder2_paramset1[j],z_extrappt0_fixedpts_extraporder2_paramset1[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder2_paramset1[j],ypbdy0_fixedpts_extraporder2_paramset1[j],zpbdy0_fixedpts_extraporder2_paramset1[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -24329,8 +24601,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder2_paramset1=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder2_paramset1,xibdy0_fixedpts_extraporder2_paramset1,x_extrappt0_fixedpts_extraporder2_paramset1,y_extrappt0_fixedpts_extraporder2_paramset1,z_extrappt0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1,chiextrap0_fixedpts_extraporder2_paramset1,xiextrap0_fixedpts_extraporder2_paramset1,&basebdy_Nchi_fixedpts_extraporder2_paramset1,&basebdy_Nxi_fixedpts_extraporder2_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder2_paramset1,quasiset_massdensity0_fixedpts_extraporder2_paramset1,x_extrappt0_fixedpts_extraporder2_paramset1,y_extrappt0_fixedpts_extraporder2_paramset1,z_extrappt0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1,rhobdy0_fixedpts_extraporder2_paramset1,chibdy0_fixedpts_extraporder2_paramset1,xibdy0_fixedpts_extraporder2_paramset1,&basebdy_Nchi_fixedpts_extraporder2_paramset1,&basebdy_Nxi_fixedpts_extraporder2_paramset1);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder2_paramset1,xibdy0_fixedpts_extraporder2_paramset1,xpbdy0_fixedpts_extraporder2_paramset1,ypbdy0_fixedpts_extraporder2_paramset1,zpbdy0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1,chiextrap0_fixedpts_extraporder2_paramset1,xiextrap0_fixedpts_extraporder2_paramset1,&basebdy_Nchi_fixedpts_extraporder2_paramset1,&basebdy_Nxi_fixedpts_extraporder2_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder2_paramset1,quasiset_massdensity0_fixedpts_extraporder2_paramset1,xpbdy0_fixedpts_extraporder2_paramset1,ypbdy0_fixedpts_extraporder2_paramset1,zpbdy0_fixedpts_extraporder2_paramset1,&basenumbdypoints_fixedpts_extraporder2_paramset1,rhobdy0_fixedpts_extraporder2_paramset1,chibdy0_fixedpts_extraporder2_paramset1,xibdy0_fixedpts_extraporder2_paramset1,&basebdy_Nchi_fixedpts_extraporder2_paramset1,&basebdy_Nxi_fixedpts_extraporder2_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder2_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -24414,7 +24686,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder3_paramset1; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder3_paramset1[j],y_extrappt0_fixedpts_extraporder3_paramset1[j],z_extrappt0_fixedpts_extraporder3_paramset1[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder3_paramset1[j],ypbdy0_fixedpts_extraporder3_paramset1[j],zpbdy0_fixedpts_extraporder3_paramset1[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -24426,7 +24698,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder3_paramset1[j],y_extrappt0_fixedpts_extraporder3_paramset1[j],z_extrappt0_fixedpts_extraporder3_paramset1[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder3_paramset1[j],ypbdy0_fixedpts_extraporder3_paramset1[j],zpbdy0_fixedpts_extraporder3_paramset1[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -24618,8 +24890,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder3_paramset1=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder3_paramset1,xibdy0_fixedpts_extraporder3_paramset1,x_extrappt0_fixedpts_extraporder3_paramset1,y_extrappt0_fixedpts_extraporder3_paramset1,z_extrappt0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1,chiextrap0_fixedpts_extraporder3_paramset1,xiextrap0_fixedpts_extraporder3_paramset1,&basebdy_Nchi_fixedpts_extraporder3_paramset1,&basebdy_Nxi_fixedpts_extraporder3_paramset1);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder3_paramset1,quasiset_massdensity0_fixedpts_extraporder3_paramset1,x_extrappt0_fixedpts_extraporder3_paramset1,y_extrappt0_fixedpts_extraporder3_paramset1,z_extrappt0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1,rhobdy0_fixedpts_extraporder3_paramset1,chibdy0_fixedpts_extraporder3_paramset1,xibdy0_fixedpts_extraporder3_paramset1,&basebdy_Nchi_fixedpts_extraporder3_paramset1,&basebdy_Nxi_fixedpts_extraporder3_paramset1);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder3_paramset1,xibdy0_fixedpts_extraporder3_paramset1,xpbdy0_fixedpts_extraporder3_paramset1,ypbdy0_fixedpts_extraporder3_paramset1,zpbdy0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1,chiextrap0_fixedpts_extraporder3_paramset1,xiextrap0_fixedpts_extraporder3_paramset1,&basebdy_Nchi_fixedpts_extraporder3_paramset1,&basebdy_Nxi_fixedpts_extraporder3_paramset1);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder3_paramset1,quasiset_massdensity0_fixedpts_extraporder3_paramset1,xpbdy0_fixedpts_extraporder3_paramset1,ypbdy0_fixedpts_extraporder3_paramset1,zpbdy0_fixedpts_extraporder3_paramset1,&basenumbdypoints_fixedpts_extraporder3_paramset1,rhobdy0_fixedpts_extraporder3_paramset1,chibdy0_fixedpts_extraporder3_paramset1,xibdy0_fixedpts_extraporder3_paramset1,&basebdy_Nchi_fixedpts_extraporder3_paramset1,&basebdy_Nxi_fixedpts_extraporder3_paramset1);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder3_paramset1_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -24705,7 +24977,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder1_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder1_paramset2[j],y_extrappt0_fixedpts_extraporder1_paramset2[j],z_extrappt0_fixedpts_extraporder1_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder1_paramset2[j],ypbdy0_fixedpts_extraporder1_paramset2[j],zpbdy0_fixedpts_extraporder1_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -24717,7 +24989,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder1_paramset2[j],y_extrappt0_fixedpts_extraporder1_paramset2[j],z_extrappt0_fixedpts_extraporder1_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder1_paramset2[j],ypbdy0_fixedpts_extraporder1_paramset2[j],zpbdy0_fixedpts_extraporder1_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -24909,8 +25181,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder1_paramset2=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder1_paramset2,xibdy0_fixedpts_extraporder1_paramset2,x_extrappt0_fixedpts_extraporder1_paramset2,y_extrappt0_fixedpts_extraporder1_paramset2,z_extrappt0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2,chiextrap0_fixedpts_extraporder1_paramset2,xiextrap0_fixedpts_extraporder1_paramset2,&basebdy_Nchi_fixedpts_extraporder1_paramset2,&basebdy_Nxi_fixedpts_extraporder1_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder1_paramset2,quasiset_massdensity0_fixedpts_extraporder1_paramset2,x_extrappt0_fixedpts_extraporder1_paramset2,y_extrappt0_fixedpts_extraporder1_paramset2,z_extrappt0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2,rhobdy0_fixedpts_extraporder1_paramset2,chibdy0_fixedpts_extraporder1_paramset2,xibdy0_fixedpts_extraporder1_paramset2,&basebdy_Nchi_fixedpts_extraporder1_paramset2,&basebdy_Nxi_fixedpts_extraporder1_paramset2);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder1_paramset2,xibdy0_fixedpts_extraporder1_paramset2,xpbdy0_fixedpts_extraporder1_paramset2,ypbdy0_fixedpts_extraporder1_paramset2,zpbdy0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2,chiextrap0_fixedpts_extraporder1_paramset2,xiextrap0_fixedpts_extraporder1_paramset2,&basebdy_Nchi_fixedpts_extraporder1_paramset2,&basebdy_Nxi_fixedpts_extraporder1_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder1_paramset2,quasiset_massdensity0_fixedpts_extraporder1_paramset2,xpbdy0_fixedpts_extraporder1_paramset2,ypbdy0_fixedpts_extraporder1_paramset2,zpbdy0_fixedpts_extraporder1_paramset2,&basenumbdypoints_fixedpts_extraporder1_paramset2,rhobdy0_fixedpts_extraporder1_paramset2,chibdy0_fixedpts_extraporder1_paramset2,xibdy0_fixedpts_extraporder1_paramset2,&basebdy_Nchi_fixedpts_extraporder1_paramset2,&basebdy_Nxi_fixedpts_extraporder1_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder1_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -24994,7 +25266,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder2_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder2_paramset2[j],y_extrappt0_fixedpts_extraporder2_paramset2[j],z_extrappt0_fixedpts_extraporder2_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder2_paramset2[j],ypbdy0_fixedpts_extraporder2_paramset2[j],zpbdy0_fixedpts_extraporder2_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -25006,7 +25278,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder2_paramset2[j],y_extrappt0_fixedpts_extraporder2_paramset2[j],z_extrappt0_fixedpts_extraporder2_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder2_paramset2[j],ypbdy0_fixedpts_extraporder2_paramset2[j],zpbdy0_fixedpts_extraporder2_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -25198,8 +25470,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder2_paramset2=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder2_paramset2,xibdy0_fixedpts_extraporder2_paramset2,x_extrappt0_fixedpts_extraporder2_paramset2,y_extrappt0_fixedpts_extraporder2_paramset2,z_extrappt0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2,chiextrap0_fixedpts_extraporder2_paramset2,xiextrap0_fixedpts_extraporder2_paramset2,&basebdy_Nchi_fixedpts_extraporder2_paramset2,&basebdy_Nxi_fixedpts_extraporder2_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder2_paramset2,quasiset_massdensity0_fixedpts_extraporder2_paramset2,x_extrappt0_fixedpts_extraporder2_paramset2,y_extrappt0_fixedpts_extraporder2_paramset2,z_extrappt0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2,rhobdy0_fixedpts_extraporder2_paramset2,chibdy0_fixedpts_extraporder2_paramset2,xibdy0_fixedpts_extraporder2_paramset2,&basebdy_Nchi_fixedpts_extraporder2_paramset2,&basebdy_Nxi_fixedpts_extraporder2_paramset2);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder2_paramset2,xibdy0_fixedpts_extraporder2_paramset2,xpbdy0_fixedpts_extraporder2_paramset2,ypbdy0_fixedpts_extraporder2_paramset2,zpbdy0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2,chiextrap0_fixedpts_extraporder2_paramset2,xiextrap0_fixedpts_extraporder2_paramset2,&basebdy_Nchi_fixedpts_extraporder2_paramset2,&basebdy_Nxi_fixedpts_extraporder2_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder2_paramset2,quasiset_massdensity0_fixedpts_extraporder2_paramset2,xpbdy0_fixedpts_extraporder2_paramset2,ypbdy0_fixedpts_extraporder2_paramset2,zpbdy0_fixedpts_extraporder2_paramset2,&basenumbdypoints_fixedpts_extraporder2_paramset2,rhobdy0_fixedpts_extraporder2_paramset2,chibdy0_fixedpts_extraporder2_paramset2,xibdy0_fixedpts_extraporder2_paramset2,&basebdy_Nchi_fixedpts_extraporder2_paramset2,&basebdy_Nxi_fixedpts_extraporder2_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder2_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -25283,7 +25555,7 @@ void AdS4D_post_tstep(int L)
                                             fp = fopen(name, "w+");
                                             for( j = 0; j < basenumbdypoints_fixedpts_extraporder3_paramset2; j++ )
                                             {
-                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder3_paramset2[j],y_extrappt0_fixedpts_extraporder3_paramset2[j],z_extrappt0_fixedpts_extraporder3_paramset2[j],j);
+                                                fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder3_paramset2[j],ypbdy0_fixedpts_extraporder3_paramset2[j],zpbdy0_fixedpts_extraporder3_paramset2[j],j);
                                             }
                                             fclose(fp);   
                                         if ((reduced_ascii) && (reduction_factor_ascii!=0))
@@ -25295,7 +25567,7 @@ void AdS4D_post_tstep(int L)
                                             {
                                                 if ((j%reduction_factor_ascii)==0)
                                                 {
-                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,x_extrappt0_fixedpts_extraporder3_paramset2[j],y_extrappt0_fixedpts_extraporder3_paramset2[j],z_extrappt0_fixedpts_extraporder3_paramset2[j],j_red);
+                                                    fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",ct,xpbdy0_fixedpts_extraporder3_paramset2[j],ypbdy0_fixedpts_extraporder3_paramset2[j],zpbdy0_fixedpts_extraporder3_paramset2[j],j_red);
                                                     j_red=j_red+1;
                                                 }
                                             }
@@ -25487,8 +25759,8 @@ void AdS4D_post_tstep(int L)
                             {
                                 printf("\nRUNNING ON ONLY 1 PROCESS...THE NUMERICAL APPROXIMATION OF AdS MASS FOR FIXED POINTS, FIRST ORDER EXTRAPOLATION IS RELIABLE ON 1 PROCESS...COMPUTING AdS MASS\n");      
                                 *rhobdy0_fixedpts_extraporder3_paramset2=1;
-                                chibdy_xibdy_(chibdy0_fixedpts_extraporder3_paramset2,xibdy0_fixedpts_extraporder3_paramset2,x_extrappt0_fixedpts_extraporder3_paramset2,y_extrappt0_fixedpts_extraporder3_paramset2,z_extrappt0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2,chiextrap0_fixedpts_extraporder3_paramset2,xiextrap0_fixedpts_extraporder3_paramset2,&basebdy_Nchi_fixedpts_extraporder3_paramset2,&basebdy_Nxi_fixedpts_extraporder3_paramset2);    
-                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder3_paramset2,quasiset_massdensity0_fixedpts_extraporder3_paramset2,x_extrappt0_fixedpts_extraporder3_paramset2,y_extrappt0_fixedpts_extraporder3_paramset2,z_extrappt0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2,rhobdy0_fixedpts_extraporder3_paramset2,chibdy0_fixedpts_extraporder3_paramset2,xibdy0_fixedpts_extraporder3_paramset2,&basebdy_Nchi_fixedpts_extraporder3_paramset2,&basebdy_Nxi_fixedpts_extraporder3_paramset2);          
+                                chibdy_xibdy_(chibdy0_fixedpts_extraporder3_paramset2,xibdy0_fixedpts_extraporder3_paramset2,xpbdy0_fixedpts_extraporder3_paramset2,ypbdy0_fixedpts_extraporder3_paramset2,zpbdy0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2,chiextrap0_fixedpts_extraporder3_paramset2,xiextrap0_fixedpts_extraporder3_paramset2,&basebdy_Nchi_fixedpts_extraporder3_paramset2,&basebdy_Nxi_fixedpts_extraporder3_paramset2);    
+                                doubleintegralonsphere_(AdS_mass0_fixedpts_extraporder3_paramset2,quasiset_massdensity0_fixedpts_extraporder3_paramset2,xpbdy0_fixedpts_extraporder3_paramset2,ypbdy0_fixedpts_extraporder3_paramset2,zpbdy0_fixedpts_extraporder3_paramset2,&basenumbdypoints_fixedpts_extraporder3_paramset2,rhobdy0_fixedpts_extraporder3_paramset2,chibdy0_fixedpts_extraporder3_paramset2,xibdy0_fixedpts_extraporder3_paramset2,&basebdy_Nchi_fixedpts_extraporder3_paramset2,&basebdy_Nxi_fixedpts_extraporder3_paramset2);          
                                 FILE *fp;
                                 sprintf(name,"AdSbdy_fixedpts_extraporder3_paramset2_%st_AdSmass.txt",AMRD_save_tag);
                                 fp = fopen(name, "a+");
@@ -25530,9 +25802,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder1_paramset1);
                         free(quasiset_angmomdensityz_freepts_extraporder1_paramset1);
                         free(bdyphi_freepts_extraporder1_paramset1);  
-                        free(x_extrappt_freepts_extraporder1_paramset1);
-                        free(y_extrappt_freepts_extraporder1_paramset1);
-                        free(z_extrappt_freepts_extraporder1_paramset1);   
+                        free(xpbdy_freepts_extraporder1_paramset1);
+                        free(ypbdy_freepts_extraporder1_paramset1);
+                        free(zpbdy_freepts_extraporder1_paramset1);   
                        	free(x_outermostpt_freepts_extraporder1_paramset1);
                        	free(y_outermostpt_freepts_extraporder1_paramset1);
                        	free(z_outermostpt_freepts_extraporder1_paramset1);   
@@ -25586,9 +25858,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder1_paramset1);
                         free(bdyphi0_freepts_extraporder1_paramset1);
                         free(AdS_mass0_freepts_extraporder1_paramset1);     
-                        free(x_extrappt0_freepts_extraporder1_paramset1);
-                        free(y_extrappt0_freepts_extraporder1_paramset1);
-                        free(z_extrappt0_freepts_extraporder1_paramset1);
+                        free(xpbdy0_freepts_extraporder1_paramset1);
+                        free(ypbdy0_freepts_extraporder1_paramset1);
+                        free(zpbdy0_freepts_extraporder1_paramset1);
                        	free(x_outermostpt0_freepts_extraporder1_paramset1);
                        	free(y_outermostpt0_freepts_extraporder1_paramset1);
                        	free(z_outermostpt0_freepts_extraporder1_paramset1);  
@@ -25621,9 +25893,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder2_paramset1);
                         free(quasiset_angmomdensityz_freepts_extraporder2_paramset1);
                         free(bdyphi_freepts_extraporder2_paramset1);  
-                        free(x_extrappt_freepts_extraporder2_paramset1);
-                        free(y_extrappt_freepts_extraporder2_paramset1);
-                        free(z_extrappt_freepts_extraporder2_paramset1);   
+                        free(xpbdy_freepts_extraporder2_paramset1);
+                        free(ypbdy_freepts_extraporder2_paramset1);
+                        free(zpbdy_freepts_extraporder2_paramset1);   
                         free(x_outermostpt_freepts_extraporder2_paramset1);
                         free(y_outermostpt_freepts_extraporder2_paramset1);
                         free(z_outermostpt_freepts_extraporder2_paramset1);   
@@ -25677,9 +25949,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder2_paramset1);
                         free(bdyphi0_freepts_extraporder2_paramset1);
                         free(AdS_mass0_freepts_extraporder2_paramset1);     
-                        free(x_extrappt0_freepts_extraporder2_paramset1);
-                        free(y_extrappt0_freepts_extraporder2_paramset1);
-                        free(z_extrappt0_freepts_extraporder2_paramset1);
+                        free(xpbdy0_freepts_extraporder2_paramset1);
+                        free(ypbdy0_freepts_extraporder2_paramset1);
+                        free(zpbdy0_freepts_extraporder2_paramset1);
                         free(x_outermostpt0_freepts_extraporder2_paramset1);
                         free(y_outermostpt0_freepts_extraporder2_paramset1);
                         free(z_outermostpt0_freepts_extraporder2_paramset1);  
@@ -25712,9 +25984,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder3_paramset1);
                         free(quasiset_angmomdensityz_freepts_extraporder3_paramset1);
                         free(bdyphi_freepts_extraporder3_paramset1);  
-                        free(x_extrappt_freepts_extraporder3_paramset1);
-                        free(y_extrappt_freepts_extraporder3_paramset1);
-                        free(z_extrappt_freepts_extraporder3_paramset1);   
+                        free(xpbdy_freepts_extraporder3_paramset1);
+                        free(ypbdy_freepts_extraporder3_paramset1);
+                        free(zpbdy_freepts_extraporder3_paramset1);   
                         free(x_outermostpt_freepts_extraporder3_paramset1);
                         free(y_outermostpt_freepts_extraporder3_paramset1);
                         free(z_outermostpt_freepts_extraporder3_paramset1);   
@@ -25768,9 +26040,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder3_paramset1);
                         free(bdyphi0_freepts_extraporder3_paramset1);
                         free(AdS_mass0_freepts_extraporder3_paramset1);     
-                        free(x_extrappt0_freepts_extraporder3_paramset1);
-                        free(y_extrappt0_freepts_extraporder3_paramset1);
-                        free(z_extrappt0_freepts_extraporder3_paramset1);
+                        free(xpbdy0_freepts_extraporder3_paramset1);
+                        free(ypbdy0_freepts_extraporder3_paramset1);
+                        free(zpbdy0_freepts_extraporder3_paramset1);
                         free(x_outermostpt0_freepts_extraporder3_paramset1);
                         free(y_outermostpt0_freepts_extraporder3_paramset1);
                         free(z_outermostpt0_freepts_extraporder3_paramset1);  
@@ -25805,9 +26077,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder1_paramset2);
                         free(quasiset_angmomdensityz_freepts_extraporder1_paramset2);
                         free(bdyphi_freepts_extraporder1_paramset2);  
-                        free(x_extrappt_freepts_extraporder1_paramset2);
-                        free(y_extrappt_freepts_extraporder1_paramset2);
-                        free(z_extrappt_freepts_extraporder1_paramset2);   
+                        free(xpbdy_freepts_extraporder1_paramset2);
+                        free(ypbdy_freepts_extraporder1_paramset2);
+                        free(zpbdy_freepts_extraporder1_paramset2);   
                         free(x_outermostpt_freepts_extraporder1_paramset2);
                         free(y_outermostpt_freepts_extraporder1_paramset2);
                         free(z_outermostpt_freepts_extraporder1_paramset2);   
@@ -25861,9 +26133,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder1_paramset2);
                         free(bdyphi0_freepts_extraporder1_paramset2);
                         free(AdS_mass0_freepts_extraporder1_paramset2);     
-                        free(x_extrappt0_freepts_extraporder1_paramset2);
-                        free(y_extrappt0_freepts_extraporder1_paramset2);
-                        free(z_extrappt0_freepts_extraporder1_paramset2);
+                        free(xpbdy0_freepts_extraporder1_paramset2);
+                        free(ypbdy0_freepts_extraporder1_paramset2);
+                        free(zpbdy0_freepts_extraporder1_paramset2);
                         free(x_outermostpt0_freepts_extraporder1_paramset2);
                         free(y_outermostpt0_freepts_extraporder1_paramset2);
                         free(z_outermostpt0_freepts_extraporder1_paramset2);  
@@ -25896,9 +26168,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder2_paramset2);
                         free(quasiset_angmomdensityz_freepts_extraporder2_paramset2);
                         free(bdyphi_freepts_extraporder2_paramset2);  
-                        free(x_extrappt_freepts_extraporder2_paramset2);
-                        free(y_extrappt_freepts_extraporder2_paramset2);
-                        free(z_extrappt_freepts_extraporder2_paramset2);   
+                        free(xpbdy_freepts_extraporder2_paramset2);
+                        free(ypbdy_freepts_extraporder2_paramset2);
+                        free(zpbdy_freepts_extraporder2_paramset2);   
                         free(x_outermostpt_freepts_extraporder2_paramset2);
                         free(y_outermostpt_freepts_extraporder2_paramset2);
                         free(z_outermostpt_freepts_extraporder2_paramset2);   
@@ -25952,9 +26224,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder2_paramset2);
                         free(bdyphi0_freepts_extraporder2_paramset2);
                         free(AdS_mass0_freepts_extraporder2_paramset2);     
-                        free(x_extrappt0_freepts_extraporder2_paramset2);
-                        free(y_extrappt0_freepts_extraporder2_paramset2);
-                        free(z_extrappt0_freepts_extraporder2_paramset2);
+                        free(xpbdy0_freepts_extraporder2_paramset2);
+                        free(ypbdy0_freepts_extraporder2_paramset2);
+                        free(zpbdy0_freepts_extraporder2_paramset2);
                         free(x_outermostpt0_freepts_extraporder2_paramset2);
                         free(y_outermostpt0_freepts_extraporder2_paramset2);
                         free(z_outermostpt0_freepts_extraporder2_paramset2);  
@@ -25987,9 +26259,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_freepts_extraporder3_paramset2);
                         free(quasiset_angmomdensityz_freepts_extraporder3_paramset2);
                         free(bdyphi_freepts_extraporder3_paramset2);  
-                        free(x_extrappt_freepts_extraporder3_paramset2);
-                        free(y_extrappt_freepts_extraporder3_paramset2);
-                        free(z_extrappt_freepts_extraporder3_paramset2);   
+                        free(xpbdy_freepts_extraporder3_paramset2);
+                        free(ypbdy_freepts_extraporder3_paramset2);
+                        free(zpbdy_freepts_extraporder3_paramset2);   
                         free(x_outermostpt_freepts_extraporder3_paramset2);
                         free(y_outermostpt_freepts_extraporder3_paramset2);
                         free(z_outermostpt_freepts_extraporder3_paramset2);   
@@ -26043,9 +26315,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_freepts_extraporder3_paramset2);
                         free(bdyphi0_freepts_extraporder3_paramset2);
                         free(AdS_mass0_freepts_extraporder3_paramset2);     
-                        free(x_extrappt0_freepts_extraporder3_paramset2);
-                        free(y_extrappt0_freepts_extraporder3_paramset2);
-                        free(z_extrappt0_freepts_extraporder3_paramset2);
+                        free(xpbdy0_freepts_extraporder3_paramset2);
+                        free(ypbdy0_freepts_extraporder3_paramset2);
+                        free(zpbdy0_freepts_extraporder3_paramset2);
                         free(x_outermostpt0_freepts_extraporder3_paramset2);
                         free(y_outermostpt0_freepts_extraporder3_paramset2);
                         free(z_outermostpt0_freepts_extraporder3_paramset2);  
@@ -26085,9 +26357,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder1_paramset1);
                         free(quasiset_angmomdensityz_fixedpts_extraporder1_paramset1);
                         free(bdyphi_fixedpts_extraporder1_paramset1);  
-                        free(x_extrappt_fixedpts_extraporder1_paramset1);
-                        free(y_extrappt_fixedpts_extraporder1_paramset1);
-                        free(z_extrappt_fixedpts_extraporder1_paramset1);   
+                        free(xpbdy_fixedpts_extraporder1_paramset1);
+                        free(ypbdy_fixedpts_extraporder1_paramset1);
+                        free(zpbdy_fixedpts_extraporder1_paramset1);   
                         free(x_outermostpt_fixedpts_extraporder1_paramset1);
                         free(y_outermostpt_fixedpts_extraporder1_paramset1);
                         free(z_outermostpt_fixedpts_extraporder1_paramset1);   
@@ -26141,9 +26413,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder1_paramset1);
                         free(bdyphi0_fixedpts_extraporder1_paramset1);
                         free(AdS_mass0_fixedpts_extraporder1_paramset1);     
-                        free(x_extrappt0_fixedpts_extraporder1_paramset1);
-                        free(y_extrappt0_fixedpts_extraporder1_paramset1);
-                        free(z_extrappt0_fixedpts_extraporder1_paramset1);
+                        free(xpbdy0_fixedpts_extraporder1_paramset1);
+                        free(ypbdy0_fixedpts_extraporder1_paramset1);
+                        free(zpbdy0_fixedpts_extraporder1_paramset1);
                         free(x_outermostpt0_fixedpts_extraporder1_paramset1);
                         free(y_outermostpt0_fixedpts_extraporder1_paramset1);
                         free(z_outermostpt0_fixedpts_extraporder1_paramset1);  
@@ -26176,9 +26448,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder2_paramset1);
                         free(quasiset_angmomdensityz_fixedpts_extraporder2_paramset1);
                         free(bdyphi_fixedpts_extraporder2_paramset1);  
-                        free(x_extrappt_fixedpts_extraporder2_paramset1);
-                        free(y_extrappt_fixedpts_extraporder2_paramset1);
-                        free(z_extrappt_fixedpts_extraporder2_paramset1);   
+                        free(xpbdy_fixedpts_extraporder2_paramset1);
+                        free(ypbdy_fixedpts_extraporder2_paramset1);
+                        free(zpbdy_fixedpts_extraporder2_paramset1);   
                         free(x_outermostpt_fixedpts_extraporder2_paramset1);
                         free(y_outermostpt_fixedpts_extraporder2_paramset1);
                         free(z_outermostpt_fixedpts_extraporder2_paramset1);   
@@ -26232,9 +26504,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder2_paramset1);
                         free(bdyphi0_fixedpts_extraporder2_paramset1);
                         free(AdS_mass0_fixedpts_extraporder2_paramset1);     
-                        free(x_extrappt0_fixedpts_extraporder2_paramset1);
-                        free(y_extrappt0_fixedpts_extraporder2_paramset1);
-                        free(z_extrappt0_fixedpts_extraporder2_paramset1);
+                        free(xpbdy0_fixedpts_extraporder2_paramset1);
+                        free(ypbdy0_fixedpts_extraporder2_paramset1);
+                        free(zpbdy0_fixedpts_extraporder2_paramset1);
                         free(x_outermostpt0_fixedpts_extraporder2_paramset1);
                         free(y_outermostpt0_fixedpts_extraporder2_paramset1);
                         free(z_outermostpt0_fixedpts_extraporder2_paramset1);  
@@ -26267,9 +26539,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder3_paramset1);
                         free(quasiset_angmomdensityz_fixedpts_extraporder3_paramset1);
                         free(bdyphi_fixedpts_extraporder3_paramset1);  
-                        free(x_extrappt_fixedpts_extraporder3_paramset1);
-                        free(y_extrappt_fixedpts_extraporder3_paramset1);
-                        free(z_extrappt_fixedpts_extraporder3_paramset1);   
+                        free(xpbdy_fixedpts_extraporder3_paramset1);
+                        free(ypbdy_fixedpts_extraporder3_paramset1);
+                        free(zpbdy_fixedpts_extraporder3_paramset1);   
                         free(x_outermostpt_fixedpts_extraporder3_paramset1);
                         free(y_outermostpt_fixedpts_extraporder3_paramset1);
                         free(z_outermostpt_fixedpts_extraporder3_paramset1);   
@@ -26323,9 +26595,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder3_paramset1);
                         free(bdyphi0_fixedpts_extraporder3_paramset1);
                         free(AdS_mass0_fixedpts_extraporder3_paramset1);     
-                        free(x_extrappt0_fixedpts_extraporder3_paramset1);
-                        free(y_extrappt0_fixedpts_extraporder3_paramset1);
-                        free(z_extrappt0_fixedpts_extraporder3_paramset1);
+                        free(xpbdy0_fixedpts_extraporder3_paramset1);
+                        free(ypbdy0_fixedpts_extraporder3_paramset1);
+                        free(zpbdy0_fixedpts_extraporder3_paramset1);
                         free(x_outermostpt0_fixedpts_extraporder3_paramset1);
                         free(y_outermostpt0_fixedpts_extraporder3_paramset1);
                         free(z_outermostpt0_fixedpts_extraporder3_paramset1);  
@@ -26360,9 +26632,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder1_paramset2);
                         free(quasiset_angmomdensityz_fixedpts_extraporder1_paramset2);
                         free(bdyphi_fixedpts_extraporder1_paramset2);  
-                        free(x_extrappt_fixedpts_extraporder1_paramset2);
-                        free(y_extrappt_fixedpts_extraporder1_paramset2);
-                        free(z_extrappt_fixedpts_extraporder1_paramset2);   
+                        free(xpbdy_fixedpts_extraporder1_paramset2);
+                        free(ypbdy_fixedpts_extraporder1_paramset2);
+                        free(zpbdy_fixedpts_extraporder1_paramset2);   
                         free(x_outermostpt_fixedpts_extraporder1_paramset2);
                         free(y_outermostpt_fixedpts_extraporder1_paramset2);
                         free(z_outermostpt_fixedpts_extraporder1_paramset2);   
@@ -26416,9 +26688,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder1_paramset2);
                         free(bdyphi0_fixedpts_extraporder1_paramset2);
                         free(AdS_mass0_fixedpts_extraporder1_paramset2);     
-                        free(x_extrappt0_fixedpts_extraporder1_paramset2);
-                        free(y_extrappt0_fixedpts_extraporder1_paramset2);
-                        free(z_extrappt0_fixedpts_extraporder1_paramset2);
+                        free(xpbdy0_fixedpts_extraporder1_paramset2);
+                        free(ypbdy0_fixedpts_extraporder1_paramset2);
+                        free(zpbdy0_fixedpts_extraporder1_paramset2);
                         free(x_outermostpt0_fixedpts_extraporder1_paramset2);
                         free(y_outermostpt0_fixedpts_extraporder1_paramset2);
                         free(z_outermostpt0_fixedpts_extraporder1_paramset2);  
@@ -26451,9 +26723,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder2_paramset2);
                         free(quasiset_angmomdensityz_fixedpts_extraporder2_paramset2);
                         free(bdyphi_fixedpts_extraporder2_paramset2);  
-                        free(x_extrappt_fixedpts_extraporder2_paramset2);
-                        free(y_extrappt_fixedpts_extraporder2_paramset2);
-                        free(z_extrappt_fixedpts_extraporder2_paramset2);   
+                        free(xpbdy_fixedpts_extraporder2_paramset2);
+                        free(ypbdy_fixedpts_extraporder2_paramset2);
+                        free(zpbdy_fixedpts_extraporder2_paramset2);   
                         free(x_outermostpt_fixedpts_extraporder2_paramset2);
                         free(y_outermostpt_fixedpts_extraporder2_paramset2);
                         free(z_outermostpt_fixedpts_extraporder2_paramset2);   
@@ -26507,9 +26779,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder2_paramset2);
                         free(bdyphi0_fixedpts_extraporder2_paramset2);
                         free(AdS_mass0_fixedpts_extraporder2_paramset2);     
-                        free(x_extrappt0_fixedpts_extraporder2_paramset2);
-                        free(y_extrappt0_fixedpts_extraporder2_paramset2);
-                        free(z_extrappt0_fixedpts_extraporder2_paramset2);
+                        free(xpbdy0_fixedpts_extraporder2_paramset2);
+                        free(ypbdy0_fixedpts_extraporder2_paramset2);
+                        free(zpbdy0_fixedpts_extraporder2_paramset2);
                         free(x_outermostpt0_fixedpts_extraporder2_paramset2);
                         free(y_outermostpt0_fixedpts_extraporder2_paramset2);
                         free(z_outermostpt0_fixedpts_extraporder2_paramset2);  
@@ -26542,9 +26814,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityy_fixedpts_extraporder3_paramset2);
                         free(quasiset_angmomdensityz_fixedpts_extraporder3_paramset2);
                         free(bdyphi_fixedpts_extraporder3_paramset2);  
-                        free(x_extrappt_fixedpts_extraporder3_paramset2);
-                        free(y_extrappt_fixedpts_extraporder3_paramset2);
-                        free(z_extrappt_fixedpts_extraporder3_paramset2);   
+                        free(xpbdy_fixedpts_extraporder3_paramset2);
+                        free(ypbdy_fixedpts_extraporder3_paramset2);
+                        free(zpbdy_fixedpts_extraporder3_paramset2);   
                         free(x_outermostpt_fixedpts_extraporder3_paramset2);
                         free(y_outermostpt_fixedpts_extraporder3_paramset2);
                         free(z_outermostpt_fixedpts_extraporder3_paramset2);   
@@ -26598,9 +26870,9 @@ void AdS4D_post_tstep(int L)
                         free(quasiset_angmomdensityz0_fixedpts_extraporder3_paramset2);
                         free(bdyphi0_fixedpts_extraporder3_paramset2);
                         free(AdS_mass0_fixedpts_extraporder3_paramset2);     
-                        free(x_extrappt0_fixedpts_extraporder3_paramset2);
-                        free(y_extrappt0_fixedpts_extraporder3_paramset2);
-                        free(z_extrappt0_fixedpts_extraporder3_paramset2);
+                        free(xpbdy0_fixedpts_extraporder3_paramset2);
+                        free(ypbdy0_fixedpts_extraporder3_paramset2);
+                        free(zpbdy0_fixedpts_extraporder3_paramset2);
                         free(x_outermostpt0_fixedpts_extraporder3_paramset2);
                         free(y_outermostpt0_fixedpts_extraporder3_paramset2);
                         free(z_outermostpt0_fixedpts_extraporder3_paramset2);  

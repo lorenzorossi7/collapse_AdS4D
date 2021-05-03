@@ -533,10 +533,17 @@ void dmdiss3d_ex_gen_(real *f,real *work,real *eps,int *do_bdy,int *phys_bdy_typ
 void nexttobdypoints_freepts_(real *chrbdy, 
                       int *numbdypoints, int *extrap_order, real *currentres_ratio_Lhighres_Llowres, int *half_steps_from_bdy_ext, int *half_steps_from_bdy_int, real *x, real *y, real *z, real *chr, real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz,  int *phys_bdy, int *ghost_width);
 
+void nexttobdypoints_radextrap_(real *chrbdy, 
+                      int *numbdypoints, int *extrap_order, real *currentres_ratio_Lhighres_Llowres, int *half_steps_from_bdy_ext, int *half_steps_from_bdy_int, real *x, real *y, real *z, real *chr, real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz,  int *phys_bdy, int *ghost_width);
+
 void nexttobdypoints_fixedpts_(real *chrbdy,
                       int *numbdypoints, int *extrap_order, int *ind_distance_fixedpts, real *currentres_ratio_Lhighres_Llowres, int *half_steps_from_bdy_ext, int *half_steps_from_bdy_int, int *num_fixed_coords, real *fixed_coords, real *x, real *y, real *z, real *chr, real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz,  int *phys_bdy, int *ghost_width);
 
 void xyz_extrap_outermost_(real *x_extrappt, real *y_extrappt, real *z_extrappt, 
+                            real *x_outermostpt, real *y_outermostpt, real *z_outermostpt,
+                            real *chrbdy, int *numbdypoints, real *x, real *y, real *z, real *dt, real *chr, real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz, int *ghost_width);
+
+void xyz_bdy_out_radextrap_(real *x_extrappt, real *y_extrappt, real *z_extrappt, 
                             real *x_outermostpt, real *y_outermostpt, real *z_outermostpt,
                             real *chrbdy, int *numbdypoints, real *x, real *y, real *z, real *dt, real *chr, real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz, int *ghost_width);
 
@@ -553,6 +560,13 @@ void calc_leadordcoeff_phi1_(real *leadordcoeff_phi1,
                             real *x,real *y,real *z,real *dt,real *chr,real *AdS_L,real *ex,int *Nx,int *Ny,int *Nz,int *phys_bdy,int *ghost_width);
 
 void extrap_bdyphi_freepts_(real *bdyphi,
+                  real *leadordcoeff_phi1,
+                           real *x_extrappt,real *y_extrappt,real *z_extrappt,
+                           real *chrbdy,int *numbdypoints,
+                           int *extrap_order,
+                           real *x,real *y,real *z,real *dt,real *chr,real *AdS_L,real *ex,int *Nx,int *Ny,int *Nz,int *phys_bdy,int *ghost_width);
+
+void bdyphi_radextrap_(real *bdyphi,
                   real *leadordcoeff_phi1,
                            real *x_extrappt,real *y_extrappt,real *z_extrappt,
                            real *chrbdy,int *numbdypoints,
@@ -589,6 +603,25 @@ void calc_quasiset_ll_(
                   real *x, real *y, real *z, real *dt, real *chr, real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz, int *phys_bdy, int *ghost_width);
 
 void extrap_quasiset_freepts_(real *quasiset_tt, real *quasiset_tchi, real *quasiset_txi, real *quasiset_chichi, real *quasiset_chixi,
+                   real *quasiset_xixi,
+                   real *quasiset_trace,
+                   real *quasiset_massdensity,
+                   real *quasiset_angmomdensityx,
+                   real *quasiset_angmomdensityy,
+                   real *quasiset_angmomdensityz,
+                   real *quasiset_tt_ll, real *quasiset_tchi_ll, real *quasiset_txi_ll, real *quasiset_chichi_ll, real *quasiset_chixi_ll,
+                   real *quasiset_xixi_ll,
+                   real *quasiset_tracell,
+                   real *quasiset_massdensityll,
+                   real *quasiset_angmomdensityxll,
+                   real *quasiset_angmomdensityyll,
+                   real *quasiset_angmomdensityzll,
+                   real *x_extrappt, real *y_extrappt, real *z_extrappt,
+                   real *chrbdy, int *numbdypoints,
+                   int *extrap_order,
+                   real *x, real *y, real *z, real *dt, real *chr, real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz, int *phys_bdy, int *ghost_width);
+
+void quasiset_radextrap_(real *quasiset_tt, real *quasiset_tchi, real *quasiset_txi, real *quasiset_chichi, real *quasiset_chixi,
                    real *quasiset_xixi,
                    real *quasiset_trace,
                    real *quasiset_massdensity,

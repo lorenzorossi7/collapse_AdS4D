@@ -5,7 +5,7 @@ refsym := 0
 #------ Initial Data -------------------------------------------------------
 
 #scalar field ID#
-phi1_amp_1 := 0.0
+phi1_amp_1 := 0.55
 phi1_r0_1 := 0.0
 phi1_delta_1 := 0.2
 phi1_x0_1 := [0.0 0.0 0.0]
@@ -19,14 +19,14 @@ stype := 0
 
 #Lorent boost parameters
 boost_v_1 := [0.0 -0.95 0.0]
-boost_amp_1 := 0.55
+boost_amp_1 := 0.0
 boost_r0_1 := 0.0
 boost_delta_1 := 0.2
 boost_x0_1 := [0.0 0.3 0.2]
 boost_ecc_1 := [0.2 0.2 0.2]
 
 boost_v_2 := [0.0 +0.95 0.0]
-boost_amp_2 := 0.55
+boost_amp_2 := 0.0
 boost_r0_2 := 0.0
 boost_delta_2 := 0.2
 boost_x0_2 := [0.0 -0.3 -0.2]
@@ -84,9 +84,12 @@ background := 0
 skip_constraints := 0
 output_ires := 1
 output_bdyquantities := 1
+#if rad_extrap=1 we use boundary extrapolation along radial direction (output saved in the freepts txt files)
+#if rad_extrap=0 we extrapolate along Cartesian directions
+rad_extrap := 1
 output_outermostpts := 1
 bdy_extrap_freepts := 1
-bdy_extrap_fixedpts := 1
+bdy_extrap_fixedpts := 0
 half_steps_from_bdy_ext_paramset1 := 9
 half_steps_from_bdy_ext_paramset2 := 5
 half_steps_from_bdy_int_paramset1 := 12
