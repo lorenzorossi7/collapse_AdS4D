@@ -7297,9 +7297,7 @@ void AdS4D_pre_tstep(int L)
                                 xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
                                 chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,
                                 &bdy_extrap_order,
-                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);  
-                        	MPI_Barrier(MPI_COMM_WORLD);
-							if (my_rank==0) {printf("POST:bdyphi_radextrap_(bdyphi_freepts_extraporder1_paramset1,quasiset_radextrap_(quasiset_tt_freepts_extraporder1_paramset1,\n"); fflush(stdout);}
+                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
                 		}
                 		else
                 		{
@@ -8134,9 +8132,7 @@ void AdS4D_pre_tstep(int L)
                     	{
                     		xyz_bdy_out_radextrap_(xpbdy_freepts_extraporder1_paramset2,ypbdy_freepts_extraporder1_paramset2,zpbdy_freepts_extraporder1_paramset2,
                                                                         x_outermostpt_freepts_extraporder1_paramset2,y_outermostpt_freepts_extraporder1_paramset2,z_outermostpt_freepts_extraporder1_paramset2,
-                                                                        chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
-                    		MPI_Barrier(MPI_COMM_WORLD);
-							if (my_rank==0) {printf("xyz_bdy_out_radextrap_(xpbdy_freepts_extraporder1_paramset2\n"); fflush(stdout);}
+                                                                        chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);  
                     	}
                     	else
                     	{
@@ -8211,8 +8207,6 @@ void AdS4D_pre_tstep(int L)
                                 chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,
                                 &bdy_extrap_order,
                                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
-                        	MPI_Barrier(MPI_COMM_WORLD);
-							if (my_rank==0) {printf("bdyphi_radextrap_(bdyphi_freepts_extraporder1_paramset2,quasiset_radextrap_(quasiset_tt_freepts_extraporder1_paramset2,\n"); fflush(stdout);}
                 		}
                 		else
                 		{
@@ -15920,8 +15914,6 @@ void AdS4D_post_tstep(int L)
 	                		{
     	            			if (my_rank==0) printf("\nFirst order radial extrapolation of boundary quantities using paramset1 parameters (saved in freepts_extraporder1_paramset1*.txt files\n");
         	        			nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset1,&half_steps_from_bdy_int_paramset1,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
-        	        			MPI_Barrier(MPI_COMM_WORLD);
-								if (my_rank==0) {printf("nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset1\n"); fflush(stdout);}
             	    		}
                 			else
                 			{
@@ -16683,8 +16675,6 @@ void AdS4D_post_tstep(int L)
                 			{
                 				if (my_rank==0) printf("\nFirst order radial extrapolation of boundary quantities using parameterset2 parameters (saved in freepts_extraporder1_paramset2*.txt files\n");
                 				nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset2,&numbdypoints_freepts_extraporder1_paramset2,&bdy_extrap_order,&currentres_ratio_Lhighres_Llowres,&half_steps_from_bdy_ext_paramset2,&half_steps_from_bdy_int_paramset2,x,y,z,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
-                				MPI_Barrier(MPI_COMM_WORLD);
-								if (my_rank==0) {printf("nexttobdypoints_radextrap_(chrbdy_freepts_extraporder1_paramset2\n"); fflush(stdout);}
                 			}
                 			else
                 			{
@@ -18879,8 +18869,6 @@ void AdS4D_post_tstep(int L)
 							xyz_bdy_out_radextrap_(xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
                         						x_outermostpt_freepts_extraporder1_paramset1,y_outermostpt_freepts_extraporder1_paramset1,z_outermostpt_freepts_extraporder1_paramset1,
                         						chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,ghost_width);    
-							MPI_Barrier(MPI_COMM_WORLD);
-							if (my_rank==0) {printf("xyz_bdy_out_radextrap_(xpbdy_freepts_extraporder1_paramset1\n"); fflush(stdout);}
 						}
                     	else
                     	{
@@ -18955,9 +18943,7 @@ void AdS4D_post_tstep(int L)
                                 xpbdy_freepts_extraporder1_paramset1,ypbdy_freepts_extraporder1_paramset1,zpbdy_freepts_extraporder1_paramset1,
                                 chrbdy_freepts_extraporder1_paramset1,&numbdypoints_freepts_extraporder1_paramset1,
                                 &bdy_extrap_order,
-                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);  
-                        	MPI_Barrier(MPI_COMM_WORLD);
-							if (my_rank==0) {printf("bdyphi_radextrap_(bdyphi_freepts_extraporder1_paramset1,quasiset_radextrap_(quasiset_tt_freepts_extraporder1_paramset1\n"); fflush(stdout);}
+                                x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
                 		}
                 		else
                 		{   
