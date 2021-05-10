@@ -166,10 +166,10 @@ c----------------------------------------------------------------------
 
 
 ! eliminate troublesome points
-!removing z=0 implies that we remove in particular the troublesome points 
-!with chi=0,1 (which have y=z=0,x=1,-1) and points with xi=0,1 (which have z=0,y>0,any x). 
+!y=z=0 (i.e. the x axis, where chi=0 or 1) are troublesome points where the xi coordinate is not defined  
 !We will fill and impose regularity at these points in post-processing in Mathematica.
             if (
+     &          (abs(yp1).lt.10.0d0**(-10)).and.
      &          (abs(zp1).lt.10.0d0**(-10)) 
      &         ) then
              chrbdy(i,j,k)=ex

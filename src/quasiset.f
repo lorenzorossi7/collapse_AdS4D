@@ -136,13 +136,14 @@ c----------------------------------------------------------------------
 
 
 ! eliminate troublesome points
-!removing z=0 implies that we remove in particular the troublesome points with chi=0,1 (which have y=z=0,x=1,-1) and points with xi=0,1 (which have z=0,y>0,any x). We will fill and impose regularity at these points in Mathematica.
+!y=z=0 (i.e. the x axis, where chi=0 or 1) are troublesome points where the xi coordinate is not defined  
+!We will fill and impose regularity at these points in post-processing in Mathematica.
             if (
+     &          (abs(yp1).lt.10.0d0**(-10)).and.
      &          (abs(zp1).lt.10.0d0**(-10)) 
      &         ) then
              chrbdy(i,j,k)=ex
             end if
-
 
 !If we use derivatives to define near boundary quantities, we will only define them at points between is and ie (js and je, ks and ke). Therefore, for extrapolation, we can only select near boundary points whose neighbors used for extrapolation in the direction of the bulk along the axes (i.e. the direction of extrapolation) are within that range
 !We also need to make sure that those neighbours are not excised.
@@ -698,13 +699,14 @@ c----------------------------------------------------------------------
 
 
 ! eliminate troublesome points
-!removing z=0 implies that we remove in particular the troublesome points with chi=0,1 (which have y=z=0,x=1,-1) and points with xi=0,1 (which have z=0,y>0,any x). We will fill and impose regularity at these points in Mathematica.
+!y=z=0 (i.e. the x axis, where chi=0 or 1) are troublesome points where the xi coordinate is not defined  
+!We will fill and impose regularity at these points in post-processing in Mathematica.
             if (
-     &          (abs(zp1).lt.10.0d0**(-10))
+     &          (abs(yp1).lt.10.0d0**(-10)).and.
+     &          (abs(zp1).lt.10.0d0**(-10)) 
      &         ) then
              chrbdy(i,j,k)=ex
             end if
-
 
 !NOTICE: for example, in the case of extrapolation along x, x>0, if the closest point to the AdS boundary that we use is (i,j,k), the second fixed (for all resolutions) point that we want to use is (i-ind_distance_fixedpts,j,k)
 !If we use derivatives to define near boundary quantities, we will only define them at points between is and ie (js and je, ks and ke). Therefore, for extrapolation, we can only select near boundary points whose neighbors used for extrapolation in the direction of the bulk along the axes (i.e. the direction of extrapolation) are within that range

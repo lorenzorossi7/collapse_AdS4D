@@ -10743,7 +10743,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = abs(zp2/tan(PI*chip2))
+                        yp2  = abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -11055,7 +11055,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = -abs(zp2/tan(PI*chip2))
+                        yp2  = -abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -11381,7 +11381,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = -abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = abs(zp2/tan(PI*chip2))
+                        yp2  = abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -11693,7 +11693,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = -abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = -abs(zp2/tan(PI*chip2))
+                        yp2  = -abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -12023,7 +12023,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = abs(zp2/tan(PI*chip2))
+                        yp2  = abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -12336,7 +12336,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = -abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = abs(zp2/tan(PI*chip2))
+                        yp2  = abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -12662,7 +12662,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = -abs(zp2/tan(PI*chip2))
+                        yp2  = -abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -12975,7 +12975,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = -abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = -abs(zp2/tan(PI*chip2))
+                        yp2  = -abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -13318,7 +13318,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = abs(zp2/tan(PI*chip2))
+                        yp2  = abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -13630,7 +13630,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = -abs(zp2/tan(PI*chip2))
+                        yp2  = -abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -13955,7 +13955,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = -abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = abs(zp2/tan(PI*chip2))
+                        yp2  = abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -14267,7 +14267,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = -abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = -abs(zp2/tan(PI*chip2))
+                        yp2  = -abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -14583,7 +14583,7 @@ c-------------------------------------------------------------------------------
                       ypc=y(jpc)
                       ypd=y(jpd)
 
-                      if (xp1.gt.0) then !(i.e., quadrant Ia)
+                      if (xp1.gt.0) then !(i.e., quadrant IVa)
 
                         ipa=i
                         ipb=i-1
@@ -14597,7 +14597,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = abs(zp2/tan(PI*chip2))
+                        yp2  = abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -14910,7 +14910,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = -abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = abs(zp2/tan(PI*chip2))
+                        yp2  = abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -15236,7 +15236,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = -abs(zp2/tan(PI*chip2))
+                        yp2  = -abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
@@ -15549,7 +15549,7 @@ c-------------------------------------------------------------------------------
 
                         xp2  = -abs(zp2*(1/tan(PI*chip2))
      &                     /sin(2*PI*xip2))
-                        yp2  = -abs(zp2/tan(PI*chip2))
+                        yp2  = -abs(zp2/tan(2*PI*xip2))
                         rhop2=abs(zp2/(sin(PI*chip2)*sin(2*PI*xip2)))
 
                         quasiset_tt_pa=
