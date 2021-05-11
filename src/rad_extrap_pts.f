@@ -1412,8 +1412,8 @@ c----------------------------------------------------------------------
 
                   !eliminates the grid point p1 from the list of candidate points to use for radial extrapolation 
                   !if it is not the outermost point in the range in which we look for candidates
-                  if ((k+1).le.ie) then 
-                    if (chrbdy2(i,j,k+1).ne.ex) then
+                  if ((k-1).ge.is) then 
+                    if (chrbdy2(i,j,k-1).ne.ex) then
                       chrbdy(i,j,k)=ex
                     end if
                   end if
