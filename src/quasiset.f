@@ -145,9 +145,10 @@ c----------------------------------------------------------------------
              chrbdy(i,j,k)=ex
             end if
 
+
 !If we use derivatives to define near boundary quantities, we will only define them at points between is and ie (js and je, ks and ke). Therefore, for extrapolation, we can only select near boundary points whose neighbors used for extrapolation in the direction of the bulk along the axes (i.e. the direction of extrapolation) are within that range
 !We also need to make sure that those neighbours are not excised.
-!We also define near boundary quantities at points where y0 and z0 are not both 0. So we need to make sure that we select points such that neighbouring points used for extrapolation don't have such values of y0,z0. Notice, we've already imposed that z(k) is not 0, we only need to impose the condition when extrapolation is along z, so the value of the z-coordinate of the second point used is different from the first one.
+!We also define near boundary quantities at points where y0 and z0 are not both 0. So we need to make sure that we select points such that neighbouring points used for extrapolation don't have such values of y0,z0. Notice, we've already imposed that y(j)=!=0 and z(k)=!=0 for the outermost point. Therefore, when extrapolation is along y or z, we need to impose the condition that the (y,z) coordinates of the other points used are different from 0.
 !The condition (chrbdy2(i+1,j,k).ne.ex) makes sure that (i,j,k) is the outmost point satisfying the conditions of the previous for-loop, which sets chrbdy2 as well as chrbdy. In other words, if there's an outer point w.r.t. (i,j,k) that satisfies those conditions, then we don't want to use (i,j,k) for extrapolation, but we will use that other point. 
 
 
@@ -184,6 +185,12 @@ c----------------------------------------------------------------------
                    chrbdy(i,j,k)=ex
               else if (chr(i,j-1,k).eq.ex) then
                    chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-1))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
               else if ((j+1).le.Ny) then !ensures that the index j+1 is not out of bounds
                  if (chrbdy2(i,j+1,k).ne.ex) then
                    chrbdy(i,j,k)=ex
@@ -193,6 +200,12 @@ c----------------------------------------------------------------------
               if ((j+1).gt.je) then !it ensures that the index j+1 is not out of bounds and that near-boundary quantities are defined at other points used for extrapolation
                    chrbdy(i,j,k)=ex
               else if (chr(i,j+1,k).eq.ex) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+1))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
                    chrbdy(i,j,k)=ex
               else if ((j-1).ge.1) then !ensures that the index j-1 is not out of bounds
                  if (chrbdy2(i,j-1,k).ne.ex) then
@@ -279,6 +292,18 @@ c----------------------------------------------------------------------
                    chrbdy(i,j,k)=ex
               else if (chr(i,j-2,k).eq.ex) then
                    chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-1))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-2))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
               else if ((j+1).le.Ny) then !ensures that the index j+1 is not out of bounds
                  if (chrbdy2(i,j+1,k).ne.ex) then
                    chrbdy(i,j,k)=ex
@@ -290,6 +315,18 @@ c----------------------------------------------------------------------
               else if (chr(i,j+1,k).eq.ex) then
                    chrbdy(i,j,k)=ex
               else if (chr(i,j+2,k).eq.ex) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+1))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+2))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
                    chrbdy(i,j,k)=ex
               else if ((j-1).ge.1) then !ensures that the index j-1 is not out of bounds
                  if (chrbdy2(i,j-1,k).ne.ex) then
@@ -399,6 +436,24 @@ c----------------------------------------------------------------------
                    chrbdy(i,j,k)=ex
               else if (chr(i,j-3,k).eq.ex) then
                    chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-1))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-2))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-3))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
               else if ((j+1).le.Ny) then !ensures that the index j+1 is not out of bounds
                  if (chrbdy2(i,j+1,k).ne.ex) then
                    chrbdy(i,j,k)=ex
@@ -412,6 +467,24 @@ c----------------------------------------------------------------------
               else if (chr(i,j+2,k).eq.ex) then
                    chrbdy(i,j,k)=ex
               else if (chr(i,j+3,k).eq.ex) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+1))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+2))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+3))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
                    chrbdy(i,j,k)=ex
               else if ((j-1).ge.1) then !ensures that the index j-1 is not out of bounds
                  if (chrbdy2(i,j-1,k).ne.ex) then
@@ -708,9 +781,10 @@ c----------------------------------------------------------------------
              chrbdy(i,j,k)=ex
             end if
 
+
 !NOTICE: for example, in the case of extrapolation along x, x>0, if the closest point to the AdS boundary that we use is (i,j,k), the second fixed (for all resolutions) point that we want to use is (i-ind_distance_fixedpts,j,k)
 !If we use derivatives to define near boundary quantities, we will only define them at points between is and ie (js and je, ks and ke). Therefore, for extrapolation, we can only select near boundary points whose neighbors used for extrapolation in the direction of the bulk along the axes (i.e. the direction of extrapolation) are within that range
-!We also define near boundary quantities at points where y0 and z0 are not both 0. So we need to make sure that we select points such that neighbouring points used for extrapolation don't have such values of y0,z0. Notice, we've already imposed that z(k) is not 0, we only need to impose the condition when extrapolation is along z, so the value of the z-coordinate of the second point used is different from the first one.
+!We also define near boundary quantities at points where y0 and z0 are not both 0. So we need to make sure that we select points such that neighbouring points used for extrapolation don't have such values of y0,z0. Notice, we've already imposed that y(j)=!=0 and z(k)=!=0 for the outermost point. Therefore, when extrapolation is along y or z, we need to impose the condition that the (y,z) coordinates of the other points used are different from 0.
 !The condition (chrbdy2(i+ind_distance_fixedpts,j,k).ne.ex) makes sure that (i,j,k) is the outmost point satisfying the conditions of the previous for-loop, which sets chrbdy2 as well as chrbdy. In other words, if there's an outer point w.r.t. (i,j,k) that satisfies those conditions, then we don't want to use (i,j,k) for extrapolation, but we will use that other point.
 
            maxxyzp1=max(abs(xp1),abs(yp1),abs(zp1))
@@ -744,6 +818,12 @@ c----------------------------------------------------------------------
                    chrbdy(i,j,k)=ex
               else if (chr(i,j-ind_distance_fixedpts,k).eq.ex) then
                    chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
               else if ((j+ind_distance_fixedpts).le.Ny) then !ensures that the index j+ind_distance_fixedpts is not out of bounds
                  if (chrbdy2(i,j+ind_distance_fixedpts,k).ne.ex) then
                    chrbdy(i,j,k)=ex
@@ -753,6 +833,12 @@ c----------------------------------------------------------------------
               if ((j+ind_distance_fixedpts).gt.je) then !it ensures that the index j+ind_distance_fixedpts is not out of bounds and that near-boundary quantities are defined at other points used for extrapolation
                    chrbdy(i,j,k)=ex
               else if (chr(i,j+ind_distance_fixedpts,k).eq.ex) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
                    chrbdy(i,j,k)=ex
               else if ((j-ind_distance_fixedpts).ge.1) then !ensures that the index j-ind_distance_fixedpts is not out of bounds
                  if (chrbdy2(i,j-ind_distance_fixedpts,k).ne.ex) then
@@ -838,6 +924,18 @@ c----------------------------------------------------------------------
                    chrbdy(i,j,k)=ex
               else if (chr(i,j-2*ind_distance_fixedpts,k).eq.ex) then
                    chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-2*ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
               else if ((j+ind_distance_fixedpts).le.Ny) then !ensures that the index j+ind_distance_fixedpts is not out of bounds
                  if (chrbdy2(i,j+ind_distance_fixedpts,k).ne.ex) then
                    chrbdy(i,j,k)=ex
@@ -849,6 +947,18 @@ c----------------------------------------------------------------------
               else if (chr(i,j+ind_distance_fixedpts,k).eq.ex) then
                    chrbdy(i,j,k)=ex
               else if (chr(i,j+2*ind_distance_fixedpts,k).eq.ex) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+2*ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
                    chrbdy(i,j,k)=ex
               else if ((j-ind_distance_fixedpts).ge.1) then !ensures that the index j-ind_distance_fixedpts is not out of bounds
                  if (chrbdy2(i,j-ind_distance_fixedpts,k).ne.ex) then
@@ -957,6 +1067,24 @@ c----------------------------------------------------------------------
                    chrbdy(i,j,k)=ex
               else if (chr(i,j-3*ind_distance_fixedpts,k).eq.ex) then
                    chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-2*ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j-3*ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
               else if ((j+ind_distance_fixedpts).le.Ny) then !ensures that the index j+1 is not out of bounds
                  if (chrbdy2(i,j+ind_distance_fixedpts,k).ne.ex) then
                    chrbdy(i,j,k)=ex
@@ -970,6 +1098,24 @@ c----------------------------------------------------------------------
               else if (chr(i,j+2*ind_distance_fixedpts,k).eq.ex) then
                    chrbdy(i,j,k)=ex
               else if (chr(i,j+3*ind_distance_fixedpts,k).eq.ex) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+2*ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
+                   chrbdy(i,j,k)=ex
+              else if (
+     &             (abs(z(k)).lt.10.0d0**(-10)).and.
+     &             (abs(y(j+3*ind_distance_fixedpts))
+     &                 .lt.10.0d0**(-10))
+     &            ) then
                    chrbdy(i,j,k)=ex
               else if ((j-ind_distance_fixedpts).ge.1) then !ensures that the index j-1 is not out of bounds
                  if (chrbdy2(i,j-ind_distance_fixedpts,k).ne.ex) then
