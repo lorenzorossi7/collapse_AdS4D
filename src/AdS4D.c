@@ -82,8 +82,8 @@ real ex_r[MAX_BHS][3],ex_xc[MAX_BHS][3];
 
 int background,skip_constraints;
 int output_ires,output_relkretschcentregrid,output_kretsch,output_relkretsch,output_riemanncube;
-int output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf;
-int output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_diagnosticAH_ascii;
+int output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,output_relkretschAH_sdf;
+int output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_relkretschAH_ascii,output_diagnosticAH_ascii;
 int rad_extrap;
 int output_bdyquantities,output_AdS_mass;
 int output_bdyphi;
@@ -695,6 +695,7 @@ real *AH_g0_zz[MAX_BHS];
 real *AH_g0_chichi[MAX_BHS];
 real *AH_g0_chiphi[MAX_BHS];
 real *AH_g0_phiphi[MAX_BHS];
+real *AH_relkretsch[MAX_BHS];
 real *AH_ahr[MAX_BHS],*AH_dph[MAX_BHS],*AH_dch[MAX_BHS];
 real *AH_da0[MAX_BHS],*AH_dcq[MAX_BHS],*AH_dcp[MAX_BHS],*AH_dcp2[MAX_BHS];
 
@@ -2340,10 +2341,12 @@ void AdS4D_var_post_init(char *pfile)
 	output_moreAHquant_sdf=0; AMRD_int_param(pfile,"output_moreAHquant_sdf",&output_moreAHquant_sdf,1);
 	output_metricAH_cart_sdf=0; AMRD_int_param(pfile,"output_metricAH_cart_sdf",&output_metricAH_cart_sdf,1);
 	output_metricAH_sph_sdf=0; AMRD_int_param(pfile,"output_metricAH_sph_sdf",&output_metricAH_sph_sdf,1);
-	output_moreAHquant_ascii=0; AMRD_int_param(pfile,"output_moreAHquant_ascii",&output_moreAHquant_sdf,1);
+	output_relkretschAH_sdf=0; if (output_kretsch == 1) {AMRD_int_param(pfile,"output_relkretschAH_sdf",&output_relkretschAH_sdf,1);}
+	output_moreAHquant_ascii=0; AMRD_int_param(pfile,"output_moreAHquant_ascii",&output_moreAHquant_ascii,1);
 	output_AHtheta_ascii=0; AMRD_int_param(pfile,"output_AHtheta_ascii",&output_AHtheta_ascii,1);
 	output_metricAH_cart_ascii=0; AMRD_int_param(pfile,"output_metricAH_cart_ascii",&output_metricAH_cart_ascii,1);
 	output_metricAH_sph_ascii=0; AMRD_int_param(pfile,"output_metricAH_sph_ascii",&output_metricAH_sph_ascii,1);
+	output_relkretschAH_ascii=0; if (output_kretsch == 1) {AMRD_int_param(pfile,"output_relkretschAH_ascii",&output_relkretschAH_ascii,1);}
 	output_diagnosticAH_ascii=0; AMRD_int_param(pfile,"output_diagnosticAH_ascii",&output_diagnosticAH_ascii,1);
     output_bdyquantities=0; AMRD_int_param(pfile,"output_bdyquantities",&output_bdyquantities,1);
     rad_extrap=0; AMRD_int_param(pfile,"rad_extrap",&rad_extrap,1);
@@ -2520,7 +2523,8 @@ void AdS4D_var_post_init(char *pfile)
         AH_g0_zz[l]=(real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real));
         AH_g0_chichi[l]=(real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real));
         AH_g0_chiphi[l]=(real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real));
-        AH_g0_phiphi[l]=(real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real));   
+        AH_g0_phiphi[l]=(real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real));
+        AH_relkretsch[l]=(real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real));
         AH_ahr[l]=(real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real));
         AH_dch[l]=(real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real));
       	AH_dph[l]=(real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real));
@@ -15392,8 +15396,8 @@ void AdS4D_pre_tstep(int L)
             omt=0; // over-max-tolerance
 
             AH[l]=find_apph(&M,&J,&area,&c_equat,&c_polar,&c_polar2,found_AH[l],&AH_min_resid0,
-                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,
-                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_diagnosticAH_ascii); // AH finder 
+                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,output_relkretschAH_sdf,
+                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_relkretschAH_ascii,output_diagnosticAH_ascii); // AH finder 
             if (AH[l]) { freq0[l]=AH_freq_aft[l]; found_AH[l]=1; got_an_AH=1; AH_tol[l]=AH_tol_aft[l]; found_count_AH[l]++; } // if this time found AH  
             // if previously found but failed now
             if (found_AH[l] && !AH[l]) 
@@ -15407,8 +15411,8 @@ void AdS4D_pre_tstep(int L)
                     for (i=0; i<AH_Nchi[l]*AH_Nphi[l]; i++) AH_R[l][i]=prev_AH_R[i]*AH_reset_scale[l];  
 
                     if (!(AH[l]=find_apph(&M,&J,&area,&c_equat,&c_polar,&c_polar2,found_AH[l],&AH_min_resid1,
-                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,
-                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_diagnosticAH_ascii)))
+                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,output_relkretschAH_sdf,
+                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_relkretschAH_ascii,output_diagnosticAH_ascii)))
                     { 
                         // shrink old initial-guess surface
                         if (my_rank==0 && AMRD_evo_trace>=1) printf("... still can't find one (min_resid=%lf)\n"
@@ -15416,8 +15420,8 @@ void AdS4D_pre_tstep(int L)
                         for (i=0; i<AH_Nchi[l]*AH_Nphi[l]; i++) AH_R[l][i]=prev_AH_R[i]/AH_reset_scale[l];  
 
                         if (!(AH[l]=find_apph(&M,&J,&area,&c_equat,&c_polar,&c_polar2,found_AH[l],&AH_min_resid2,
-                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,
-                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_diagnosticAH_ascii)))
+                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,output_relkretschAH_sdf,
+                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_relkretschAH_ascii,output_diagnosticAH_ascii)))
                         {   
                             // increase AH_tol to force an AH to be found, starting with shrunken initial-guess surface
                             if (AH_min_resid2<AH_min_resid1 && AH_min_resid2<AH_min_resid0) 
@@ -15433,8 +15437,8 @@ void AdS4D_pre_tstep(int L)
                                 AH_tol[l]=AH_min_resid2*AH_omt_scale[l];
 
                                 if (!(AH[l]=find_apph(&M,&J,&area,&c_equat,&c_polar,&c_polar2,found_AH[l],&AH_min_resid2,
-                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,
-                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_diagnosticAH_ascii)))
+                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,output_relkretschAH_sdf,
+                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_relkretschAH_ascii,output_diagnosticAH_ascii)))
                                 {
                                     if (my_rank==0 && AMRD_evo_trace>=1) printf("BUG: couldn't find *same* AH\n");
                                     if (AH_RESET_AFTER_FAIL) found_AH[l]=0;
@@ -15455,8 +15459,8 @@ void AdS4D_pre_tstep(int L)
                                 AH_tol[l]=AH_min_resid1*AH_omt_scale[l];
 
                                 if (!(AH[l]=find_apph(&M,&J,&area,&c_equat,&c_polar,&c_polar2,found_AH[l],&AH_min_resid1,
-                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,
-                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_diagnosticAH_ascii)))
+                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,output_relkretschAH_sdf,
+                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_relkretschAH_ascii,output_diagnosticAH_ascii)))
                                 {
                                     if (my_rank==0 && AMRD_evo_trace>=1) printf("BUG: couldn't find *same* AH\n");
                                     if (AH_RESET_AFTER_FAIL) found_AH[l]=0;
@@ -15477,8 +15481,8 @@ void AdS4D_pre_tstep(int L)
                                 AH_tol[l]=AH_min_resid0*AH_omt_scale[l];
 
                                 if (!(AH[l]=find_apph(&M,&J,&area,&c_equat,&c_polar,&c_polar2,found_AH[l],&AH_min_resid0,
-                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,
-                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_diagnosticAH_ascii)))
+                                      output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf,output_relkretschAH_sdf,
+                                      output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_relkretschAH_ascii,output_diagnosticAH_ascii)))
                                 {
                                     if (my_rank==0 && AMRD_evo_trace>=1) printf("BUG: couldn't find *same* AH\n");
                                     if (AH_RESET_AFTER_FAIL) found_AH[l]=0;
@@ -15541,6 +15545,11 @@ void AdS4D_pre_tstep(int L)
 	        	        sprintf(name,"%sAH_g0_phiphi_%i",AMRD_save_tag,l);
     	        	    gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_g0_phiphi[l]);
     	    	    }
+    	    	    if (output_relkretschAH_sdf)
+					{
+						sprintf(name,"%sAH_relkretsch_%i",AMRD_save_tag,l);
+	        	        gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_relkretsch[l]);
+    	    	    }
     	    	}
 
 				if (output_moreAHquant_ascii && (my_rank==0))
@@ -15578,7 +15587,7 @@ void AdS4D_pre_tstep(int L)
 	            	    fclose(fp);
                 	}
 
-                	if (output_metricAH_cart_sdf)
+                	if (output_metricAH_cart_ascii)
 	                {
 	                	sprintf(fname,"%sAH_t_g0xx_g0xy_g0xz_g0yy_g0yz_g0zz_ind_%i_tstep%d.txt",AMRD_save_tag,l,lsteps);
 		            	fp = fopen (fname, "w+");
@@ -15594,7 +15603,7 @@ void AdS4D_pre_tstep(int L)
 	            	    fclose(fp);
                 	}
 
-                	if (output_metricAH_sph_sdf)
+                	if (output_metricAH_sph_ascii)
 	                {
 	                	sprintf(fname,"%sAH_t_g0chichi_g0chiphi_g0phiphi_ind_%i_tstep%d.txt",AMRD_save_tag,l,lsteps);
 		            	fp = fopen (fname, "w+");
@@ -15605,6 +15614,22 @@ void AdS4D_pre_tstep(int L)
 	                	   	//format: t,g0_chichi,g0_chiphi,g0_phiphi,ind (values on horizon)
 	                   		fprintf(fp,"%24.16e %24.16e %24.16e %24.16e %i \n",
 	                   			ct,AH_g0_chichi[l][j+AH_Nchi[l]*k],AH_g0_chiphi[l][j+AH_Nchi[l]*k],AH_g0_phiphi[l][j+AH_Nchi[l]*k],j+AH_Nchi[l]*k); 
+	                   		}
+				    	}
+	            	    fclose(fp);
+                	}
+
+                	if (output_relkretschAH_ascii)
+	                {
+	                	sprintf(fname,"%sAH_t_relkretsch_ind_%i_tstep%d.txt",AMRD_save_tag,l,lsteps);
+		            	fp = fopen (fname, "w+");
+		            	for( j = 0; j < AH_Nchi[l]; j++ )
+					    {
+	        	        	for( k = 0; k < AH_Nphi[l]; k++ ) 
+					   	    {
+	                	   	//format: t,AH_relkretsch,ind (values on horizon)
+	                   		fprintf(fp,"%24.16e %24.16e %i \n",
+	                   			ct,AH_relkretsch[l][j+AH_Nchi[l]*k],j+AH_Nchi[l]*k); 
 	                   		}
 				    	}
 	            	    fclose(fp);

@@ -73,6 +73,7 @@ extern real *AH_g0_xz[MAX_BHS];
 extern real *AH_g0_yy[MAX_BHS];
 extern real *AH_g0_yz[MAX_BHS];
 extern real *AH_g0_zz[MAX_BHS];
+extern real *AH_relkretsch[MAX_BHS];
 
 extern real *AH_wtt1[MAX_BHS];
 extern real *AH_wtx1[MAX_BHS];
@@ -118,6 +119,7 @@ extern real *gb_xz,*gb_xz_n,*gb_xz_np1,*gb_xz_nm1;
 extern real *gb_yy,*gb_yy_n,*gb_yy_np1,*gb_yy_nm1; 
 extern real *gb_yz,*gb_yz_n,*gb_yz_np1,*gb_yz_nm1;
 extern real *gb_zz,*gb_zz_n,*gb_zz_np1,*gb_zz_nm1; 
+extern real *relkretsch,*relkretsch_n,*relkretsch_np1,*relkretsch_nm1;
 
 extern real *Hb_t,*Hb_t_n,*Hb_t_np1,*Hb_t_nm1;
 extern real *Hb_x,*Hb_x_n,*Hb_x_np1,*Hb_x_nm1;

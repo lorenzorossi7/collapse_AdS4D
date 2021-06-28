@@ -58,12 +58,16 @@ AH_max_iter_4 := 0
 AH_tmin := 0
 #if the following are disabled, we only output the position of the AH and the expansion theta in .sdf files
 output_moreAHquant_sdf := 1
-output_metricAH_cart_sdf := 1
-output_metricAH_sph_sdf := 0
+output_metricAH_cart_sdf := 0
+output_metricAH_sph_sdf := 1
+#setting output_relkretschAH_sdf to 1 will output relative Kretschmann at the AH only if output_kretsch is enabled
+output_relkretschAH_sdf := 1
 output_moreAHquant_ascii := 0
-output_AHtheta_ascii := 0
-output_metricAH_cart_ascii := 0
-output_metricAH_sph_ascii := 0
+output_AHtheta_ascii := 1
+output_metricAH_cart_ascii := 1
+output_metricAH_sph_ascii := 1
+#setting output_relkretschAH_ascii to 1 will output relative Kretschmann at the AH only if output_kretsch is enabled
+output_relkretschAH_ascii := 1
 output_diagnosticAH_ascii := 0
 #Option important when restarting from checkpoint: in case the excision surface of the new run is smaller than the one in the old one, this option makes sure that all the points excised in the previous run are excised in the current one
 excise_prev_run_ex_pts := 0
