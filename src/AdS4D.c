@@ -3228,7 +3228,6 @@ void AdS4D_t0_cnst_data(void)
                     x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width,
                     &output_kretsch,&output_riemanncube);
 
-            printf("relkretschcentregrid=%lf\n",*relkretschcentregrid);
             //NOTICE: relkretsch_np1 is not synchronized yet at this stage, meaning that only 1 process has a non-zero value at x=y=z=0. This is crucial for how we save and print relkretschcentregrid in pre_tstep    
 			    //if (my_rank==0) {printf("post init_nm1\n"); fflush(stdout); }
 //			   for (i=0; i<Nx; i++)
@@ -3289,8 +3288,8 @@ void AdS4D_pre_io_calc(void)
     int ivecNt=AMRD_steps/AMRD_save_ivec0[3]+1; //+1 to include t=0
     int lc_steps=AMRD_lsteps[Lc-1];   
 
-    MPI_Barrier(MPI_COMM_WORLD);
-    if (my_rank==0) {printf("AdS4D_pre_io_calc is called,lcsteps=%i\n",lc_steps); fflush(stdout); }
+    //MPI_Barrier(MPI_COMM_WORLD);
+    //if (my_rank==0) {printf("AdS4D_pre_io_calc is called,lcsteps=%i\n",lc_steps); fflush(stdout); }
 
     // compute independent residuals of the AdS4D system
     if (ct!=0)
@@ -11504,8 +11503,6 @@ void AdS4D_pre_io_calc(void)
             	{
 					MPI_Allreduce((&lrelkretschcentregrid0),(&maxrelkretschcentregrid0),1,MPI_DOUBLE,MPI_MAX,MPI_COMM_WORLD);
 	                MPI_Allreduce((&lrelkretschcentregrid0),(&minrelkretschcentregrid0),1,MPI_DOUBLE,MPI_MIN,MPI_COMM_WORLD);
-	                printf("maxrelkretschcentregrid0=%lf\n",maxrelkretschcentregrid0); fflush(stdout); 
-	                printf("minrelkretschcentregrid0=%lf\n",minrelkretschcentregrid0); fflush(stdout); 
 	                if (uniSize>1)
 	                {
 	                    relkretschcentregrid0=maxrelkretschcentregrid0+minrelkretschcentregrid0;
@@ -11514,10 +11511,6 @@ void AdS4D_pre_io_calc(void)
 	                {
 	                    relkretschcentregrid0=maxrelkretschcentregrid0;
 	                }
-
-	                MPI_Barrier(MPI_COMM_WORLD);
-	                if (my_rank==0)
-	                {printf("ct=%lf,relkretschcentregrid0=%lf\n",ct,relkretschcentregrid0); fflush(stdout);}
 
 	                if (my_rank==0)
 	                {
@@ -11542,9 +11535,6 @@ void AdS4D_pre_io_calc(void)
 	        if (output_bdyquantities)
 	        {  
 
-	        	MPI_Barrier(MPI_COMM_WORLD);
-				if (my_rank==0) {printf("pre_io_calc: pre_calc_quasiset\n"); fflush(stdout);}
-
 	            calc_leadordcoeff_phi1_(leadordcoeff_phi1,
 	                                    phi1_np1,phi1_n,phi1_nm1,
 	                                    x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
@@ -11568,9 +11558,6 @@ void AdS4D_pre_io_calc(void)
 	                        gb_yz_np1,gb_yz_n,gb_yz_nm1,
 	                        gb_zz_np1,gb_zz_n,gb_zz_nm1,
 	                        x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width);
-
-	            MPI_Barrier(MPI_COMM_WORLD);
-				if (my_rank==0) {printf("pre_io_calc: post_calc_quasiset\n"); fflush(stdout);}
 
                 if (lc_steps==0)
         		{ 
@@ -12291,8 +12278,8 @@ void AdS4D_pre_io_calc(void)
 	                        }	
 	            		}//closes condition on output_bdy_extraporder1_paramset1
 
-						MPI_Barrier(MPI_COMM_WORLD);
-						if (my_rank==0) {printf("pre_io_calc: post_freepts 1st order extrap paramset1\n"); fflush(stdout);}
+						//MPI_Barrier(MPI_COMM_WORLD);
+						//if (my_rank==0) {printf("pre_io_calc: post_freepts 1st order extrap paramset1\n"); fflush(stdout);}
 
 	            		//SECOND ORDER EXTRAPOLATION
 		            	if (output_bdy_extraporder2_paramset1)
