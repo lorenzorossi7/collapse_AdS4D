@@ -47,8 +47,8 @@ c----------------------------------------------------------------------
 
 !----------------------------------------------------------------------
 
-              if ((abs(xp1).gt.abs(yp1)).and.
-     &            (abs(xp1).gt.abs(zp1))) then !(i.e., |xp1|>|yp1|,|zp1|, so xp1 cannot be 0)
+              if ((abs(xp1).ge.abs(yp1)).and.
+     &            (abs(xp1).ge.abs(zp1))) then !(i.e., |xp1|>=|yp1|,|zp1|, so xp1 cannot be 0)
             
                 if (xp1.gt.0) then !(i.e., we are in the upper part of 
                                     !the spatial grid, called "a" sector)
@@ -535,8 +535,8 @@ c----------------------------------------------------------------------
 
 
 
-              else if ((abs(yp1).gt.abs(zp1)).and.
-     &                 (abs(yp1).gt.abs(xp1))) then !(i.e., |yp1|>|zp1|,|xp1|, so yp1 cannot be 0)
+              else if ((abs(yp1).ge.abs(zp1)).and.
+     &                 (abs(yp1).ge.abs(xp1))) then !(i.e., |yp1|>=|zp1|,|xp1|, so yp1 cannot be 0)
 
 
                 if (yp1.gt.0) then !(i.e., we are in either Q.Ia or Q.Ib or Q.IVa or Q.IVb)

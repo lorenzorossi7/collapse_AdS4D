@@ -550,10 +550,12 @@ c----------------------------------------------------------------------
         end
 
 c-----------------------------------------------------------------------
-c calculate Kretschmann scalar of the solution
+c calculate Kretschmann scalar, Kretschmann scalar relative to the background, 
+c Riemann cube scalar and Riemann cube scalar relative to the background
 c-----------------------------------------------------------------------
-        subroutine kretsch(relkretsch_n,
+        subroutine kretsch_riemanncube(relkretsch_n,
      &                  relkretschcentregrid,
+     &                  relriemanncube_n,
      &                  gb_tt_np1,gb_tt_n,gb_tt_nm1,
      &                  gb_tx_np1,gb_tx_n,gb_tx_nm1,
      &                  gb_ty_np1,gb_ty_n,gb_ty_nm1,
@@ -569,9 +571,14 @@ c-----------------------------------------------------------------------
      &                  Hb_y_np1,Hb_y_n,Hb_y_nm1,
      &                  Hb_z_np1,Hb_z_n,Hb_z_nm1,
      &                  phi1_np1,phi1_n,phi1_nm1,
-     &                  x,y,z,dt,chr,L,ex,Nx,Ny,Nz,phys_bdy,ghost_width)
+     &                  x,y,z,dt,chr,L,ex,Nx,Ny,Nz,phys_bdy,ghost_width,
+     &                  output_kretsch,
+     &                  output_riemanncube)
 
         implicit none
+
+        integer output_kretsch
+        integer output_riemanncube
         integer Nx,Ny,Nz
         integer i,j,k
         integer phys_bdy(6),ghost_width(6)
@@ -634,6 +641,7 @@ c-----------------------------------------------------------------------
         real*8 gamma_ull(4,4,4),gamma_ull_x(4,4,4,4)
         real*8 riemann_ulll(4,4,4,4)
         real*8 riemann_llll(4,4,4,4),riemann_uuuu(4,4,4,4)
+        real*8 riemann_uull(4,4,4,4)
         real*8 ricci_ll(4,4),ricci_lu(4,4),ricci
         real*8 einstein_ll(4,4),set_ll(4,4)
         real*8 Hads_l(4),A_l(4),A_l_x(4,4)
@@ -659,309 +667,6 @@ c-----------------------------------------------------------------------
         real*8 kretsch_n(Nx,Ny,Nz),relkretsch_n(Nx,Ny,Nz)
         real*8 kretschpureads
         real*8 relkretschcentregrid
-
-!!!!!!!DEBUGGING!!!!!!
-        integer max_i,max_j,max_k
-        real*8  max_efe_all_ires
-!!!!!!!!!!!!!!!!!!!!!1
-
-        ! initialize fixed-size variables
-        data i,j,k,is,ie,js,je,ks,ke/0,0,0,0,0,0,0,0,0/
-        data ic,jc,kc/0,0,0/
-        data i1,j1,k1,a,b,c,d,e,p,q,r/0,0,0,0,0,0,0,0,0,0,0/
-
-        data dx,dy,dz/0.0,0.0,0.0/
-        data x0,y0,rho0/0.0,0.0,0.0/    
-
-        data g0_ll,g0_uu/16*0.0,16*0.0/
-        data gads_ll,gads_uu/16*0.0,16*0.0/
-        data h0_ll,h0_uu/16*0.0,16*0.0/
-        data gamma_ull/64*0.0/
-        data gamma_ull_x/256*0.0/
-
-        data g0_ll_x,g0_uu_x/64*0.0,64*0.0/
-        data gads_ll_x,gads_uu_x/64*0.0,64*0.0/
-        data h0_ll_x,h0_uu_x/64*0.0,64*0.0/
-
-        data g0_ll_xx/256*0.0/
-        data gads_ll_xx/256*0.0/
-        data h0_ll_xx/256*0.0/
-
-        data ricci/0.0/
-        data ricci_ll,ricci_lu/16*0.0,16*0.0/
-        data einstein_ll,set_ll/16*0.0,16*0.0/
-        data riemann_ulll/256*0.0/
-        data riemann_llll/256*0.0/
-        data riemann_uuuu/256*0.0/
-
-        data A_l,Hads_l/4*0.0,4*0.0/
-        data A_l_x/16*0.0/
-
-        data phi10_x/4*0.0/
-        data phi10_xx/16*0.0/
-
-        data boxx_u,boxx_l/4*0.0,4*0.0/
-
-!----------------------------------------------------------------------
-
-
-        dx=(x(2)-x(1))
-        dy=(y(2)-y(1))
-        dz=(z(2)-z(1))
-
-        ! set index bounds for main loop
-        is=2
-        ie=Nx-1
-        js=2
-        je=Ny-1
-        ks=2
-        ke=Nz-1
-
-        ! adjust index bounds to compensate for ghost_width
-        if (ghost_width(1).gt.0) is=is+ghost_width(1)-1
-        if (ghost_width(2).gt.0) ie=ie-(ghost_width(2)-1)
-        if (ghost_width(3).gt.0) js=js+ghost_width(3)-1
-        if (ghost_width(4).gt.0) je=je-(ghost_width(4)-1)
-        if (ghost_width(5).gt.0) ks=ks+ghost_width(5)-1
-        if (ghost_width(6).gt.0) ke=ke-(ghost_width(6)-1)
-
-
-        ! (MAIN LOOP) loop through spacetime points x(i),y(j)
-        do i=is,ie
-          do j=js,je
-           do k=ks,ke
-
-              x0=x(i)
-              y0=y(j)
-              z0=z(k)
-              rho0=sqrt(x0**2+y0**2+z0**2)
-
-            if (chr(i,j,k).ne.ex) then
-
-              ! computes tensors at point i,j
-              call tensor_init(
-     &                gb_tt_np1,gb_tt_n,gb_tt_nm1,
-     &                gb_tx_np1,gb_tx_n,gb_tx_nm1,
-     &                gb_ty_np1,gb_ty_n,gb_ty_nm1,
-     &                gb_tz_np1,gb_tz_n,gb_tz_nm1,
-     &                gb_xx_np1,gb_xx_n,gb_xx_nm1,
-     &                gb_xy_np1,gb_xy_n,gb_xy_nm1,
-     &                gb_xz_np1,gb_xz_n,gb_xz_nm1,
-     &                gb_yy_np1,gb_yy_n,gb_yy_nm1,
-     &                gb_yz_np1,gb_yz_n,gb_yz_nm1,
-     &                gb_zz_np1,gb_zz_n,gb_zz_nm1,
-     &                Hb_t_np1,Hb_t_n,Hb_t_nm1,
-     &                Hb_x_np1,Hb_x_n,Hb_x_nm1,
-     &                Hb_y_np1,Hb_y_n,Hb_y_nm1,
-     &                Hb_z_np1,Hb_z_n,Hb_z_nm1,
-     &                phi1_np1,phi1_n,phi1_nm1,
-     &                g0_ll,g0_uu,g0_ll_x,g0_uu_x,g0_ll_xx,
-     &                gads_ll,gads_uu,gads_ll_x,gads_uu_x,gads_ll_xx,
-     &                h0_ll,h0_uu,h0_ll_x,h0_uu_x,h0_ll_xx,
-     &                A_l,A_l_x,Hads_l,
-     &                gamma_ull,gamma_ull_x,
-     &                riemann_ulll,ricci_ll,ricci_lu,ricci,
-     &                einstein_ll,set_ll,
-     &                phi10_x,phi10_xx,
-     &                x,y,z,dt,chr,L,ex,Nx,Ny,Nz,i,j,k)
-
-               do a=1,4
-                do b=1,4
-                 do c=1,4
-                  do d=1,4
-                   riemann_llll(a,b,c,d)=0.0d0
-                   do p=1,4
-                    riemann_llll(a,b,c,d)=riemann_llll(a,b,c,d)
-     &               +riemann_ulll(p,b,c,d)*g0_ll(p,a)
-                   end do
-                  end do
-                 end do
-                end do
-               end do
-
-               do a=1,4
-                do b=1,4
-                 do c=1,4
-                  do d=1,4
-                   riemann_uuuu(a,b,c,d)=0.0d0
-                   do p=1,4
-                    do q=1,4
-                     do r=1,4
-                        riemann_uuuu(a,b,c,d)=riemann_uuuu(a,b,c,d)
-     &                   +riemann_ulll(a,p,q,r)*g0_uu(p,b)
-     &                          *g0_uu(q,c)*g0_uu(r,d)
-                     end do
-                    end do
-                   end do
-                  end do
-                 end do
-                end do
-               end do
-
-
-               kretsch_n(i,j,k)=0.0d0
-       
-               do a=1,4
-                do b=1,4
-                 do c=1,4
-                  do d=1,4
-       
-                       kretsch_n(i,j,k)=
-     &                         kretsch_n(i,j,k)
-     &                         +riemann_uuuu(a,b,c,d)
-     &                         *riemann_llll(a,b,c,d)
-       
-                  end do
-                 end do
-                end do
-               end do
-
-               kretschpureads=24
-
-               relkretsch_n(i,j,k)=(kretsch_n(i,j,k))/kretschpureads-1.0d0
-
-            else
-               kretsch_n(i,j,k)=0.0d0
-               relkretsch_n(i,j,k)=0.0d0
-            end if
-
-!find the indices denoting the point at the centre of the grid. Needed to compute relkretschcentregrid
-               if (     (abs(x0).lt.10.0d0**(-10))
-     &             .and.(abs(y0).lt.10.0d0**(-10))
-     &             .and.(abs(z0).lt.10.0d0**(-10)) ) then
-
-                  ic=i
-                  jc=j
-                  kc=k
-               end if
-
-
-           end do
-          end do
-        end do
-
-        relkretschcentregrid=0.0d0
-
-        if ((ic.gt.0).and.(jc.gt.0).and.(kc.gt.0)) then !this condition is activated only if the processor calling ires contains the centre of the grid (where ic,jc and kc are set to a positive number by the cycle above)
-             relkretschcentregrid=relkretsch_n(ic,jc,kc)
-        else
-             relkretschcentregrid=0.0d0
-        end if
-
-!           write(*,*) "ex,chr(ic,jc,kc)",ex,chr(ic,jc,kc)
-!           write(*,*) "ic,jc,kc=",ic,jc,kc
-!           write(*,*) "relkretschcentregrid=",relkretschcentregrid
-
-
-        return
-        end
-
-c-----------------------------------------------------------------------
-c calculate Riemann cube scalar of the solution
-c-----------------------------------------------------------------------
-        subroutine riemanncube(relriemanncube_n,
-     &                  gb_tt_np1,gb_tt_n,gb_tt_nm1,
-     &                  gb_tx_np1,gb_tx_n,gb_tx_nm1,
-     &                  gb_ty_np1,gb_ty_n,gb_ty_nm1,
-     &                  gb_tz_np1,gb_tz_n,gb_tz_nm1,
-     &                  gb_xx_np1,gb_xx_n,gb_xx_nm1,
-     &                  gb_xy_np1,gb_xy_n,gb_xy_nm1,
-     &                  gb_xz_np1,gb_xz_n,gb_xz_nm1,
-     &                  gb_yy_np1,gb_yy_n,gb_yy_nm1,
-     &                  gb_yz_np1,gb_yz_n,gb_yz_nm1,
-     &                  gb_zz_np1,gb_zz_n,gb_zz_nm1,
-     &                  Hb_t_np1,Hb_t_n,Hb_t_nm1,
-     &                  Hb_x_np1,Hb_x_n,Hb_x_nm1,
-     &                  Hb_y_np1,Hb_y_n,Hb_y_nm1,
-     &                  Hb_z_np1,Hb_z_n,Hb_z_nm1,
-     &                  phi1_np1,phi1_n,phi1_nm1,
-     &                  x,y,z,dt,chr,L,ex,Nx,Ny,Nz,phys_bdy,ghost_width)
-
-        implicit none
-        integer Nx,Ny,Nz
-        integer i,j,k
-        integer phys_bdy(6),ghost_width(6)
-        real*8 chr(Nx,Ny,Nz),ex
-        real*8 x(Nx),y(Ny),z(Nz),dt,L
-        real*8 lambda4
-        real*8 phi1_np1(Nx,Ny,Nz),phi1_n(Nx,Ny,Nz),phi1_nm1(Nx,Ny,Nz)
-        real*8 gb_tt_np1(Nx,Ny,Nz),gb_tx_np1(Nx,Ny,Nz)
-        real*8 gb_ty_np1(Nx,Ny,Nz)
-        real*8 gb_tz_np1(Nx,Ny,Nz)
-        real*8 gb_xx_np1(Nx,Ny,Nz),gb_xy_np1(Nx,Ny,Nz)
-        real*8 gb_xz_np1(Nx,Ny,Nz)
-        real*8 gb_yy_np1(Nx,Ny,Nz)
-        real*8 gb_yz_np1(Nx,Ny,Nz)
-        real*8 gb_zz_np1(Nx,Ny,Nz)
-        real*8 gb_tt_n(Nx,Ny,Nz),gb_tx_n(Nx,Ny,Nz),gb_ty_n(Nx,Ny,Nz)
-        real*8 gb_tz_n(Nx,Ny,Nz)
-        real*8 gb_xx_n(Nx,Ny,Nz),gb_xy_n(Nx,Ny,Nz),gb_yy_n(Nx,Ny,Nz)
-        real*8 gb_xz_n(Nx,Ny,Nz)
-        real*8 gb_yz_n(Nx,Ny,Nz)
-        real*8 gb_zz_n(Nx,Ny,Nz)
-        real*8 gb_tt_nm1(Nx,Ny,Nz),gb_tx_nm1(Nx,Ny,Nz)
-        real*8 gb_ty_nm1(Nx,Ny,Nz)
-        real*8 gb_tz_nm1(Nx,Ny,Nz)
-        real*8 gb_xx_nm1(Nx,Ny,Nz),gb_xy_nm1(Nx,Ny,Nz)
-        real*8 gb_xz_nm1(Nx,Ny,Nz)
-        real*8 gb_yy_nm1(Nx,Ny,Nz)
-        real*8 gb_yz_nm1(Nx,Ny,Nz)
-        real*8 gb_zz_nm1(Nx,Ny,Nz)
-
-        real*8 Hb_t_np1(Nx,Ny,Nz),Hb_t_n(Nx,Ny,Nz),Hb_t_nm1(Nx,Ny,Nz)
-        real*8 Hb_x_np1(Nx,Ny,Nz),Hb_x_n(Nx,Ny,Nz),Hb_x_nm1(Nx,Ny,Nz)
-        real*8 Hb_y_np1(Nx,Ny,Nz),Hb_y_n(Nx,Ny,Nz),Hb_y_nm1(Nx,Ny,Nz)
-        real*8 Hb_z_np1(Nx,Ny,Nz),Hb_z_n(Nx,Ny,Nz),Hb_z_nm1(Nx,Ny,Nz)
-
-        integer is,ie,js,je,ks,ke
-
-        integer i1,j1,k1,a,b,c,d,e,f,g,h,p,q,r
-        integer ic,jc,kc
-        real*8 efe_ires(4,4)
-
-        real*8 PI
-        parameter (PI=3.141592653589793d0)
-
-        real*8 dx,dy,dz
-        real*8 x0,y0,z0,rho0        
-
-        real*8 boxx_u(4),boxx_l(4) 
-
-        !--------------------------------------------------------------
-        ! variables for tensor manipulations 
-        !(indices are t,x,y,theta,phi)
-        !--------------------------------------------------------------
-        real*8 g0_ll(4,4),g0_uu(4,4)
-        real*8 g0_ll_x(4,4,4),g0_uu_x(4,4,4),g0_ll_xx(4,4,4,4)
-        real*8 gads_ll(4,4),gads_uu(4,4)
-        real*8 gads_ll_x(4,4,4),gads_uu_x(4,4,4),gads_ll_xx(4,4,4,4)
-        real*8 h0_ll(4,4),h0_uu(4,4)
-        real*8 h0_ll_x(4,4,4),h0_uu_x(4,4,4),h0_ll_xx(4,4,4,4)
-        real*8 gamma_ull(4,4,4),gamma_ull_x(4,4,4,4)
-        real*8 riemann_ulll(4,4,4,4),riemann_llll(4,4,4,4)
-        real*8 riemann_uuuu(4,4,4,4),riemann_lluu(4,4,4,4)
-        real*8 ricci_ll(4,4),ricci_lu(4,4),ricci
-        real*8 einstein_ll(4,4),set_ll(4,4)
-        real*8 Hads_l(4),A_l(4),A_l_x(4,4)
-        real*8 phi10_x(4),phi10_xx(4,4)
-
-        !--------------------------------------------------------------
-        ! variables for outward null expansion in spherical symmetry
-        !--------------------------------------------------------------
-        real*8 n_l(4),s_l(4)
-        real*8 n_u(4),s_u(4)
-        real*8 n_l_x(4,4),n_u_x(4,4),s_l_x(4,4)
-        real*8 f0_x(4)
-        real*8 f0_xx(4,4)
-        real*8 gam_uu(4,4),sig_uu(4,4)
-        real*8 gam_uu_x(4,4,4)
-        real*8 normsusq
-
-        real*8 g0gamfx(4)
-        real*8 nufx,nuxfx(4),gamxfxfx(4)
-
-        real*8 theta(Nx,Ny,Nz)
-
         real*8 riemanncube_n(Nx,Ny,Nz),relriemanncube_n(Nx,Ny,Nz)
         real*8 riemanncubepureads
 
@@ -998,7 +703,7 @@ c-----------------------------------------------------------------------
         data riemann_ulll/256*0.0/
         data riemann_llll/256*0.0/
         data riemann_uuuu/256*0.0/
-        data riemann_lluu/256*0.0/
+        data riemann_uull/256*0.0/
 
         data A_l,Hads_l/4*0.0,4*0.0/
         data A_l_x/16*0.0/
@@ -1075,79 +780,113 @@ c-----------------------------------------------------------------------
                 do b=1,4
                  do c=1,4
                   do d=1,4
-
                    riemann_llll(a,b,c,d)=0.0d0
-                   do p=1,4
-                    riemann_llll(a,b,c,d)=riemann_llll(a,b,c,d)
-     &               +riemann_ulll(p,b,c,d)*g0_ll(p,a)
-                   end do
-
                    riemann_uuuu(a,b,c,d)=0.0d0
-                   do p=1,4
-                    do q=1,4
-                     do r=1,4
-                        riemann_uuuu(a,b,c,d)=riemann_uuuu(a,b,c,d)
-     &                   +riemann_ulll(a,p,q,r)*g0_uu(p,b)
-     &                         *g0_uu(q,c)*g0_uu(r,d)
+                   riemann_uull(a,b,c,d)=0.0d0
+                   do e=1,4
+                     riemann_llll(a,b,c,d)=
+     &                     riemann_llll(a,b,c,d)
+     &                     +riemann_ulll(e,b,c,d)*g0_ll(e,a)
+                     if (output_riemanncube.eq.1) then
+                      riemann_uull(a,b,c,d)=riemann_uull(a,b,c,d)
+     &                             +riemann_ulll(a,e,c,d)*g0_uu(e,b)
+                     end if
+                    do f=1,4
+                     do g=1,4
+                     riemann_uuuu(a,b,c,d)=
+     &                          riemann_uuuu(a,b,c,d)
+     &                          +riemann_ulll(a,e,f,g)*g0_uu(e,b)
+     &                            *g0_uu(f,c)*g0_uu(g,d)
                      end do
                     end do
                    end do
-
-                   riemann_lluu(a,b,c,d)=0
-                   do p=1,4
-                    do q=1,4
-                     do r=1,4
-                        riemann_lluu(a,b,c,d)=riemann_lluu(a,b,c,d)
-     &                   +riemann_ulll(p,b,q,r)*g0_ll(p,a)
-     &                         *g0_uu(q,c)*g0_uu(r,d)
-                     end do
-                    end do
-                   end do
-
-
 
                   end do
                  end do
                 end do
                end do
-       
 
+
+               kretsch_n(i,j,k)=0.0d0
+               relkretsch_n(i,j,k)=0.0d0
                riemanncube_n(i,j,k)=0.0d0
+               relriemanncube_n(i,j,k)=0.0d0
+               if ((output_kretsch.eq.1)
+     &          .or.(output_riemanncube.eq.1)) then
+                do a=1,4
+                 do b=1,4
+                  do c=1,4
+                   do d=1,4
+                    if (output_kretsch.eq.1) then
+                       kretsch_n(i,j,k)=
+     &                         kretsch_n(i,j,k)
+     &                         +riemann_uuuu(a,b,c,d)
+     &                         *riemann_llll(a,b,c,d)
+                    end if
 
-               do a=1,4
-                do b=1,4
-                 do c=1,4
-                  do d=1,4
-                   do e=1,4
-                    do f=1,4
-       
+                    if (output_riemanncube.eq.1) then
+                     do e=1,4
+                      do f=1,4
                        riemanncube_n(i,j,k)=
      &                         riemanncube_n(i,j,k)
-     &                         +riemann_llll(a,b,c,d)
-     &                         *riemann_uuuu(c,d,e,f)
-     &                         *riemann_lluu(e,f,a,b)
+     &                         +riemann_uuuu(a,b,c,d)
+     &                         *riemann_llll(c,d,e,f)
+     &                         *riemann_uull(e,f,a,b)
+
+                      end do
+                     end do
+                    end if
        
-                    end do
                    end do
                   end do
                  end do
                 end do
-               end do
+                if (output_kretsch.eq.1) then
+                 kretschpureads=24
+                 relkretsch_n(i,j,k)=(kretsch_n(i,j,k))
+     &                         /kretschpureads-1.0d0
+                end if
+                if (output_riemanncube.eq.1) then
+                 riemanncubepureads=-48
+                 relriemanncube_n(i,j,k)=(riemanncube_n(i,j,k))
+     &                         /riemanncubepureads-1.0d0
+                end if
+               end if
 
-               riemanncubepureads=-48
 
-               relriemanncube_n(i,j,k)=(riemanncube_n(i,j,k))
-     &                                 /riemanncubepureads-1.0d0
 
             else
+               kretsch_n(i,j,k)=0.0d0
+               relkretsch_n(i,j,k)=0.0d0
                riemanncube_n(i,j,k)=0.0d0
                relriemanncube_n(i,j,k)=0.0d0
             end if
+
+!find the indices denoting the point at the centre of the grid. Needed to compute relkretschcentregrid
+               if (     (abs(x0).lt.10.0d0**(-10))
+     &             .and.(abs(y0).lt.10.0d0**(-10))
+     &             .and.(abs(z0).lt.10.0d0**(-10)) ) then
+
+                  ic=i
+                  jc=j
+                  kc=k
+               end if
 
 
            end do
           end do
         end do
+
+        relkretschcentregrid=0.0d0
+
+        if ((ic.gt.0).and.(jc.gt.0).and.(kc.gt.0)) then !this condition is activated only if the processor calling ires contains the centre of the grid (where ic,jc and kc are set to a positive number by the cycle above)
+             relkretschcentregrid=relkretsch_n(ic,jc,kc)
+             !write(*,*) "ex,chr(ic,jc,kc)",ex,chr(ic,jc,kc)
+             !write(*,*) "ic,jc,kc=",ic,jc,kc
+             !write(*,*) "relkretschcentregrid=",relkretschcentregrid
+        else
+             relkretschcentregrid=0.0d0
+        end if
 
 
         return

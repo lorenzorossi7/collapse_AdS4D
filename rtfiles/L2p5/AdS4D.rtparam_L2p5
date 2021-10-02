@@ -39,7 +39,7 @@ ief_bh_r0 := 0.0
 AH_Lmin := 1
 AH_rsteps := 10
 AH_eps := 0.0
-AH_max_iter := 10000
+AH_max_iter := 0000
 AH_lambda := 0.0001
 AH_tol := 1e-2
 AH_r0 := 0.10
@@ -86,14 +86,21 @@ prev_run_ex_r_4 := [0.0 0.0 0.0]
 background := 0
 skip_constraints := 0
 output_ires := 1
-output_bdyquantities := 1
+output_kretsch := 1
+#setting output_relkretschcentregrid to 1 will output relative Kretschmann at the centre of the grid only if output_kretsch is enabled
+output_relkretschcentregrid := 1
+output_riemanncube := 1
+
+#------ Boundary extrapolation ---------
+output_bdyquantities := 0
+bdy_L := 1
 #if rad_extrap=1 we use boundary extrapolation along radial direction (output saved in the freepts txt files)
 #if rad_extrap=0 we extrapolate along Cartesian directions
 rad_extrap := 1
 output_outermostpts := 1
 bdy_extrap_freepts := 1
 bdy_extrap_fixedpts := 1
-half_steps_from_bdy_ext_paramset1 := 9
+half_steps_from_bdy_ext_paramset1 := 7
 half_steps_from_bdy_ext_paramset2 := 5
 half_steps_from_bdy_int_paramset1 := 12
 half_steps_from_bdy_int_paramset2 := 12
@@ -110,17 +117,10 @@ output_bdytrace          := 1
 output_bdymassdens       := 1
 output_bdyangmomdens     := 1
 output_AdS_mass := 0
-output_kretsch := 1
-#setting output_relkretschcentregrid to 1 will output relative Kretschmann at the centre of the grid only if output_kretsch is enabled
-output_relkretschcentregrid := 0
-output_riemanncube := 1
 reduced_ascii := 0
 reduction_factor_ascii := 36
 alltimes_ascii := 0
 timestep_ascii := 1
-#Option to remove repeated boundary points that could appear from different outermost bulk points in different processes that have the same corresponding extrapolated point
-#WARNING: if we use many processes removing repeated points can take loop will take a long time. In that case it's better to eliminate repeated points in post-processing
-remove_repeated_bdypoints := 0
 
 #------ interpolation parameters (0:off,1:xy2pt,2:rho2pt,3:rho3pt) ---------
 
@@ -216,8 +216,8 @@ c1_i := 20.0
 c2_i := 0.5
 c3_i := 1.0
 
-rhoa := 0.5
-rhob := 0.9
+rhoa := 0.3
+rhob := 0.6
 
 #------ dissipation --------------------------------------------------------
 

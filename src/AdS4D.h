@@ -403,8 +403,9 @@ void ires_(real *efe_all_ires,
            real *x, real *y, real *z, real *dt, real *chr, 
            real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz, int *phys_bdy, int *ghost_width);
 
-void kretsch_(real *relkretsch_n,
+void kretsch_riemanncube_(real *relkretsch_n,
            real *relkretschcentregrid,
+           real *relriemanncube_n,
            real *gb_tt_np1, real *gb_tt_n, real *gb_tt_nm1,
            real *gb_tx_np1, real *gb_tx_n, real *gb_tx_nm1,
            real *gb_ty_np1, real *gb_ty_n, real *gb_ty_nm1,
@@ -421,26 +422,8 @@ void kretsch_(real *relkretsch_n,
            real *Hb_z_np1, real *Hb_z_n, real *Hb_z_nm1,
            real *phi1_np1, real *phi1_n, real *phi1_nm1,
            real *x, real *y, real *z, real *dt, real *chr,
-           real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz, int *phys_bdy, int *ghost_width);
-
-void riemanncube_(real *relriemanncube_n,
-           real *gb_tt_np1, real *gb_tt_n, real *gb_tt_nm1,
-           real *gb_tx_np1, real *gb_tx_n, real *gb_tx_nm1,
-           real *gb_ty_np1, real *gb_ty_n, real *gb_ty_nm1,
-           real *gb_tz_np1, real *gb_tz_n, real *gb_tz_nm1,
-           real *gb_xx_np1, real *gb_xx_n, real *gb_xx_nm1,
-           real *gb_xy_np1, real *gb_xy_n, real *gb_xy_nm1,
-           real *gb_xz_np1, real *gb_xz_n, real *gb_xz_nm1,
-           real *gb_yy_np1, real *gb_yy_n, real *gb_yy_nm1,
-           real *gb_yz_np1, real *gb_yz_n, real *gb_yz_nm1,
-           real *gb_zz_np1, real *gb_zz_n, real *gb_zz_nm1,
-           real *Hb_t_np1, real *Hb_t_n, real *Hb_t_nm1,
-           real *Hb_x_np1, real *Hb_x_n, real *Hb_x_nm1,
-           real *Hb_y_np1, real *Hb_y_n, real *Hb_y_nm1,
-           real *Hb_z_np1, real *Hb_z_n, real *Hb_z_nm1,
-           real *phi1_np1, real *phi1_n, real *phi1_nm1,
-           real *x, real *y, real *z, real *dt, real *chr,
-           real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz, int *phys_bdy, int *ghost_width);
+           real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz, int *phys_bdy, int *ghost_width,
+           int *output_kretsch,int *output_riemanncube);
 
 void gu_calc_(real *gb_tt, real *gb_tx, real *gb_ty, real *gb_xx, 
               real *gb_xy, real *gb_yy, real *gb_zz, 
@@ -562,11 +545,11 @@ void calc_leadordcoeff_phi1_(real *leadordcoeff_phi1,
                             real *x,real *y,real *z,real *dt,real *chr,real *AdS_L,real *ex,int *Nx,int *Ny,int *Nz,int *phys_bdy,int *ghost_width);
 
 void extrap_bdyphi_freepts_(real *bdyphi,
-                  real *leadordcoeff_phi1,
-                           real *x_extrappt,real *y_extrappt,real *z_extrappt,
-                           real *chrbdy,int *numbdypoints,
-                           int *extrap_order,
-                           real *x,real *y,real *z,real *dt,real *chr,real *AdS_L,real *ex,int *Nx,int *Ny,int *Nz,int *phys_bdy,int *ghost_width);
+                            real *leadordcoeff_phi1,
+                            real *x_extrappt,real *y_extrappt,real *z_extrappt,
+                            real *chrbdy,int *numbdypoints,
+                            int *extrap_order,
+                            real *x,real *y,real *z,real *dt,real *chr,real *AdS_L,real *ex,int *Nx,int *Ny,int *Nz,int *phys_bdy,int *ghost_width);
 
 void bdyphi_radextrap_(real *bdyphi,
                   real *leadordcoeff_phi1,
