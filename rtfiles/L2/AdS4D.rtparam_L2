@@ -37,7 +37,8 @@ boost_ecc_2 := [0.2 0.2 0.2]
 ief_bh_r0 := 0.0
 
 #AH-finder#
-#AH_Lmin := 1
+AH_Lmin := 1
+AH_Lmax := 1
 AH_rsteps := 10
 AH_eps := 0.0
 #AH_max_iter := 10000

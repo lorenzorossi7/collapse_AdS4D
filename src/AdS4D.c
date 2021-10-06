@@ -2452,7 +2452,7 @@ void AdS4D_var_post_init(char *pfile)
 
 		if (MAX_AH_Nchi_AH_Nphi_AH_FINDER < AH_Nchi[l]*AH_Nphi[l]) AMRD_stop("the resolution of the AH finder must be smaller than MAX_AH_Nchi_AH_Nphi_AH_FINDER\n",""); 
 
-        if (l==0) { AH_Lmin[l]=2; sprintf(buf,"AH_Lmin"); }
+        if (l==0) { AH_Lmin[l]=1; sprintf(buf,"AH_Lmin"); }
         else { AH_Lmin[l]=AH_Lmin[0]; sprintf(buf,"AH_Lmin_%i",l+1); }
         AMRD_int_param(pfile,buf,&AH_Lmin[l],1);    
         if (l==0) { AH_Lmax[l]=100; sprintf(buf,"AH_Lmax"); }
@@ -20241,8 +20241,8 @@ void AdS4D_pre_tstep(int L)
         for (i=0; i<AH_Nchi[l]*AH_Nphi[l]; i++) {prev_AH_R[i]=AH_R[l][i];} 
         for (i=0; i<3; i++) {prev_AH_xc[i]=AH_xc[l][i];}
         c_AH=l;
-    	AH_Lmin[l]=Lc;
-		AH_Lmax[l]=Lf;
+    	//AH_Lmin[l]=Lc;
+		//AH_Lmax[l]=Lf;
 
 
         if (AH_max_iter[l]>0 && L>=AH_Lmin[l] && L<=AH_Lmax[l] && ct>=AH_tmin[l])
@@ -20720,8 +20720,8 @@ void AdS4D_post_tstep(int L)
         for (i=0; i<AH_Nchi[l]*AH_Nphi[l]; i++) {prev_AH_R[i]=AH_R[l][i];} 
         for (i=0; i<3; i++) {prev_AH_xc[i]=AH_xc[l][i];}
         c_AH=l;
-        AH_Lmin[l]=Lc+1;
-        AH_Lmax[l]=Lf;
+        //AH_Lmin[l]=Lc;
+        //AH_Lmax[l]=Lf;
 
 
         if (AH_max_iter[l]>0 && L>=AH_Lmin[l] && L<=AH_Lmax[l] && ct>=AH_tmin[l] &&(fabs(coarse_t-ct)<pow(10,-10)))
