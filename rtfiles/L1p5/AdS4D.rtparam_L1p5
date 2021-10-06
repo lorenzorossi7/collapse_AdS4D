@@ -36,7 +36,7 @@ boost_ecc_2 := [0.2 0.2 0.2]
 ief_bh_r0 := 0.0
 
 #AH-finder#
-AH_Lmin := 1
+#AH_Lmin := 1
 AH_rsteps := 10
 AH_eps := 0.0
 AH_max_iter := 0000
@@ -44,6 +44,7 @@ AH_lambda := 0.0001
 AH_tol := 1e-2
 AH_r0 := 0.10
 AH_r1 := 0.50
+AH_reset_r_sample := 1
 AH_xc := [0.0 0.0 0.0]
 AH_Nchi := 9
 AH_Nphi := 17

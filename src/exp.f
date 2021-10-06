@@ -454,12 +454,14 @@ c-----------------------------------------------------------------------
 c given AH_R,AH_xc, computes the corresponding coordinate center
 c and principle axis radii for excision ex_r0,ex_xc0
 c-----------------------------------------------------------------------
-        subroutine fill_ex_params(AH_R,AH_xc,ex_r0,ex_xc0,
+        subroutine fill_ex_params(AH_R,AH_xc,min_AH_R,max_AH_R,
+     &                            ex_r0,ex_xc0,
      &                            AH_Nchi,AH_Nphi,dx,dy,dz,axisym)
         implicit none
         integer axisym
         integer AH_Nchi,AH_Nphi
         real*8 AH_R(AH_Nchi,AH_Nphi),AH_xc(3),ex_r0(3),ex_xc0(3)
+        real*8 min_AH_R,max_AH_R
         
         real*8 PI
         parameter (PI=3.141592653589793d0)
@@ -485,6 +487,9 @@ c-----------------------------------------------------------------------
         zmin=1
         zmax=0
 
+        min_AH_R=1
+        max_AH_R=0
+
         dahchi=PI/(AH_Nchi-1)
         dahphi=2*PI/(AH_Nphi-1)
 
@@ -497,9 +502,6 @@ c-----------------------------------------------------------------------
             ! AH_R,AH_chi: polar coordinates of point on AH, wrt center of AH
             ! AH_xc(1),AH_xc(2),AH_xc(3): cartesian coordinates of center of AH, wrt origin
             ! x,y,z cartesian coordinates of point on AH, wrt origin
-!            x=AH_R(i,j)*sin(AH_chi)*cos(AH_phi)+AH_xc(1)
-!            y=AH_R(i,j)*sin(AH_chi)*sin(AH_phi)+AH_xc(2)
-!            z=AH_R(i,j)*cos(AH_chi)+AH_xc(3)
 
             x=AH_R(i,j)*cos(AH_chi)+AH_xc(1)
             y=AH_R(i,j)*sin(AH_chi)*cos(AH_phi)+AH_xc(2)
@@ -513,6 +515,9 @@ c-----------------------------------------------------------------------
             ymax=max(y,ymax)
             zmax=max(z,ymax)
 
+            if (AH_R(i,j)<min_AH_R) min_AH_R=AH_R(i,j)
+            if (AH_R(i,j)>max_AH_R) max_AH_R=AH_R(i,j)
+
           end do
         end do
 
@@ -521,7 +526,8 @@ c-----------------------------------------------------------------------
         ex_xc0(2)=AH_xc(2)
         ex_xc0(3)=AH_xc(3)
 
-        !sets excision principal axis radii as ellipse semi-axes
+        !sets semi-axes of ellispoid approximation of AH:
+        !if the AH can be approximated by an ellipsoid with axes along the x,y,z axes, the following gives the semi-axes of this ellipsoid
         ex_r0(1)=(xmax-xmin)/2
         ex_r0(2)=(ymax-ymin)/2
         ex_r0(3)=(zmax-zmin)/2
@@ -912,6 +918,7 @@ c-----------------------------------------------------------------------
      &                    AH_g0_yy,AH_g0_yz,AH_g0_zz,
      &                    AH_g0_chichi,AH_g0_chiphi,AH_g0_phiphi,
      &                    AH_relkretsch,
+     &                    AH_relriemanncube,
      &                    AH_ahr,AH_dch,AH_dph,
      &                    AH_da0,AH_dcq,AH_dcp,AH_dcp2,
      &                    gb_tt_np1,gb_tt_n,gb_tt_nm1,
@@ -925,6 +932,7 @@ c-----------------------------------------------------------------------
      &                    gb_yz_np1,gb_yz_n,gb_yz_nm1,
      &                    gb_zz_np1,gb_zz_n,gb_zz_nm1,
      &                    relkretsch_n,
+     &                    relriemanncube_n,
      &                    L,x,y,z,dt,chr,ex,do_ex,
      &                    Nx,Ny,Nz,axisym)
         implicit none
@@ -947,6 +955,7 @@ c-----------------------------------------------------------------------
         real*8 AH_g0_chiphi(AH_Nchi,AH_Nphi)
         real*8 AH_g0_phiphi(AH_Nchi,AH_Nphi)
         real*8 AH_relkretsch(AH_Nchi,AH_Nphi)
+        real*8 AH_relriemanncube(AH_Nchi,AH_Nphi)
         real*8 AH_ahr(AH_Nchi,AH_Nphi)
         real*8 AH_dch(AH_Nchi,AH_Nphi)
         real*8 AH_dph(AH_Nchi,AH_Nphi)
@@ -968,6 +977,7 @@ c-----------------------------------------------------------------------
         real*8 gb_yz_np1(Nx,Ny,Nz),gb_yz_n(Nx,Ny,Nz),gb_yz_nm1(Nx,Ny,Nz)
         real*8 gb_zz_np1(Nx,Ny,Nz),gb_zz_n(Nx,Ny,Nz),gb_zz_nm1(Nx,Ny,Nz)
         real*8 relkretsch_n(Nx,Ny,Nz)
+        real*8 relriemanncube_n(Nx,Ny,Nz)
 
         real*8 cosx(Nx),cosy(Ny),cosz(Nz)
         real*8 sinx(Nx),siny(Ny),sinz(Nz)
@@ -1307,6 +1317,17 @@ c-----------------------------------------------------------------------
      &           (  fx)*(1-fy)*(  fz)  *relkretsch_n(i+1,j,k+1)+
      &           (1-fx)*(  fy)*(  fz)  *relkretsch_n(i,j+1,k+1)+
      &           (  fx)*(  fy)*(  fz)  *relkretsch_n(i+1,j+1,k+1)
+
+
+          AH_relriemanncube(i0,j0)=
+     &           (1-fx)*(1-fy)*(1-fz)  *relriemanncube_n(i,j,k)+
+     &           (  fx)*(1-fy)*(1-fz)  *relriemanncube_n(i+1,j,k)+
+     &           (1-fx)*(  fy)*(1-fz)  *relriemanncube_n(i,j+1,k)+
+     &           (  fx)*(  fy)*(1-fz)  *relriemanncube_n(i+1,j+1,k)+
+     &           (1-fx)*(1-fy)*(  fz)  *relriemanncube_n(i,j,k+1)+
+     &           (  fx)*(1-fy)*(  fz)  *relriemanncube_n(i+1,j,k+1)+
+     &           (1-fx)*(  fy)*(  fz)  *relriemanncube_n(i,j+1,k+1)+
+     &           (  fx)*(  fy)*(  fz)  *relriemanncube_n(i+1,j+1,k+1)
 
         !--------------------------------------------------------------
         ! proper area element

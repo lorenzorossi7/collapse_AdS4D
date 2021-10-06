@@ -73,7 +73,6 @@ extern real *AH_g0_xz[MAX_BHS];
 extern real *AH_g0_yy[MAX_BHS];
 extern real *AH_g0_yz[MAX_BHS];
 extern real *AH_g0_zz[MAX_BHS];
-extern real *AH_relkretsch[MAX_BHS];
 
 extern real *AH_wtt1[MAX_BHS];
 extern real *AH_wtx1[MAX_BHS];
@@ -94,6 +93,19 @@ extern int skip_ires;
 extern int out1_freq;
 
 extern int AH_count[MAX_BHS],found_AH[MAX_BHS],freq0[MAX_BHS];
+
+extern int output_moreAHquant_sdf;
+extern int output_metricAH_cart_sdf;
+extern int output_metricAH_sph_sdf;
+extern int output_relkretschAH_sdf;
+extern int output_relriemanncubeAH_sdf;
+extern int output_moreAHquant_ascii;
+extern int output_AHtheta_ascii;
+extern int output_metricAH_cart_ascii;
+extern int output_metricAH_sph_ascii;
+extern int output_relkretschAH_ascii;
+extern int output_relriemanncubeAH_ascii;
+extern int output_diagnosticAH_ascii;
 
 
 
@@ -120,6 +132,7 @@ extern real *gb_yy,*gb_yy_n,*gb_yy_np1,*gb_yy_nm1;
 extern real *gb_yz,*gb_yz_n,*gb_yz_np1,*gb_yz_nm1;
 extern real *gb_zz,*gb_zz_n,*gb_zz_np1,*gb_zz_nm1; 
 extern real *relkretsch,*relkretsch_n,*relkretsch_np1,*relkretsch_nm1;
+extern real *relriemanncube,*relriemanncube_n,*relriemanncube_np1,*relriemanncube_nm1;
 
 extern real *Hb_t,*Hb_t_n,*Hb_t_np1,*Hb_t_nm1;
 extern real *Hb_x,*Hb_x_n,*Hb_x_np1,*Hb_x_nm1;
@@ -423,7 +436,7 @@ void kretsch_riemanncube_(real *relkretsch_n,
            real *phi1_np1, real *phi1_n, real *phi1_nm1,
            real *x, real *y, real *z, real *dt, real *chr,
            real *AdS_L, real *ex, int *Nx, int *Ny, int *Nz, int *phys_bdy, int *ghost_width,
-           int *output_kretsch,int *output_riemanncube);
+           int *output_relkretsch,int *output_relriemanncube);
 
 void gu_calc_(real *gb_tt, real *gb_tx, real *gb_ty, real *gb_xx, 
               real *gb_xy, real *gb_yy, real *gb_zz, 

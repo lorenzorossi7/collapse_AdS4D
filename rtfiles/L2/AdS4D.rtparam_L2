@@ -37,7 +37,7 @@ boost_ecc_2 := [0.2 0.2 0.2]
 ief_bh_r0 := 0.0
 
 #AH-finder#
-AH_Lmin := 1
+#AH_Lmin := 1
 AH_rsteps := 10
 AH_eps := 0.0
 #AH_max_iter := 10000
@@ -45,6 +45,7 @@ AH_lambda := 0.0001
 AH_tol := 1e-2
 AH_r0 := 0.10
 AH_r1 := 0.50
+AH_reset_r_sample := 1
 AH_xc := [0.0 0.0 0.0]
 AH_Nchi := 9
 AH_Nphi := 17
@@ -61,17 +62,19 @@ AH_max_iter_4 := 0
 AH_tmin := 0
 #if the following are disabled, we only output the position of the AH and the expansion theta in .sdf files
 output_moreAHquant_sdf := 1
-output_metricAH_cart_sdf := 0
+output_metricAH_cart_sdf := 1
 output_metricAH_sph_sdf := 1
-#setting output_relkretschAH_sdf to 1 will output relative Kretschmann at the AH only if output_kretsch is enabled
+#setting output_relkretschAH_sdf to 1 will output relative Kretschmann at the AH only if output_relkretsch is enabled
 output_relkretschAH_sdf := 1
-output_moreAHquant_ascii := 0
+output_relriemanncubeAH_sdf := 1
+output_moreAHquant_ascii := 1
 output_AHtheta_ascii := 1
 output_metricAH_cart_ascii := 1
 output_metricAH_sph_ascii := 1
-#setting output_relkretschAH_ascii to 1 will output relative Kretschmann at the AH only if output_kretsch is enabled
+#setting output_relkretschAH_ascii to 1 will output relative Kretschmann at the AH only if output_relkretsch is enabled
 output_relkretschAH_ascii := 1
-output_diagnosticAH_ascii := 0
+output_relriemanncubeAH_ascii := 1
+output_diagnosticAH_ascii := 1
 #Option important when restarting from checkpoint: in case the excision surface of the new run is smaller than the one in the old one, this option makes sure that all the points excised in the previous run are excised in the current one
 excise_prev_run_ex_pts := 0
 #excision ellipse semi-axes of the previous run when restarting from checkpoint: they must be set only if we are enabling excise_prev_run_ex_pts
@@ -89,10 +92,10 @@ prev_run_ex_r_4 := [0.0 0.0 0.0]
 background := 0
 skip_constraints := 0
 output_ires := 1
-output_kretsch := 1
-#setting output_relkretschcentregrid to 1 will output relative Kretschmann at the centre of the grid only if output_kretsch is enabled
-output_relkretschcentregrid := 0
-output_riemanncube := 1
+output_relkretsch := 1
+#setting output_relkretschcentregrid to 1 will output relative Kretschmann at the centre of the grid only if output_relkretsch is enabled
+output_relkretschcentregrid := 1
+output_relriemanncube := 1
 
 #------ Boundary extrapolation ---------
 output_bdyquantities := 0
