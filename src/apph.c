@@ -130,8 +130,8 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
       AH_g0_chichi[c_AH][i]=0;
       AH_g0_chiphi[c_AH][i]=0;
       AH_g0_phiphi[c_AH][i]=0;
-      AH_relkretsch[c_AH][i]=0;
-      AH_relriemanncube[c_AH][i]=0;
+      AH_kretsch[c_AH][i]=0;
+      AH_riemanncube[c_AH][i]=0;
       AH_ahr[c_AH][i]=0;
       AH_dch[c_AH][i]=0;
       AH_dph[c_AH][i]=0;
@@ -164,8 +164,8 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
                          AH_g0_xx[c_AH],AH_g0_xy[c_AH],AH_g0_xz[c_AH],
                          AH_g0_yy[c_AH],AH_g0_yz[c_AH],AH_g0_zz[c_AH],
                          AH_g0_chichi[c_AH],AH_g0_chiphi[c_AH],AH_g0_phiphi[c_AH],
-                         AH_relkretsch[c_AH],
-                         AH_relriemanncube[c_AH],
+                         AH_kretsch[c_AH],
+                         AH_riemanncube[c_AH],
                          AH_ahr[c_AH],AH_dch[c_AH],AH_dph[c_AH],
                          AH_da0[c_AH],AH_dcq[c_AH],AH_dcp[c_AH],AH_dcp2[c_AH],
                          gb_tt_n,gb_tt_nm1,gb_tt_np1,
@@ -178,8 +178,8 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
                          gb_yy_n,gb_yy_nm1,gb_yy_np1,
                          gb_yz_n,gb_yz_nm1,gb_yz_np1,
                          gb_zz_n,gb_zz_nm1,gb_zz_np1,
-                         relkretsch_n,
-                         relriemanncube_n,
+                         kretsch_n,
+                         riemanncube_n,
                          &AdS_L,x,y,z,&dt,chr,&AMRD_ex,&AMRD_do_ex,&Nx,&Ny,&Nz,&axisym);
                }
                else
@@ -193,8 +193,8 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
                          AH_g0_xx[c_AH],AH_g0_xy[c_AH],AH_g0_xz[c_AH],
                          AH_g0_yy[c_AH],AH_g0_yz[c_AH],AH_g0_zz[c_AH],
                          AH_g0_chichi[c_AH],AH_g0_chiphi[c_AH],AH_g0_phiphi[c_AH],
-                         AH_relkretsch[c_AH],
-                         AH_relriemanncube[c_AH],
+                         AH_kretsch[c_AH],
+                         AH_riemanncube[c_AH],
                          AH_ahr[c_AH],AH_dch[c_AH],AH_dph[c_AH],
                          AH_da0[c_AH],AH_dcq[c_AH],AH_dcp[c_AH],AH_dcp2[c_AH],
                          gb_tt_np1,gb_tt_n,gb_tt_nm1,
@@ -207,8 +207,8 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
                          gb_yy_np1,gb_yy_n,gb_yy_nm1,
                          gb_yz_np1,gb_yz_n,gb_yz_nm1,
                          gb_zz_np1,gb_zz_n,gb_zz_nm1,
-                         relkretsch_np1,
-                         relriemanncube_np1,
+                         kretsch_np1,
+                         riemanncube_np1,
                          &AdS_L,x,y,z,&dt,chr,&AMRD_ex,&AMRD_do_ex,&Nx,&Ny,&Nz,&axisym);
                }
 
@@ -302,20 +302,20 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
         for (i=0; i<np; i++) {AH_g0_phiphi[c_AH][i]=AH_w3[c_AH][i]+AH_w4[c_AH][i];}
       }
 
-      if (output_relkretschAH_sdf||output_relkretschAH_ascii)
+      if (output_kretschAH_sdf||output_kretschAH_ascii)
       {
-        // save relkretschmann scalar on the horizon, accounting for all processors
-        MPI_Allreduce(AH_relkretsch[c_AH],AH_w3[c_AH],np,MPI_DOUBLE,MPI_MAX,MPI_COMM_WORLD);
-        MPI_Allreduce(AH_relkretsch[c_AH],AH_w4[c_AH],np,MPI_DOUBLE,MPI_MIN,MPI_COMM_WORLD);
-        for (i=0; i<np; i++) {AH_relkretsch[c_AH][i]=AH_w3[c_AH][i]+AH_w4[c_AH][i];}
+        // save kretschmann scalar on the horizon, accounting for all processors
+        MPI_Allreduce(AH_kretsch[c_AH],AH_w3[c_AH],np,MPI_DOUBLE,MPI_MAX,MPI_COMM_WORLD);
+        MPI_Allreduce(AH_kretsch[c_AH],AH_w4[c_AH],np,MPI_DOUBLE,MPI_MIN,MPI_COMM_WORLD);
+        for (i=0; i<np; i++) {AH_kretsch[c_AH][i]=AH_w3[c_AH][i]+AH_w4[c_AH][i];}
       }
 
-      if (output_relriemanncubeAH_sdf||output_relriemanncubeAH_ascii)
+      if (output_riemanncubeAH_sdf||output_riemanncubeAH_ascii)
       {
-        // save relative relkretschmann scalar on the horizon, accounting for all processors
-        MPI_Allreduce(AH_relriemanncube[c_AH],AH_w3[c_AH],np,MPI_DOUBLE,MPI_MAX,MPI_COMM_WORLD);
-        MPI_Allreduce(AH_relriemanncube[c_AH],AH_w4[c_AH],np,MPI_DOUBLE,MPI_MIN,MPI_COMM_WORLD);
-        for (i=0; i<np; i++) {AH_relriemanncube[c_AH][i]=AH_w3[c_AH][i]+AH_w4[c_AH][i];}
+        // save relative kretschmann scalar on the horizon, accounting for all processors
+        MPI_Allreduce(AH_riemanncube[c_AH],AH_w3[c_AH],np,MPI_DOUBLE,MPI_MAX,MPI_COMM_WORLD);
+        MPI_Allreduce(AH_riemanncube[c_AH],AH_w4[c_AH],np,MPI_DOUBLE,MPI_MIN,MPI_COMM_WORLD);
+        for (i=0; i<np; i++) {AH_riemanncube[c_AH][i]=AH_w3[c_AH][i]+AH_w4[c_AH][i];}
       }
 
       if (output_diagnosticAH_ascii)
@@ -371,13 +371,13 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
      reg_ah_r_(AH_g0_chiphi[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
      reg_ah_r_(AH_g0_phiphi[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
     }
-    if (output_relkretschAH_sdf||output_relkretschAH_ascii)
+    if (output_kretschAH_sdf||output_kretschAH_ascii)
     {
-      reg_ah_r_(AH_relkretsch[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+      reg_ah_r_(AH_kretsch[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
     }
-    if (output_relriemanncubeAH_sdf||output_relriemanncubeAH_ascii)
+    if (output_riemanncubeAH_sdf||output_riemanncubeAH_ascii)
     {
-      reg_ah_r_(AH_relriemanncube[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+      reg_ah_r_(AH_riemanncube[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
     }
   }
 
@@ -404,13 +404,13 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
             smooth_ah_r_(AH_g0_chiphi[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
             smooth_ah_r_(AH_g0_phiphi[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
           }
-          if (output_relkretschAH_sdf||output_relkretschAH_ascii)
+          if (output_kretschAH_sdf||output_kretschAH_ascii)
           {
-            smooth_ah_r_(AH_relkretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            smooth_ah_r_(AH_kretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
           }
-          if (output_relriemanncubeAH_sdf||output_relriemanncubeAH_ascii)
+          if (output_riemanncubeAH_sdf||output_riemanncubeAH_ascii)
           {
-            smooth_ah_r_(AH_relriemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            smooth_ah_r_(AH_riemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
           }
         }
       }
@@ -434,13 +434,13 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
             smooth_ah_r_b_(AH_g0_chiphi[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
             smooth_ah_r_b_(AH_g0_phiphi[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
           }
-          if (output_relkretschAH_sdf||output_relkretschAH_ascii)
+          if (output_kretschAH_sdf||output_kretschAH_ascii)
           {
-            smooth_ah_r_b_(AH_relkretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            smooth_ah_r_b_(AH_kretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
           }
-          if (output_relriemanncubeAH_sdf||output_relriemanncubeAH_ascii)
+          if (output_riemanncubeAH_sdf||output_riemanncubeAH_ascii)
           {
-            smooth_ah_r_b_(AH_relriemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            smooth_ah_r_b_(AH_riemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
           }
         }
       }
@@ -468,13 +468,13 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
             smooth_ah_r_(AH_g0_chiphi[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
             smooth_ah_r_(AH_g0_phiphi[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
           }
-          if (output_relkretschAH_sdf||output_relkretschAH_ascii)
+          if (output_kretschAH_sdf||output_kretschAH_ascii)
           {
-            smooth_ah_r_(AH_relkretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            smooth_ah_r_(AH_kretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
           }
-          if (output_relriemanncubeAH_sdf||output_relriemanncubeAH_ascii)
+          if (output_riemanncubeAH_sdf||output_riemanncubeAH_ascii)
           {
-            smooth_ah_r_(AH_relriemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            smooth_ah_r_(AH_riemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
           }
         }
       }
@@ -546,21 +546,21 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
             smooth_ah_r_(AH_g0_phiphi[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
             reg_ah_r_(AH_g0_phiphi[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
           }
-          if (output_relkretschAH_sdf||output_relkretschAH_ascii)
+          if (output_kretschAH_sdf||output_kretschAH_ascii)
           {
-            smooth_ah_r_b_(AH_relkretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
-            smooth_ah_r_(AH_relkretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
-            reg_ah_r_(AH_relkretsch[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]); 
-            smooth_ah_r_(AH_relkretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
-            reg_ah_r_(AH_relkretsch[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);  
+            smooth_ah_r_b_(AH_kretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            smooth_ah_r_(AH_kretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            reg_ah_r_(AH_kretsch[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]); 
+            smooth_ah_r_(AH_kretsch[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            reg_ah_r_(AH_kretsch[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);  
           }
-          if (output_relriemanncubeAH_sdf||output_relriemanncubeAH_ascii)
+          if (output_riemanncubeAH_sdf||output_riemanncubeAH_ascii)
           {
-            smooth_ah_r_b_(AH_relriemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
-            smooth_ah_r_(AH_relriemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
-            reg_ah_r_(AH_relriemanncube[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]); 
-            smooth_ah_r_(AH_relriemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
-            reg_ah_r_(AH_relriemanncube[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);  
+            smooth_ah_r_b_(AH_riemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            smooth_ah_r_(AH_riemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            reg_ah_r_(AH_riemanncube[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]); 
+            smooth_ah_r_(AH_riemanncube[c_AH],AH_w1[c_AH],&eps0,&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+            reg_ah_r_(AH_riemanncube[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);  
           }
         }
 
@@ -586,13 +586,13 @@ real fill_theta_ahmetric(double *AH_theta0, real eps0, real *area, real *c_equat
         reg_ah_r_(AH_g0_chiphi[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
         reg_ah_r_(AH_g0_phiphi[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
       }
-      if (output_relkretschAH_sdf||output_relkretschAH_ascii)
+      if (output_kretschAH_sdf||output_kretschAH_ascii)
       {
-        reg_ah_r_(AH_relkretsch[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+        reg_ah_r_(AH_kretsch[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
       }
-      if (output_relriemanncubeAH_sdf||output_relriemanncubeAH_ascii)
+      if (output_riemanncubeAH_sdf||output_riemanncubeAH_ascii)
       {
-        reg_ah_r_(AH_relriemanncube[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
+        reg_ah_r_(AH_riemanncube[c_AH],&AH_Nchi[c_AH],&AH_Nphi[c_AH]);
       }
     }
 

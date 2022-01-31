@@ -550,12 +550,11 @@ c----------------------------------------------------------------------
         end
 
 c-----------------------------------------------------------------------
-c calculate Kretschmann scalar, Kretschmann scalar relative to the background, 
-c Riemann cube scalar and Riemann cube scalar relative to the background
+c calculate Kretschmann scalar and Riemann cube scalar
 c-----------------------------------------------------------------------
-        subroutine kretsch_riemanncube(relkretsch_n,
-     &                  relkretschcentregrid,
-     &                  relriemanncube_n,
+        subroutine kretsch_riemanncube(kretsch_n,
+     &                  kretschcentregrid,
+     &                  riemanncube_n,
      &                  gb_tt_np1,gb_tt_n,gb_tt_nm1,
      &                  gb_tx_np1,gb_tx_n,gb_tx_nm1,
      &                  gb_ty_np1,gb_ty_n,gb_ty_nm1,
@@ -576,7 +575,6 @@ c-----------------------------------------------------------------------
      &                  output_riemanncube)
 
         implicit none
-
         integer output_kretsch
         integer output_riemanncube
         integer Nx,Ny,Nz
@@ -636,6 +634,14 @@ c-----------------------------------------------------------------------
         real*8 g0_ll_x(4,4,4),g0_uu_x(4,4,4),g0_ll_xx(4,4,4,4)
         real*8 gads_ll(4,4),gads_uu(4,4)
         real*8 gads_ll_x(4,4,4),gads_uu_x(4,4,4),gads_ll_xx(4,4,4,4)
+        real*8 gammaads_ull(4,4,4)
+        real*8 gammaads_ull_x(4,4,4,4)
+        real*8 riemannads_ulll(4,4,4,4)
+        real*8 riemannads_llll(4,4,4,4)
+        real*8 riemannads_uuuu(4,4,4,4)
+        real*8 riemannads_uull(4,4,4,4)
+        real*8 kretschads,riemanncubeads
+
         real*8 h0_ll(4,4),h0_uu(4,4)
         real*8 h0_ll_x(4,4,4),h0_uu_x(4,4,4),h0_ll_xx(4,4,4,4)
         real*8 gamma_ull(4,4,4),gamma_ull_x(4,4,4,4)
@@ -664,11 +670,9 @@ c-----------------------------------------------------------------------
 
         real*8 theta(Nx,Ny,Nz)
 
-        real*8 kretsch_n(Nx,Ny,Nz),relkretsch_n(Nx,Ny,Nz)
-        real*8 kretschpureads
-        real*8 relkretschcentregrid
-        real*8 riemanncube_n(Nx,Ny,Nz),relriemanncube_n(Nx,Ny,Nz)
-        real*8 riemanncubepureads
+        real*8 kretsch_n(Nx,Ny,Nz)
+        real*8 kretschcentregrid
+        real*8 riemanncube_n(Nx,Ny,Nz)
 
 !!!!!!!DEBUGGING!!!!!!
         integer max_i,max_j,max_k
@@ -808,15 +812,13 @@ c-----------------------------------------------------------------------
 
 
                kretsch_n(i,j,k)=0.0d0
-               relkretsch_n(i,j,k)=0.0d0
                riemanncube_n(i,j,k)=0.0d0
-               relriemanncube_n(i,j,k)=0.0d0
                if ((output_kretsch.eq.1)
      &          .or.(output_riemanncube.eq.1)) then
-                do a=1,4
-                 do b=1,4
-                  do c=1,4
-                   do d=1,4
+               do a=1,4
+                do b=1,4
+                 do c=1,4
+                  do d=1,4
                     if (output_kretsch.eq.1) then
                        kretsch_n(i,j,k)=
      &                         kretsch_n(i,j,k)
@@ -837,32 +839,19 @@ c-----------------------------------------------------------------------
                      end do
                     end if
        
-                   end do
                   end do
                  end do
                 end do
-                if (output_kretsch.eq.1) then
-                 kretschpureads=24
-                 relkretsch_n(i,j,k)=(kretsch_n(i,j,k))
-     &                         /kretschpureads-1.0d0
-                end if
-                if (output_riemanncube.eq.1) then
-                 riemanncubepureads=-48
-                 relriemanncube_n(i,j,k)=(riemanncube_n(i,j,k))
-     &                         /riemanncubepureads-1.0d0
-                end if
+               end do
                end if
-
 
 
             else
                kretsch_n(i,j,k)=0.0d0
-               relkretsch_n(i,j,k)=0.0d0
                riemanncube_n(i,j,k)=0.0d0
-               relriemanncube_n(i,j,k)=0.0d0
             end if
 
-!find the indices denoting the point at the centre of the grid. Needed to compute relkretschcentregrid
+!find the indices denoting the point at the centre of the grid. Needed to compute kretschcentregrid
                if (     (abs(x0).lt.10.0d0**(-10))
      &             .and.(abs(y0).lt.10.0d0**(-10))
      &             .and.(abs(z0).lt.10.0d0**(-10)) ) then
@@ -877,16 +866,17 @@ c-----------------------------------------------------------------------
           end do
         end do
 
-        relkretschcentregrid=0.0d0
+        kretschcentregrid=0.0d0
 
         if ((ic.gt.0).and.(jc.gt.0).and.(kc.gt.0)) then !this condition is activated only if the processor calling ires contains the centre of the grid (where ic,jc and kc are set to a positive number by the cycle above)
-             relkretschcentregrid=relkretsch_n(ic,jc,kc)
-             !write(*,*) "ex,chr(ic,jc,kc)",ex,chr(ic,jc,kc)
-             !write(*,*) "ic,jc,kc=",ic,jc,kc
-             !write(*,*) "relkretschcentregrid=",relkretschcentregrid
+             kretschcentregrid=kretsch_n(ic,jc,kc)
         else
-             relkretschcentregrid=0.0d0
+             kretschcentregrid=0.0d0
         end if
+
+!           write(*,*) "ex,chr(ic,jc,kc)",ex,chr(ic,jc,kc)
+!           write(*,*) "ic,jc,kc=",ic,jc,kc
+!           write(*,*) "kretschcentregrid=",kretschcentregrid
 
 
         return

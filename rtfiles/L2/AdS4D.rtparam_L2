@@ -65,16 +65,16 @@ AH_tmin := 0
 output_moreAHquant_sdf := 1
 output_metricAH_cart_sdf := 1
 output_metricAH_sph_sdf := 1
-#setting output_relkretschAH_sdf to 1 will output relative Kretschmann at the AH only if output_relkretsch is enabled
-output_relkretschAH_sdf := 1
-output_relriemanncubeAH_sdf := 1
+#setting output_kretschAH_sdf to 1 will output relative Kretschmann at the AH only if output_kretsch is enabled
+output_kretschAH_sdf := 1
+output_riemanncubeAH_sdf := 1
 output_moreAHquant_ascii := 1
 output_AHtheta_ascii := 1
 output_metricAH_cart_ascii := 1
 output_metricAH_sph_ascii := 1
-#setting output_relkretschAH_ascii to 1 will output relative Kretschmann at the AH only if output_relkretsch is enabled
-output_relkretschAH_ascii := 1
-output_relriemanncubeAH_ascii := 1
+#setting output_kretschAH_ascii to 1 will output relative Kretschmann at the AH only if output_kretsch is enabled
+output_kretschAH_ascii := 1
+output_riemanncubeAH_ascii := 1
 output_diagnosticAH_ascii := 1
 #Option important when restarting from checkpoint: in case the excision surface of the new run is smaller than the one in the old one, this option makes sure that all the points excised in the previous run are excised in the current one
 excise_prev_run_ex_pts := 0
@@ -93,13 +93,13 @@ prev_run_ex_r_4 := [0.0 0.0 0.0]
 background := 0
 skip_constraints := 0
 output_ires := 1
-output_relkretsch := 1
-#setting output_relkretschcentregrid to 1 will output relative Kretschmann at the centre of the grid only if output_relkretsch is enabled
-output_relkretschcentregrid := 1
-output_relriemanncube := 1
+output_kretsch := 1
+#setting output_kretschcentregrid to 1 will output relative Kretschmann at the centre of the grid only if output_kretsch is enabled
+output_kretschcentregrid := 1
+output_riemanncube := 1
 
 #------ Boundary extrapolation ---------
-output_bdyquantities := 0
+output_bdyquantities := 1
 bdy_L := 1
 #if rad_extrap=1 we use boundary extrapolation along radial direction (output saved in the freepts txt files)
 #if rad_extrap=0 we extrapolate along Cartesian directions
@@ -166,7 +166,12 @@ max_resolution_degree := 4
 #reduction_factor is the factor by which we need to reduce the number points of the lowest resolution used for convergence (i.e. the resolution with degree 1) so that we only select points that are present also in the resolutions with degree 2 and 3. To get the exact same points in higher resolutions, we need to reduce by a factor (reduction_factor**(max_resolution_degree-1))*((ratio_Lhighres_Llowres)**(resolution_degree-1)). ratio_Lhighres_Llowres and reduction_factor must be chosen so that this factor is an integer for all resolutions
 reduction_factor := 2
 
-base_shape := [33 33 33]
+#base_shape := [11 11 11]
+#base_shape := [19 19 19]
+#base_shape := [33 33 33]
+#base_shape := [65 65 65]
+#base_shape := [129 129 129]
+base_shape := [257 257 257]
 max_lev := 1
 lambda := 0.2
 rho_sp := 2
@@ -289,9 +294,9 @@ num_save_1_vars := 0
 #save_1_vars := [ "iresall" "gb_res" "kg_ires" "quasiset_tracell" ]
 
 num_save_2_vars := 0
-#save_2_vars := [ "gb_xx" "phi1" "relkretsch" "relriemanncube" ]
-#save_2_vars := [ "gb_xx" "phi1" "relkretsch" "relriemanncube" ]
-#save_2_vars := [ "relkretsch" "relriemanncube" ]
+#save_2_vars := [ "gb_xx" "phi1" "kretsch" "riemanncube" ]
+#save_2_vars := [ "gb_xx" "phi1" "kretsch" "riemanncube" ]
+#save_2_vars := [ "kretsch" "riemanncube" ]
 
 num_save_3_vars := 0
 save_3_vars := [ ]

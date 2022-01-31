@@ -89,6 +89,7 @@ c----------------------------------------------------------------------
         parameter (PI=3.141592653589793d0)
 
         real*8 x0,y0,z0
+        real*8 rho0,theta0,phi0
         real*8 dx,dy,dz
 
         real*8 zeros(Nx,Ny,Nz)
@@ -106,7 +107,7 @@ c----------------------------------------------------------------------
         real*8 normsusq
 
         real*8 g0gamfx(4)
-        real*8 nufx,nuxfx(4),gamxfxfx(4)
+        real*8 nufx,nuxfx(4),nufxfx(4),gamxfxfx(4)
 
         real*8 theta_ads
 
@@ -155,7 +156,7 @@ c----------------------------------------------------------------------
         data normsusq/0.0/
 
         data g0gamfx/4*0.0/
-        data nufx,nuxfx,gamxfxfx/0.0,4*0.0,4*0.0/
+        data nufx,nuxfx,nufxfx,gamxfxfx/0.0,4*0.0,4*0.0,4*0.0/
 
         data g0_ll,g0_uu/16*0.0,16*0.0/
         data gads_ll,gads_uu/16*0.0,16*0.0/
@@ -237,6 +238,13 @@ c----------------------------------------------------------------------
                x0=x(i)
                y0=y(j)              
                z0=z(k)
+               rho0=sqrt(x0**2+y0**2+z0**2)
+               theta0=acos(x0/rho0)
+               if (z0.lt.0) then
+                phi0=atan2(z0,y0)+2*PI
+               else
+                phi0=atan2(z0,y0)
+               end if
  
                ! computes tensors at point i,j 
                call tensor_init(
@@ -370,10 +378,13 @@ c----------------------------------------------------------------------
                 nufx=nufx
      &              +n_u(a)*f0_x(a)
                 nuxfx(a)=0
+                nufxfx(a)=0
                 gamxfxfx(a)=0
                 do c=1,4
                   nuxfx(a)=nuxfx(a)
      &                    +n_u_x(c,a)*f0_x(c)
+                  nufxfx(a)=nufxfx(a)
+     &                    +n_u(c)*f0_xx(c,a)
                   do d=1,4
                     gamxfxfx(a)=gamxfxfx(a)
      &                        +gam_uu_x(c,d,a)*f0_x(c)*f0_x(d)
@@ -385,7 +396,10 @@ c----------------------------------------------------------------------
               do a=1,4
                 do b=1,4
                   s_l_x(a,b)=
-     &                     (f0_xx(a,b)+n_l_x(a,b)*nufx+n_l(a)*nuxfx(b))
+     &                     (n_l_x(a,b)*nufx+n_l(a)*nuxfx(b)
+     &                      +f0_xx(a,b)
+     &                      +n_l(a)*nufxfx(b)
+     &                        )
      &                     /sqrt(normsusq)
      &                    -(f0_x(a)+n_l(a)*nufx)*gamxfxfx(b)
      &                     /2.0d0/sqrt(normsusq)**3
@@ -917,8 +931,8 @@ c-----------------------------------------------------------------------
      &                    AH_g0_xx,AH_g0_xy,AH_g0_xz,
      &                    AH_g0_yy,AH_g0_yz,AH_g0_zz,
      &                    AH_g0_chichi,AH_g0_chiphi,AH_g0_phiphi,
-     &                    AH_relkretsch,
-     &                    AH_relriemanncube,
+     &                    AH_kretsch,
+     &                    AH_riemanncube,
      &                    AH_ahr,AH_dch,AH_dph,
      &                    AH_da0,AH_dcq,AH_dcp,AH_dcp2,
      &                    gb_tt_np1,gb_tt_n,gb_tt_nm1,
@@ -931,8 +945,8 @@ c-----------------------------------------------------------------------
      &                    gb_yy_np1,gb_yy_n,gb_yy_nm1,
      &                    gb_yz_np1,gb_yz_n,gb_yz_nm1,
      &                    gb_zz_np1,gb_zz_n,gb_zz_nm1,
-     &                    relkretsch_n,
-     &                    relriemanncube_n,
+     &                    kretsch_n,
+     &                    riemanncube_n,
      &                    L,x,y,z,dt,chr,ex,do_ex,
      &                    Nx,Ny,Nz,axisym)
         implicit none
@@ -954,8 +968,8 @@ c-----------------------------------------------------------------------
         real*8 AH_g0_chichi(AH_Nchi,AH_Nphi)
         real*8 AH_g0_chiphi(AH_Nchi,AH_Nphi)
         real*8 AH_g0_phiphi(AH_Nchi,AH_Nphi)
-        real*8 AH_relkretsch(AH_Nchi,AH_Nphi)
-        real*8 AH_relriemanncube(AH_Nchi,AH_Nphi)
+        real*8 AH_kretsch(AH_Nchi,AH_Nphi)
+        real*8 AH_riemanncube(AH_Nchi,AH_Nphi)
         real*8 AH_ahr(AH_Nchi,AH_Nphi)
         real*8 AH_dch(AH_Nchi,AH_Nphi)
         real*8 AH_dph(AH_Nchi,AH_Nphi)
@@ -976,8 +990,8 @@ c-----------------------------------------------------------------------
         real*8 gb_yy_np1(Nx,Ny,Nz),gb_yy_n(Nx,Ny,Nz),gb_yy_nm1(Nx,Ny,Nz)
         real*8 gb_yz_np1(Nx,Ny,Nz),gb_yz_n(Nx,Ny,Nz),gb_yz_nm1(Nx,Ny,Nz)
         real*8 gb_zz_np1(Nx,Ny,Nz),gb_zz_n(Nx,Ny,Nz),gb_zz_nm1(Nx,Ny,Nz)
-        real*8 relkretsch_n(Nx,Ny,Nz)
-        real*8 relriemanncube_n(Nx,Ny,Nz)
+        real*8 kretsch_n(Nx,Ny,Nz)
+        real*8 riemanncube_n(Nx,Ny,Nz)
 
         real*8 cosx(Nx),cosy(Ny),cosz(Nz)
         real*8 sinx(Nx),siny(Ny),sinz(Nz)
@@ -1308,26 +1322,26 @@ c-----------------------------------------------------------------------
 !         write (*,*) "AH_g0_yz(i0,j0)=",AH_g0_yz(i0,j0)
 !         write (*,*) "AH_g0_zz(i0,j0)=",AH_g0_zz(i0,j0)
 
-          AH_relkretsch(i0,j0)=
-     &           (1-fx)*(1-fy)*(1-fz)  *relkretsch_n(i,j,k)+
-     &           (  fx)*(1-fy)*(1-fz)  *relkretsch_n(i+1,j,k)+
-     &           (1-fx)*(  fy)*(1-fz)  *relkretsch_n(i,j+1,k)+
-     &           (  fx)*(  fy)*(1-fz)  *relkretsch_n(i+1,j+1,k)+
-     &           (1-fx)*(1-fy)*(  fz)  *relkretsch_n(i,j,k+1)+
-     &           (  fx)*(1-fy)*(  fz)  *relkretsch_n(i+1,j,k+1)+
-     &           (1-fx)*(  fy)*(  fz)  *relkretsch_n(i,j+1,k+1)+
-     &           (  fx)*(  fy)*(  fz)  *relkretsch_n(i+1,j+1,k+1)
+          AH_kretsch(i0,j0)=
+     &           (1-fx)*(1-fy)*(1-fz)  *kretsch_n(i,j,k)+
+     &           (  fx)*(1-fy)*(1-fz)  *kretsch_n(i+1,j,k)+
+     &           (1-fx)*(  fy)*(1-fz)  *kretsch_n(i,j+1,k)+
+     &           (  fx)*(  fy)*(1-fz)  *kretsch_n(i+1,j+1,k)+
+     &           (1-fx)*(1-fy)*(  fz)  *kretsch_n(i,j,k+1)+
+     &           (  fx)*(1-fy)*(  fz)  *kretsch_n(i+1,j,k+1)+
+     &           (1-fx)*(  fy)*(  fz)  *kretsch_n(i,j+1,k+1)+
+     &           (  fx)*(  fy)*(  fz)  *kretsch_n(i+1,j+1,k+1)
 
 
-          AH_relriemanncube(i0,j0)=
-     &           (1-fx)*(1-fy)*(1-fz)  *relriemanncube_n(i,j,k)+
-     &           (  fx)*(1-fy)*(1-fz)  *relriemanncube_n(i+1,j,k)+
-     &           (1-fx)*(  fy)*(1-fz)  *relriemanncube_n(i,j+1,k)+
-     &           (  fx)*(  fy)*(1-fz)  *relriemanncube_n(i+1,j+1,k)+
-     &           (1-fx)*(1-fy)*(  fz)  *relriemanncube_n(i,j,k+1)+
-     &           (  fx)*(1-fy)*(  fz)  *relriemanncube_n(i+1,j,k+1)+
-     &           (1-fx)*(  fy)*(  fz)  *relriemanncube_n(i,j+1,k+1)+
-     &           (  fx)*(  fy)*(  fz)  *relriemanncube_n(i+1,j+1,k+1)
+          AH_riemanncube(i0,j0)=
+     &           (1-fx)*(1-fy)*(1-fz)  *riemanncube_n(i,j,k)+
+     &           (  fx)*(1-fy)*(1-fz)  *riemanncube_n(i+1,j,k)+
+     &           (1-fx)*(  fy)*(1-fz)  *riemanncube_n(i,j+1,k)+
+     &           (  fx)*(  fy)*(1-fz)  *riemanncube_n(i+1,j+1,k)+
+     &           (1-fx)*(1-fy)*(  fz)  *riemanncube_n(i,j,k+1)+
+     &           (  fx)*(1-fy)*(  fz)  *riemanncube_n(i+1,j,k+1)+
+     &           (1-fx)*(  fy)*(  fz)  *riemanncube_n(i,j+1,k+1)+
+     &           (  fx)*(  fy)*(  fz)  *riemanncube_n(i+1,j+1,k+1)
 
         !--------------------------------------------------------------
         ! proper area element

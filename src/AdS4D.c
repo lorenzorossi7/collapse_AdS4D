@@ -18,7 +18,7 @@
 #include "apph.h"
 
 //maximum value for AH_Nchi+AH_Nchi*AH_Nphi determining the resolution of the AH finder: the resolution of each AH cannot be larger than MAX_AH_Nchi_AH_Nphi_AH_finder
-#define MAX_AH_Nchi_AH_Nphi_AH_FINDER 2145 //2145=33*65, 153=9*17
+#define MAX_AH_Nchi_AH_Nphi_AH_FINDER 131841 //131841=257*513, 2145=33*65, 153=9*17
 
 //=============================================================================
 // if axisym=1, then 2+1 simulation in (x,y) plane 
@@ -86,10 +86,10 @@ real prev_run_ex_r[MAX_BHS][3];
 real ex_r[MAX_BHS][3],ex_xc[MAX_BHS][3];
 
 int background,skip_constraints;
-int output_ires,output_relkretschcentregrid,output_relkretsch,output_relriemanncube;
+int output_ires,output_kretschcentregrid,output_kretsch,output_riemanncube;
 int output_moreAHquant_sdf,output_metricAH_cart_sdf,output_metricAH_sph_sdf;
-int output_relkretschAH_sdf,output_relriemanncubeAH_sdf;
-int output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_relkretschAH_ascii,output_relriemanncubeAH_ascii,output_diagnosticAH_ascii;
+int output_kretschAH_sdf,output_riemanncubeAH_sdf;
+int output_moreAHquant_ascii,output_AHtheta_ascii,output_metricAH_cart_ascii,output_metricAH_sph_ascii,output_kretschAH_ascii,output_riemanncubeAH_ascii,output_diagnosticAH_ascii;
 int rad_extrap;
 int output_bdyquantities;
 int bdy_L;
@@ -183,8 +183,8 @@ real *Hb_y_t,*Hb_y_t_n;
 real *Hb_z_t,*Hb_z_t_n;
 
 //variables that are defined in hyperbolic_vars but just because we want them to be synchronized (synchronization only affects the current time level)
-real *relkretsch,*relkretsch_n,*relkretsch_np1,*relkretsch_nm1;
-real *relriemanncube,*relriemanncube_n,*relriemanncube_np1,*relriemanncube_nm1;
+real *kretsch,*kretsch_n,*kretsch_np1,*kretsch_nm1;
+real *riemanncube,*riemanncube_n,*riemanncube_np1,*riemanncube_nm1;
 
 real *w1,*mg_w1;
 real *w2,*mg_w2;
@@ -570,8 +570,8 @@ real *x_outermostpt_fixedpts_extraporder3_paramset2;
 real *y_outermostpt_fixedpts_extraporder3_paramset2;
 real *z_outermostpt_fixedpts_extraporder3_paramset2;
 
-real *relkretschcentregrid;
-real lrelkretschcentregrid0, maxrelkretschcentregrid0,minrelkretschcentregrid0,relkretschcentregrid0;
+real *kretschcentregrid;
+real lkretschcentregrid0, maxkretschcentregrid0,minkretschcentregrid0,kretschcentregrid0;
 
 real *tfunction,*test1,*test2,*test3,*test4;
 real *iresall,*irestt,*irestx,*iresty,*iresxx,*iresxy,*iresyy,*ireszz;
@@ -629,8 +629,8 @@ int Hb_y_t_gfn,Hb_y_t_n_gfn;
 int Hb_z_t_gfn,Hb_z_t_n_gfn;
 
 //variables that are defined in hyperbolic_vars but just because we want them to be synchronized (synchronization only affects the current time level)
-int relkretsch_gfn,relkretsch_n_gfn,relkretsch_np1_gfn,relkretsch_nm1_gfn;
-int relriemanncube_gfn,relriemanncube_n_gfn,relriemanncube_np1_gfn,relriemanncube_nm1_gfn;
+int kretsch_gfn,kretsch_n_gfn,kretsch_np1_gfn,kretsch_nm1_gfn;
+int riemanncube_gfn,riemanncube_n_gfn,riemanncube_np1_gfn,riemanncube_nm1_gfn;
 
 int mask_gfn,mask_mg_gfn,chr_gfn,chr_mg_gfn;
 
@@ -667,7 +667,7 @@ int quasiset_massdensityll_gfn;
 int quasiset_angmomdensityxll_gfn;
 int quasiset_angmomdensityyll_gfn;
 int quasiset_angmomdensityzll_gfn;
-int relkretschcentregrid_gfn;
+int kretschcentregrid_gfn;
 
 int tfunction_gfn,test1_gfn,test2_gfn,test3_gfn,test4_gfn;
 int iresall_gfn,irestt_gfn,irestx_gfn,iresty_gfn,irestz_gfn,iresxx_gfn,iresxy_gfn,iresxz_gfn,iresyy_gfn,iresyz_gfn,ireszz_gfn;
@@ -707,8 +707,8 @@ real *AH_g0_zz[MAX_BHS];
 real *AH_g0_chichi[MAX_BHS];
 real *AH_g0_chiphi[MAX_BHS];
 real *AH_g0_phiphi[MAX_BHS];
-real *AH_relkretsch[MAX_BHS];
-real *AH_relriemanncube[MAX_BHS];
+real *AH_kretsch[MAX_BHS];
+real *AH_riemanncube[MAX_BHS];
 real *AH_ahr[MAX_BHS],*AH_dph[MAX_BHS],*AH_dch[MAX_BHS];
 real *AH_da0[MAX_BHS],*AH_dcq[MAX_BHS],*AH_dcp[MAX_BHS],*AH_dcp2[MAX_BHS];
 
@@ -1688,14 +1688,14 @@ void set_gfns(void)
     if ((Hb_z_np1_gfn  = PAMR_get_gfn("Hb_z",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
 
 //variables that are defined in hyperbolic_vars but just because we want them to be synchronized (synchronization only affects the current time level)
-    if ((relkretsch_gfn      = PAMR_get_gfn("relkretsch",PAMR_MGH, 0))<0) AMRD_stop("set_gnfs error",0);
-    if ((relkretsch_nm1_gfn   = PAMR_get_gfn("relkretsch",PAMR_AMRH,3))<0) AMRD_stop("set_gnfs error",0);
-    if ((relkretsch_n_gfn   = PAMR_get_gfn("relkretsch",PAMR_AMRH,2))<0) AMRD_stop("set_gnfs error",0);
-    if ((relkretsch_np1_gfn   = PAMR_get_gfn("relkretsch",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
-    if ((relriemanncube_gfn      = PAMR_get_gfn("relriemanncube",PAMR_MGH, 0))<0) AMRD_stop("set_gnfs error",0);
-    if ((relriemanncube_nm1_gfn   = PAMR_get_gfn("relriemanncube",PAMR_AMRH,3))<0) AMRD_stop("set_gnfs error",0);
-    if ((relriemanncube_n_gfn   = PAMR_get_gfn("relriemanncube",PAMR_AMRH,2))<0) AMRD_stop("set_gnfs error",0);
-    if ((relriemanncube_np1_gfn   = PAMR_get_gfn("relriemanncube",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
+    if ((kretsch_gfn      = PAMR_get_gfn("kretsch",PAMR_MGH, 0))<0) AMRD_stop("set_gnfs error",0);
+    if ((kretsch_nm1_gfn   = PAMR_get_gfn("kretsch",PAMR_AMRH,3))<0) AMRD_stop("set_gnfs error",0);
+    if ((kretsch_n_gfn   = PAMR_get_gfn("kretsch",PAMR_AMRH,2))<0) AMRD_stop("set_gnfs error",0);
+    if ((kretsch_np1_gfn   = PAMR_get_gfn("kretsch",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
+    if ((riemanncube_gfn      = PAMR_get_gfn("riemanncube",PAMR_MGH, 0))<0) AMRD_stop("set_gnfs error",0);
+    if ((riemanncube_nm1_gfn   = PAMR_get_gfn("riemanncube",PAMR_AMRH,3))<0) AMRD_stop("set_gnfs error",0);
+    if ((riemanncube_n_gfn   = PAMR_get_gfn("riemanncube",PAMR_AMRH,2))<0) AMRD_stop("set_gnfs error",0);
+    if ((riemanncube_np1_gfn   = PAMR_get_gfn("riemanncube",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
 
 
     if ((zeta_gfn     = PAMR_get_gfn("zeta",PAMR_MGH,0))<0) AMRD_stop("set_gnfs error",0);
@@ -1746,7 +1746,7 @@ void set_gfns(void)
     if ((quasiset_angmomdensityyll_gfn    = PAMR_get_gfn("quasiset_angmomdensityyll",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
     if ((quasiset_angmomdensityzll_gfn    = PAMR_get_gfn("quasiset_angmomdensityzll",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
 
-    if ((relkretschcentregrid_gfn    = PAMR_get_gfn("relkretschcentregrid",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
+    if ((kretschcentregrid_gfn    = PAMR_get_gfn("kretschcentregrid",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
 
     if ((hb_t_res_gfn  = PAMR_get_gfn("hb_t_res",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
     if ((hb_i_res_gfn  = PAMR_get_gfn("hb_i_res",PAMR_AMRH,1))<0) AMRD_stop("set_gnfs error",0);
@@ -1941,14 +1941,14 @@ void ldptr(void)
     Hb_z_t  = gfs[Hb_z_t_gfn-1];
     Hb_z_t_n  = gfs[Hb_z_t_n_gfn-1];    
     //variables that are defined in hyperbolic_vars but just because we want them to be synchronized (synchronization only affects the current time level)
-    relkretsch     = gfs[relkretsch_gfn-1];
-    relkretsch_n   = gfs[relkretsch_n_gfn-1];
-    relkretsch_nm1   = gfs[relkretsch_nm1_gfn-1];
-    relkretsch_np1   = gfs[relkretsch_np1_gfn-1];   
-    relriemanncube     = gfs[relriemanncube_gfn-1];
-    relriemanncube_n   = gfs[relriemanncube_n_gfn-1];
-    relriemanncube_nm1   = gfs[relriemanncube_nm1_gfn-1];
-    relriemanncube_np1   = gfs[relriemanncube_np1_gfn-1];  
+    kretsch     = gfs[kretsch_gfn-1];
+    kretsch_n   = gfs[kretsch_n_gfn-1];
+    kretsch_nm1   = gfs[kretsch_nm1_gfn-1];
+    kretsch_np1   = gfs[kretsch_np1_gfn-1];   
+    riemanncube     = gfs[riemanncube_gfn-1];
+    riemanncube_n   = gfs[riemanncube_n_gfn-1];
+    riemanncube_nm1   = gfs[riemanncube_nm1_gfn-1];
+    riemanncube_np1   = gfs[riemanncube_np1_gfn-1];  
 
     zeta     = gfs[zeta_gfn-1];
     zeta_lop = gfs[zeta_lop_gfn-1];
@@ -1995,7 +1995,7 @@ void ldptr(void)
     quasiset_angmomdensityxll  = gfs[quasiset_angmomdensityxll_gfn-1];
     quasiset_angmomdensityyll  = gfs[quasiset_angmomdensityyll_gfn-1];
     quasiset_angmomdensityzll  = gfs[quasiset_angmomdensityzll_gfn-1];
-    relkretschcentregrid = gfs[relkretschcentregrid_gfn-1];
+    kretschcentregrid = gfs[kretschcentregrid_gfn-1];
     hb_t_res  = gfs[hb_t_res_gfn-1];
     hb_i_res  = gfs[hb_i_res_gfn-1];
     Hb_t_0  = gfs[Hb_t_0_gfn-1];
@@ -2350,20 +2350,20 @@ void AdS4D_var_post_init(char *pfile)
     rhoc=1; AMRD_real_param(pfile,"rhoc",&rhoc,1);
     rhod=1; AMRD_real_param(pfile,"rhod",&rhod,1);  
     ex_reset_rbuf=0; AMRD_int_param(pfile,"ex_reset_rbuf",&ex_reset_rbuf,1);
-    output_relkretschcentregrid=0; AMRD_int_param(pfile,"output_relkretschcentregrid",&output_relkretschcentregrid,1);
-    output_relkretsch=0; AMRD_int_param(pfile,"output_relkretsch",&output_relkretsch,1); 
-    output_relriemanncube=0; AMRD_int_param(pfile,"output_relriemanncube",&output_relriemanncube,1); 
+    output_kretschcentregrid=0; AMRD_int_param(pfile,"output_kretschcentregrid",&output_kretschcentregrid,1);
+    output_kretsch=0; AMRD_int_param(pfile,"output_kretsch",&output_kretsch,1); 
+    output_riemanncube=0; AMRD_int_param(pfile,"output_riemanncube",&output_riemanncube,1); 
 	output_moreAHquant_sdf=0; AMRD_int_param(pfile,"output_moreAHquant_sdf",&output_moreAHquant_sdf,1);
 	output_metricAH_cart_sdf=0; AMRD_int_param(pfile,"output_metricAH_cart_sdf",&output_metricAH_cart_sdf,1);
 	output_metricAH_sph_sdf=0; AMRD_int_param(pfile,"output_metricAH_sph_sdf",&output_metricAH_sph_sdf,1);
-	output_relkretschAH_sdf=0; if (output_relkretsch == 1) {AMRD_int_param(pfile,"output_relkretschAH_sdf",&output_relkretschAH_sdf,1);}
-	output_relriemanncubeAH_sdf=0; if (output_relriemanncube == 1) {AMRD_int_param(pfile,"output_relriemanncubeAH_sdf",&output_relriemanncubeAH_sdf,1);}
+	output_kretschAH_sdf=0; if (output_kretsch == 1) {AMRD_int_param(pfile,"output_kretschAH_sdf",&output_kretschAH_sdf,1);}
+	output_riemanncubeAH_sdf=0; if (output_riemanncube == 1) {AMRD_int_param(pfile,"output_riemanncubeAH_sdf",&output_riemanncubeAH_sdf,1);}
 	output_moreAHquant_ascii=0; AMRD_int_param(pfile,"output_moreAHquant_ascii",&output_moreAHquant_ascii,1);
 	output_AHtheta_ascii=0; AMRD_int_param(pfile,"output_AHtheta_ascii",&output_AHtheta_ascii,1);
 	output_metricAH_cart_ascii=0; AMRD_int_param(pfile,"output_metricAH_cart_ascii",&output_metricAH_cart_ascii,1);
 	output_metricAH_sph_ascii=0; AMRD_int_param(pfile,"output_metricAH_sph_ascii",&output_metricAH_sph_ascii,1);
-	output_relkretschAH_ascii=0; if (output_relkretsch == 1) {AMRD_int_param(pfile,"output_relkretschAH_ascii",&output_relkretschAH_ascii,1);}
-	output_relriemanncubeAH_ascii=0; if (output_relriemanncube == 1) {AMRD_int_param(pfile,"output_relriemanncubeAH_ascii",&output_relriemanncubeAH_ascii,1);}
+	output_kretschAH_ascii=0; if (output_kretsch == 1) {AMRD_int_param(pfile,"output_kretschAH_ascii",&output_kretschAH_ascii,1);}
+	output_riemanncubeAH_ascii=0; if (output_riemanncube == 1) {AMRD_int_param(pfile,"output_riemanncubeAH_ascii",&output_riemanncubeAH_ascii,1);}
 	output_diagnosticAH_ascii=0; AMRD_int_param(pfile,"output_diagnosticAH_ascii",&output_diagnosticAH_ascii,1);
     output_bdyquantities=0; AMRD_int_param(pfile,"output_bdyquantities",&output_bdyquantities,1);
     bdy_L=1; AMRD_int_param(pfile,"bdy_L",&bdy_L,1);
@@ -2394,7 +2394,7 @@ void AdS4D_var_post_init(char *pfile)
     half_steps_from_bdy_int_paramset2=1; AMRD_int_param(pfile,"half_steps_from_bdy_int_paramset2",&half_steps_from_bdy_int_paramset2,1);
 
     //allocate memory for relative Kretschmann scalar at the centre of the grid
-	if (output_bdyquantities||output_relkretschcentregrid) {MPI_Comm_size(MPI_COMM_WORLD,&uniSize);} 
+	if (output_bdyquantities||output_kretschcentregrid) {MPI_Comm_size(MPI_COMM_WORLD,&uniSize);} 
     if (output_bdyquantities)
     {
     	//allocate memory for fixed_coords, i.e. the values (fixed for all resolutions) of coordinates of points that we use for use boundary extrapolation
@@ -2539,8 +2539,8 @@ void AdS4D_var_post_init(char *pfile)
         if ( (AH_g0_chichi[l]= (real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real)) )==NULL) AMRD_stop("app_var_post_init...out of memory","");
         if ( (AH_g0_chiphi[l]= (real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real)) )==NULL) AMRD_stop("app_var_post_init...out of memory","");
         if ( (AH_g0_phiphi[l]= (real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real)) )==NULL) AMRD_stop("app_var_post_init...out of memory","");
-        if ( (AH_relkretsch[l]= (real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real)) )==NULL) AMRD_stop("app_var_post_init...out of memory","");
-        if ( (AH_relriemanncube[l]= (real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real)) )==NULL) AMRD_stop("app_var_post_init...out of memory","");
+        if ( (AH_kretsch[l]= (real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real)) )==NULL) AMRD_stop("app_var_post_init...out of memory","");
+        if ( (AH_riemanncube[l]= (real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real)) )==NULL) AMRD_stop("app_var_post_init...out of memory","");
         if ( (AH_ahr[l]= (real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real)) )==NULL) AMRD_stop("app_var_post_init...out of memory","");
         if ( (AH_dch[l]= (real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real)) )==NULL) AMRD_stop("app_var_post_init...out of memory","");
         if ( (AH_dph[l]= (real *)malloc(AH_Nchi[l]*AH_Nphi[l]*sizeof(real)) )==NULL) AMRD_stop("app_var_post_init...out of memory","");
@@ -2595,7 +2595,7 @@ void AdS4D_var_post_init(char *pfile)
         	{
         		ind0=i0+AH_Nchi[0]*j0;
         		AH_R[0][ind0]=rhoh;
-        		AH_R_for_ex_mask[0][ind0]=AH_R[0][ind0];
+        		if (excision_type==3) {AH_R_for_ex_mask[0][ind0]=AH_R[0][ind0];}
         	}
         }
 		min_AH_R0=rhoh;
@@ -2631,7 +2631,7 @@ void AdS4D_var_post_init(char *pfile)
         	{
         		ind0=i0+AH_Nchi[0]*j0;
         		AH_R[0][ind0]=1;
-        		AH_R_for_ex_mask[0][ind0]=AH_R[0][ind0];
+        		if (excision_type==3) {AH_R_for_ex_mask[0][ind0]=AH_R[0][ind0];}
         	}
         }
         min_AH_R0=1;
@@ -3212,11 +3212,11 @@ void AdS4D_t0_cnst_data(void)
     //compute relative Kretschmann scalar of initial data
     if (gb_xx_nm1)
     {
-        if (output_relkretsch||output_relriemanncube)
+        if (output_kretsch||output_riemanncube)
         {
-            kretsch_riemanncube_(relkretsch_n,
-                    relkretschcentregrid,
-                    relriemanncube_n,
+            kretsch_riemanncube_(kretsch_n,
+                    kretschcentregrid,
+                    riemanncube_n,
                     gb_tt_np1,gb_tt_n,gb_tt_nm1,
                     gb_tx_np1,gb_tx_n,gb_tx_nm1,
                     gb_ty_np1,gb_ty_n,gb_ty_nm1,
@@ -3233,9 +3233,9 @@ void AdS4D_t0_cnst_data(void)
                     Hb_z_np1,Hb_z_n,Hb_z_nm1,
                     phi1_np1,phi1_n,phi1_nm1,
                     x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width,
-                    &output_relkretsch,&output_relriemanncube);
+                    &output_kretsch,&output_riemanncube);
 
-            //NOTICE: relkretsch_np1 is not synchronized yet at this stage, meaning that only 1 process has a non-zero value at x=y=z=0. This is crucial for how we save and print relkretschcentregrid in pre_tstep    
+            //NOTICE: kretsch_np1 is not synchronized yet at this stage, meaning that only 1 process has a non-zero value at x=y=z=0. This is crucial for how we save and print kretschcentregrid in pre_tstep    
 			    //if (my_rank==0) {printf("post init_nm1\n"); fflush(stdout); }
 //			   for (i=0; i<Nx; i++)
 //			   {    
@@ -3249,7 +3249,7 @@ void AdS4D_t0_cnst_data(void)
 //			         printf("AdS4D_AMRH_var_clear-POST kretsch_riemanncube_\n");
 //			         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"
 //			                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));
-//			         printf("relkretsch_n[ind]=%lf,relriemanncube_n[ind]=%lf\n",relkretsch_n[ind],relriemanncube_n[ind]);
+//			         printf("kretsch_n[ind]=%lf,riemanncube_n[ind]=%lf\n",kretsch_n[ind],riemanncube_n[ind]);
 //			        }
 //			       }
 //			      }
@@ -3307,33 +3307,33 @@ void AdS4D_pre_io_calc(void)
 	    if (g_L==Lc)
         {
 			//we save here the values of the Kretschmann scalar at the centre of the grid at times greater than 0, computed at the end of g_evo_opt //The value of the Kretschmann scalar at the centre of the grid at t=0 is saved in pre_io_calc.  
-		    if (output_relkretschcentregrid)
+		    if (output_kretschcentregrid)
 		    {
-		        lrelkretschcentregrid0= *relkretschcentregrid;
+		        lkretschcentregrid0= *kretschcentregrid;
 		    }
 	
 		    if ((lc_steps%AMRD_save_ivec0[3]==0)&&(lc_steps!=0))
 	   		{
-	            if (output_relkretsch && output_relkretschcentregrid)
+	            if (output_kretsch && output_kretschcentregrid)
 	            {
-	                MPI_Allreduce((&lrelkretschcentregrid0),(&maxrelkretschcentregrid0),1,MPI_DOUBLE,MPI_MAX,MPI_COMM_WORLD);
-	                MPI_Allreduce((&lrelkretschcentregrid0),(&minrelkretschcentregrid0),1,MPI_DOUBLE,MPI_MIN,MPI_COMM_WORLD);
+	                MPI_Allreduce((&lkretschcentregrid0),(&maxkretschcentregrid0),1,MPI_DOUBLE,MPI_MAX,MPI_COMM_WORLD);
+	                MPI_Allreduce((&lkretschcentregrid0),(&minkretschcentregrid0),1,MPI_DOUBLE,MPI_MIN,MPI_COMM_WORLD);
 	                if (uniSize>1)
 	                {
-	                    relkretschcentregrid0=maxrelkretschcentregrid0+minrelkretschcentregrid0;
+	                    kretschcentregrid0=maxkretschcentregrid0+minkretschcentregrid0;
 	                }
 	                else
 	                {
-	                    relkretschcentregrid0=maxrelkretschcentregrid0;
+	                    kretschcentregrid0=maxkretschcentregrid0;
 	                }
 	                if (my_rank==0)
 	                {
-	                    // save relkretschcentregrid as ascii
-	                    size_name = snprintf(NULL, 0, "%st_relkretschcentregrid.txt",AMRD_save_tag) + 1;
+	                    // save kretschcentregrid as ascii
+	                    size_name = snprintf(NULL, 0, "%st_kretschcentregrid.txt",AMRD_save_tag) + 1;
     					if ( (name = malloc(size_name) )==NULL) AMRD_stop("app_pre_io_calc...out of memory",""); 
-	                    sprintf(name,"%st_relkretschcentregrid.txt",AMRD_save_tag);
+	                    sprintf(name,"%st_kretschcentregrid.txt",AMRD_save_tag);
 	                    errno=0; if ( (fp = fopen(name, "a+") )==NULL) printf("ERROR opening file %s with error %d!\n",name,errno);
-	                    fprintf(fp,"%24.16e %24.16e \n",ct,relkretschcentregrid0);
+	                    fprintf(fp,"%24.16e %24.16e \n",ct,kretschcentregrid0);
 	                    fclose(fp);
 	                    free(name); name=NULL;
 	                }
@@ -11498,35 +11498,35 @@ void AdS4D_pre_io_calc(void)
         if (g_L==Lc)
         {
         	//we save here the values of the Kretschmann scalar at the centre of the grid at times greater than 0, computed at the end of g_evo_opt 
-            if (output_relkretschcentregrid)
+            if (output_kretschcentregrid)
             {
-                lrelkretschcentregrid0= *relkretschcentregrid;
+                lkretschcentregrid0= *kretschcentregrid;
             }
 
             if (lc_steps==0)
         	{   
-            	if (output_relkretsch && output_relkretschcentregrid)
+            	if (output_kretsch && output_kretschcentregrid)
             	{
-					MPI_Allreduce((&lrelkretschcentregrid0),(&maxrelkretschcentregrid0),1,MPI_DOUBLE,MPI_MAX,MPI_COMM_WORLD);
-	                MPI_Allreduce((&lrelkretschcentregrid0),(&minrelkretschcentregrid0),1,MPI_DOUBLE,MPI_MIN,MPI_COMM_WORLD);
+					MPI_Allreduce((&lkretschcentregrid0),(&maxkretschcentregrid0),1,MPI_DOUBLE,MPI_MAX,MPI_COMM_WORLD);
+	                MPI_Allreduce((&lkretschcentregrid0),(&minkretschcentregrid0),1,MPI_DOUBLE,MPI_MIN,MPI_COMM_WORLD);
 	                if (uniSize>1)
 	                {
-	                    relkretschcentregrid0=maxrelkretschcentregrid0+minrelkretschcentregrid0;
+	                    kretschcentregrid0=maxkretschcentregrid0+minkretschcentregrid0;
 	                }
 	                else
 	                {
-	                    relkretschcentregrid0=maxrelkretschcentregrid0;
+	                    kretschcentregrid0=maxkretschcentregrid0;
 	                }
 
 	                if (my_rank==0)
 	                {
-	                    // save relkretschcentregrid as ascii
+	                    // save kretschcentregrid as ascii
 	                    
-	                    size_name = snprintf(NULL, 0, "%st_relkretschcentregrid.txt",AMRD_save_tag) + 1;
+	                    size_name = snprintf(NULL, 0, "%st_kretschcentregrid.txt",AMRD_save_tag) + 1;
     					if ( (name = malloc(size_name) )==NULL) AMRD_stop("app_pre_io_calc...out of memory",""); 
-	                    sprintf(name,"%st_relkretschcentregrid.txt",AMRD_save_tag);
+	                    sprintf(name,"%st_kretschcentregrid.txt",AMRD_save_tag);
 	                    errno=0; if ( (fp = fopen(name, "a+") )==NULL) printf("ERROR opening file %s with error %d!\n",name,errno);
-	                    fprintf(fp,"%24.16e %24.16e \n",ct,relkretschcentregrid0);
+	                    fprintf(fp,"%24.16e %24.16e \n",ct,kretschcentregrid0);
 	                    fclose(fp);
 	                    free(name); name=NULL;
 	                }
@@ -19913,12 +19913,12 @@ void AdS4D_evolve(int iter)
                 //
                 //   
     //compute relative Kretschmann scalar after each iteration of evolution equations (after AdS4D_evolve variables in amr_sync are synchronized, so this is where we should compute variables that we want to be synchronized) 
-    //NOTICE: before calling pre_io_calc, the function called before saving info to disk, relkretsch_np1 is synchronised and then moved to relkretsch_n (while relkretsch_n is moved to relkretsch_nm1 and relkretsch_nm1 is moved to relkretsch_np1). So we have to save relkretsch for the current time step into relkretsch_np1 to have it synchronised and saved in relkretsch_n
-        if (output_relkretsch||output_relriemanncube)
+    //NOTICE: before calling pre_io_calc, the function called before saving info to disk, kretsch_np1 is synchronised and then moved to kretsch_n (while kretsch_n is moved to kretsch_nm1 and kretsch_nm1 is moved to kretsch_np1). So we have to save kretsch for the current time step into kretsch_np1 to have it synchronised and saved in kretsch_n
+        if (output_kretsch||output_riemanncube)
         {   
-            kretsch_riemanncube_(relkretsch_np1,
-            	relkretschcentregrid,
-            	relriemanncube_np1,
+            kretsch_riemanncube_(kretsch_np1,
+            	kretschcentregrid,
+            	riemanncube_np1,
                 gb_tt_np1,gb_tt_n,gb_tt_nm1,
                 gb_tx_np1,gb_tx_n,gb_tx_nm1,
                 gb_ty_np1,gb_ty_n,gb_ty_nm1,
@@ -19935,8 +19935,8 @@ void AdS4D_evolve(int iter)
                 Hb_z_np1,Hb_z_n,Hb_z_nm1,
                 phi1_np1,phi1_n,phi1_nm1,
                 x,y,z,&dt,chr,&AdS_L,&AMRD_ex,&Nx,&Ny,&Nz,phys_bdy,ghost_width,
-                &output_relkretsch,&output_relriemanncube);
-                //NOTICE: relkretsch_np1 is not synchronized yet at this stage, meaning that only 1 process has a non-zero value at x=y=z=0. This is crucial for how we save and print relkretschcentregrid in post_tstep   
+                &output_kretsch,&output_riemanncube);
+                //NOTICE: kretsch_np1 is not synchronized yet at this stage, meaning that only 1 process has a non-zero value at x=y=z=0. This is crucial for how we save and print kretschcentregrid in post_tstep   
 //               for (i=0; i<Nx; i++)
 //			   {    
 //			   	  for (j=0; j<Ny; j++)
@@ -19949,7 +19949,7 @@ void AdS4D_evolve(int iter)
 //			         printf("AdS4D_AMRH_var_clear-POST kretsch_riemanncube_\n");
 //			         printf("i=%i,j=%i,k=%i,Nx=%i,Ny=%i,Nz=%i,x[i]=%lf,y[j]=%lf,z[k]=%lf,rho=%lf\n"
 //			                ,i,j,k,Nx,Ny,Nz,x[i],y[j],z[k],sqrt(x[i]*x[i]+y[j]*y[j]+z[k]*z[k]));
-//			         printf("relkretsch_n[ind]=%lf,relriemanncube_n[ind]=%lf\n",relkretsch_n[ind],relriemanncube_n[ind]);
+//			         printf("kretsch_n[ind]=%lf,riemanncube_n[ind]=%lf\n",kretsch_n[ind],riemanncube_n[ind]);
 //			        }
 //			       }
 //			      }
@@ -20432,20 +20432,20 @@ void AdS4D_pre_tstep(int L)
     	        	    gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_g0_phiphi[l]);
     	        	    free(name); name=NULL;
     	    	    }
-    	    	    if (output_relkretschAH_sdf)
+    	    	    if (output_kretschAH_sdf)
 					{
-						size_name = snprintf(NULL, 0, "%sAH_relkretsch_%i",AMRD_save_tag,l) + 1;
+						size_name = snprintf(NULL, 0, "%sAH_kretsch_%i",AMRD_save_tag,l) + 1;
     					if ( (name = malloc(size_name) )==NULL) AMRD_stop("app_pre_tstep...out of memory",""); 
-						sprintf(name,"%sAH_relkretsch_%i",AMRD_save_tag,l);
-	        	        gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_relkretsch[l]);
+						sprintf(name,"%sAH_kretsch_%i",AMRD_save_tag,l);
+	        	        gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_kretsch[l]);
 	        	        free(name); name=NULL;
     	    	    }
-    	    	    if (output_relriemanncubeAH_sdf)
+    	    	    if (output_riemanncubeAH_sdf)
 					{
-						size_name = snprintf(NULL, 0, "%sAH_relriemanncube_%i",AMRD_save_tag,l) + 1;
+						size_name = snprintf(NULL, 0, "%sAH_riemanncube_%i",AMRD_save_tag,l) + 1;
     					if ( (name = malloc(size_name) )==NULL) AMRD_stop("app_pre_tstep...out of memory",""); 
-						sprintf(name,"%sAH_relriemanncube_%i",AMRD_save_tag,l);
-	        	        gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_relriemanncube[l]);
+						sprintf(name,"%sAH_riemanncube_%i",AMRD_save_tag,l);
+	        	        gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_riemanncube[l]);
 	        	        free(name); name=NULL;
     	    	    }
     	    	}
@@ -20527,7 +20527,7 @@ void AdS4D_pre_tstep(int L)
 	            	    free(name); name=NULL;
                 	}
 
-                	if (output_relkretschAH_ascii)
+                	if (output_kretschAH_ascii)
 	                {
 	                	size_name = snprintf(NULL, 0, "%sAH_t_kretsch_ind_%i_tstep%d.txt",AMRD_save_tag,l,lsteps) + 1;
     					if ( (name = malloc(size_name) )==NULL) AMRD_stop("app_pre_tstep...out of memory",""); 
@@ -20537,16 +20537,16 @@ void AdS4D_pre_tstep(int L)
 					    {
 	        	        	for( k = 0; k < AH_Nphi[l]; k++ ) 
 					   	    {
-	                	   	//format: t,AH_relkretsch,ind (values on horizon)
+	                	   	//format: t,AH_kretsch,ind (values on horizon)
 	                   		fprintf(fp,"%24.16e %24.16e %i \n",
-	                   			ct,AH_relkretsch[l][j+AH_Nchi[l]*k],k+AH_Nphi[l]*j); 
+	                   			ct,AH_kretsch[l][j+AH_Nchi[l]*k],k+AH_Nphi[l]*j); 
 	                   		}
 				    	}
 	            	    fclose(fp);
 	            	    free(name); name=NULL;
                 	}
 
-                	if (output_relriemanncubeAH_ascii)
+                	if (output_riemanncubeAH_ascii)
 	                {
 	                	size_name = snprintf(NULL, 0, "%sAH_t_riemanncube_ind_%i_tstep%d.txt",AMRD_save_tag,l,lsteps) + 1;
     					if ( (name = malloc(size_name) )==NULL) AMRD_stop("app_pre_tstep...out of memory",""); 
@@ -20556,9 +20556,9 @@ void AdS4D_pre_tstep(int L)
 					    {
 	        	        	for( k = 0; k < AH_Nphi[l]; k++ ) 
 					   	    {
-	                	   	//format: t,AH_relriemanncube,ind (values on horizon)
+	                	   	//format: t,AH_riemanncube,ind (values on horizon)
 	                   		fprintf(fp,"%24.16e %24.16e %i \n",
-	                   			ct,AH_relriemanncube[l][j+AH_Nchi[l]*k],k+AH_Nphi[l]*j); 
+	                   			ct,AH_riemanncube[l][j+AH_Nchi[l]*k],k+AH_Nphi[l]*j); 
 	                   		}
 				    	}
 	            	    fclose(fp);
@@ -20909,20 +20909,20 @@ void AdS4D_post_tstep(int L)
     	        	    gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_g0_phiphi[l]);
     	        	    free(name); name=NULL;
     	    	    }
-    	    	    if (output_relkretschAH_sdf)
+    	    	    if (output_kretschAH_sdf)
 					{
-						size_name = snprintf(NULL, 0, "%sAH_relkretsch_%i",AMRD_save_tag,l) + 1;
+						size_name = snprintf(NULL, 0, "%sAH_kretsch_%i",AMRD_save_tag,l) + 1;
     					if ( (name = malloc(size_name) )==NULL) AMRD_stop("app_post_tstep...out of memory",""); 
-						sprintf(name,"%sAH_relkretsch_%i",AMRD_save_tag,l);
-	        	        gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_relkretsch[l]);
+						sprintf(name,"%sAH_kretsch_%i",AMRD_save_tag,l);
+	        	        gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_kretsch[l]);
 	        	        free(name); name=NULL;
     	    	    }
-    	    	    if (output_relriemanncubeAH_sdf)
+    	    	    if (output_riemanncubeAH_sdf)
 					{
-						size_name = snprintf(NULL, 0, "%sAH_relriemanncube_%i",AMRD_save_tag,l) + 1;
+						size_name = snprintf(NULL, 0, "%sAH_riemanncube_%i",AMRD_save_tag,l) + 1;
     					if ( (name = malloc(size_name) )==NULL) AMRD_stop("app_post_tstep...out of memory",""); 
-						sprintf(name,"%sAH_relriemanncube_%i",AMRD_save_tag,l);
-	        	        gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_relriemanncube[l]);
+						sprintf(name,"%sAH_riemanncube_%i",AMRD_save_tag,l);
+	        	        gft_out_bbox(name,ct,AH_shape,rank,AH_bbox,AH_riemanncube[l]);
 	        	        free(name); name=NULL;
     	    	    }
     	    	}
@@ -21005,7 +21005,7 @@ void AdS4D_post_tstep(int L)
 	            	    free(name); name=NULL;
                 	}
 
-                	if (output_relkretschAH_ascii)
+                	if (output_kretschAH_ascii)
 	                {
 	                	size_name = snprintf(NULL, 0, "%sAH_t_kretsch_ind_%i_tstep%d.txt",AMRD_save_tag,l,lc_steps) + 1;
     					if ( (name = malloc(size_name) )==NULL) AMRD_stop("app_post_tstep...out of memory",""); 
@@ -21015,16 +21015,16 @@ void AdS4D_post_tstep(int L)
 					    {
 	        	        	for( k = 0; k < AH_Nphi[l]; k++ ) 
 					   	    {
-	                	   	//format: t,AH_relkretsch,ind (values on horizon)
+	                	   	//format: t,AH_kretsch,ind (values on horizon)
 	                   		fprintf(fp,"%24.16e %24.16e %i \n",
-	                   			ct,AH_relkretsch[l][j+AH_Nchi[l]*k],k+AH_Nphi[l]*j); 
+	                   			ct,AH_kretsch[l][j+AH_Nchi[l]*k],k+AH_Nphi[l]*j); 
 	                   		}
 				    	}
 	            	    fclose(fp);
 	            	    free(name); name=NULL;
                 	}
 
-                	if (output_relriemanncubeAH_ascii)
+                	if (output_riemanncubeAH_ascii)
 	                {
 	                	size_name = snprintf(NULL, 0, "%sAH_t_riemanncube_ind_%i_tstep%d.txt",AMRD_save_tag,l,lc_steps) + 1;
     					if ( (name = malloc(size_name) )==NULL) AMRD_stop("app_post_tstep...out of memory",""); 
@@ -21034,9 +21034,9 @@ void AdS4D_post_tstep(int L)
 					    {
 	        	        	for( k = 0; k < AH_Nphi[l]; k++ ) 
 					   	    {
-	                	   	//format: t,AH_relriemanncube,ind (values on horizon)
+	                	   	//format: t,AH_riemanncube,ind (values on horizon)
 	                   		fprintf(fp,"%24.16e %24.16e %i \n",
-	                   			ct,AH_relriemanncube[l][j+AH_Nchi[l]*k],k+AH_Nphi[l]*j); 
+	                   			ct,AH_riemanncube[l][j+AH_Nchi[l]*k],k+AH_Nphi[l]*j); 
 	                   		}
 				    	}
 	            	    fclose(fp);

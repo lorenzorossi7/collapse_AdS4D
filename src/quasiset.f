@@ -2627,7 +2627,9 @@ c----------------------------------------------------------------------
                quasiset_angmomdensityyll(i,j,k)=
      &                         3*(
      &                          2*sin(2*PI*xi0)*(gbsph_n(1,3)/q)
-     &                         +cos(2*PI*xi0)*(gbsph_n(1,4)/q)
+     &                         +cos(2*PI*xi0)*
+     &                          (cos(PI*chi0)/sin(PI*chi0))*
+     &                             (gbsph_n(1,4)/q)
      &                         )
      &                         /(32*PI**2)
                quasiset_angmomdensityzll(i,j,k)=
@@ -2808,7 +2810,9 @@ c----------------------------------------------------------------------
               quasiset_angmomdensityyll(i,j,k)=
      &                        3*(
      &                         2*sin(2*PI*xi0)*(-dgbsph_tchi_drho_n)
-     &                        +cos(2*PI*xi0)*(-dgbsph_txi_drho_n)
+     &                         +cos(2*PI*xi0)*
+     &                          (cos(PI*chi0)/sin(PI*chi0))*
+     &                             (-dgbsph_txi_drho_n)
      &                        )
      &                        /(32*PI**2)
               quasiset_angmomdensityzll(i,j,k)=
